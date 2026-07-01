@@ -29,6 +29,7 @@ NS = {
 SITE_HOST = "kkolodziejczak.net"
 SITE_ORIGINS = (f"https://{SITE_HOST}", f"http://{SITE_HOST}")
 FAVICON_PATH = "assets/wp-content/uploads/2017/07/FavIcon-2.png"
+FAVICON_ICO_PATH = "favicon.ico"
 
 
 @dataclass
@@ -377,6 +378,7 @@ def render_layout(title: str, body: str, current_file: str, description: str = "
     css = rel_url(current_file, "assets/site.css")
     js = rel_url(current_file, "assets/site.js")
     favicon = rel_url(current_file, FAVICON_PATH)
+    favicon_ico = rel_url(current_file, FAVICON_ICO_PATH)
     home = rel_url(current_file, "index.html")
     meta_description = strip_tags(description)[:155] or "Static archive of kkolodziejczak.net."
     return f"""<!doctype html>
@@ -387,6 +389,7 @@ def render_layout(title: str, body: str, current_file: str, description: str = "
   <title>{esc(title)}</title>
   <meta name="description" content="{esc(meta_description)}">
   <link rel="icon" href="{favicon}" type="image/png">
+  <link rel="shortcut icon" href="{favicon_ico}" type="image/x-icon">
   <link rel="stylesheet" href="{css}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
 </head>
@@ -598,6 +601,30 @@ def write_text(path: Path, content: str) -> None:
     path.write_text(normalized, encoding="utf-8", newline="\n")
 
 
+def write_png_ico(source_path: Path, target_path: Path) -> None:
+    if not source_path.exists():
+        return
+
+    data = source_path.read_bytes()
+    if not data.startswith(b"\x89PNG\r\n\x1a\n") or data[12:16] != b"IHDR":
+        raise ValueError(f"{source_path} is not a PNG file.")
+
+    width = int.from_bytes(data[16:20], "big")
+    height = int.from_bytes(data[20:24], "big")
+    if width > 256 or height > 256:
+        raise ValueError(f"{source_path} is too large for a favicon.ico entry.")
+
+    target_path.write_bytes(
+        b"\x00\x00\x01\x00\x01\x00"
+        + bytes([width if width < 256 else 0, height if height < 256 else 0, 0, 0])
+        + (1).to_bytes(2, "little")
+        + (32).to_bytes(2, "little")
+        + len(data).to_bytes(4, "little")
+        + (22).to_bytes(4, "little")
+        + data
+    )
+
+
 def generate_site(
     export_path: Path,
     output_dir: Path,
@@ -615,6 +642,7 @@ def generate_site(
 
     output_dir.mkdir(parents=True, exist_ok=True)
     write_text(output_dir / ".nojekyll", "")
+    write_png_ico(output_dir / FAVICON_PATH, output_dir / FAVICON_ICO_PATH)
     write_text(output_dir / "index.html", render_index(entries))
     write_text(output_dir / "feed.xml", render_feed(entries))
     write_text(output_dir / "sitemap.xml", render_sitemap(entries))
