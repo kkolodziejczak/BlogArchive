@@ -28,6 +28,7 @@ NS = {
 
 SITE_HOST = "kkolodziejczak.net"
 SITE_ORIGINS = (f"https://{SITE_HOST}", f"http://{SITE_HOST}")
+FAVICON_PATH = "assets/wp-content/uploads/2017/07/FavIcon-2.png"
 
 
 @dataclass
@@ -375,6 +376,7 @@ def rewrite_urls(content: str, current_file: str, permalink_map: dict[str, str])
 def render_layout(title: str, body: str, current_file: str, description: str = "") -> str:
     css = rel_url(current_file, "assets/site.css")
     js = rel_url(current_file, "assets/site.js")
+    favicon = rel_url(current_file, FAVICON_PATH)
     home = rel_url(current_file, "index.html")
     meta_description = strip_tags(description)[:155] or "Static archive of kkolodziejczak.net."
     return f"""<!doctype html>
@@ -384,6 +386,7 @@ def render_layout(title: str, body: str, current_file: str, description: str = "
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{esc(title)}</title>
   <meta name="description" content="{esc(meta_description)}">
+  <link rel="icon" href="{favicon}" type="image/png">
   <link rel="stylesheet" href="{css}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
 </head>
