@@ -30,6 +30,7 @@ SITE_HOST = "kkolodziejczak.net"
 SITE_ORIGINS = (f"https://{SITE_HOST}", f"http://{SITE_HOST}")
 FAVICON_PATH = "assets/wp-content/uploads/2017/07/FavIcon-2.png"
 FAVICON_ICO_PATH = "favicon.ico"
+INCLUDED_PAGE_SLUGS = {"o-mnie"}
 
 
 @dataclass
@@ -155,6 +156,8 @@ def parse_export(export_path: Path) -> tuple[list[Entry], dict[str, str], list[s
         kind = text(item, "wp:post_type")
         status = text(item, "wp:status")
         if status != "publish" or kind not in {"post", "page"}:
+            continue
+        if kind == "page" and (text(item, "wp:post_name") or slugify(text(item, "title"))) not in INCLUDED_PAGE_SLUGS:
             continue
 
         metas = parse_meta(item)
