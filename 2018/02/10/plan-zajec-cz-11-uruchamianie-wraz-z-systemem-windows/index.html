@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan zajęć cz. 11 - Uruchamianie wraz z systemem Windows</title>
+  <meta name="description" content="W tym tygodniu dodałem możliwość uruchamiania aplikacji wraz z Windowsem. Dodatkowo poprawiłem parę niuansów. Od tej chwili ustawienia użytkownika są też z">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Plan zajęć cz. 11 - Uruchamianie wraz z systemem Windows</h1>
+        <div class="post-meta">
+          <time datetime="2018-02-10">2018-02-10</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/auto-start/index.html">#Auto start</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/plan-zajec/index.html">#Plan zajęć</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2018/02/Featured_Image-1.png" alt="">
+      <div class="post-content">
+        W tym tygodniu dodałem możliwość uruchamiania aplikacji wraz z Windowsem. Dodatkowo poprawiłem parę niuansów. Od tej chwili ustawienia użytkownika są też zapisywane na dysku twardym.
+<hr class="more-break">
+
+<h3>Uruchamianie z Windows</h3>
+
+Użytkownik od tej chwili może ustawić, aby aplikacja uruchamiała się razem ze systemem Windows. Dodanie aplikacji do auto startu nie jest trudne. Wystarczy dodać wpis do odpowiedniego rejestru ze ścieżką aplikacji, która ma się uruchomić. Prosty kod wygląda następująco:
+
+<pre class="code-block language-csharp" data-title="AutoRunService.cs"><code class="language-csharp">public class AutoRunService : IAutoRun
+{
+    private RegistryKey registryKey = Registry.CurrentUser.OpenSubKey
+        (&quot;SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run&quot;, true);
+
+    public void DisableAutoRun()
+    {
+        if (IsAutoRunEnabled())
+            registryKey.DeleteValue(&quot;ZUTSchedule&quot;);
+    }
+
+    public void EnableAutoRun()
+    {
+        var path = Assembly.GetExecutingAssembly()
+            .GetName()
+            .CodeBase
+            .Replace(&quot;file:///&quot;, &quot;&quot;)
+            .Replace(&quot;/&quot;, @&quot;\&quot;);
+        registryKey.SetValue(&quot;ZUTSchedule&quot;, path);
+    }
+
+    public bool IsAutoRunEnabled()
+    {
+        return registryKey.GetValue(&quot;ZUTSchedule&quot;) != null;
+    }
+}</code></pre>
+
+<h3>Ustawienia użytkownika</h3>
+
+Ustawienia są od teraz przechowywane na dysku twardym użytkownika. Przechowywane są zarówno preferencje do uruchomienia wraz z systemem Windows, jak i wszystkie pobrane zajęcia.
+Ilość przechowywanych informacji można drastycznie uprościć. W ciągu następnych tygodni będę optymalizował aplikację zarówno pod kątem szybkości działania, jak i niezawodności.
+
+<h3>Błędne rozwiązanie</h3>
+
+W ostatnim czasie zostały przeprowadzone modernizacje w systemie e-Dziekanat. Logika aplikacji nie działała prawidłowo. Założenia podjęte podczas parsowania tabeli z zajęciami zakładały na stałą liczbę kolumn. Niestety sposób interpretowania wyrażeń regularnych nie działał prawidłowo, kiedy doszła nowa kolumna. Pobrane informacje były wyświetlane w złych miejscach. Prostym fixem będzie skorzystanie z parsera HTML, który zapewni poprawność i elastyczność w przyszłości.
+
+<h3>Kończąc</h3>
+
+Aplikacja będzie skończona w krótkim czasie. Skończyłem już uczelnie i mam teraz więcej wolnego czasu popołudniami. Przez co będę mógł włożyć odpowiednią ilość godzin potrzebną na modernizację kodu i ostatecznie ukończenie aplikacji.
+
+Według mnie długi okres tworzenia aplikacji nie jest zły. Pozwala pomysłowi dojrzeć i doprowadzić do odpowiedniego projektu końcowej aplikacji.
+
+[KodNaGicie name="ZUTSchedule"]
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../03/przygotowania-do-obrony-brak-wpisu/index.html">Previous: Przygotowania do obrony - brak wpisu</a></span>
+        <span><a href="../../17/wlasny-nuget-package/index.html">Next: Własny nuget package</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

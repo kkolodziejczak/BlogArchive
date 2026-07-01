@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Archiwista [cz. 3 – Styl GUI]</title>
+  <meta name="description" content="Posiadam już większość rzeczy potrzebnych do stworzenia interfejsu graficznego. Czas połączyć te wszystkie rzeczy i zabrać się za implementację aplikacji..">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Archiwista [cz. 3 – Styl GUI]</h1>
+        <div class="post-meta">
+          <time datetime="2017-08-05">2017-08-05</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/archiwista/index.html">#Archiwista</a> <a href="../../../../tags/gui/index.html">#GUI</a> <a href="../../../../tags/wpf/index.html">#WPF</a> <a href="../../../../tags/xaml/index.html">#XAML</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/08/Featured_Image.png" alt="">
+      <div class="post-content">
+        <p style="text-align: justify;">Posiadam już większość rzeczy potrzebnych do stworzenia interfejsu graficznego. Jak do tej pory zdecydowałem się na dwie czcionki - Lato i Font Awesome, paletę kolorów w odcieniu niebieskiego, język angielski dla całej aplikacji oraz wstępny wygląd. Czas połączyć te wszystkie rzeczy i zabrać się za implementację aplikacji. Aplikację napiszę wykorzystując technologię WPF oraz język C#. Moim środowiskiem programistycznym będzie Visual Studio Community 2017.</p>
+
+<hr class="more-break">
+
+<h3>Słowniki</h3>
+
+<p style="text-align: justify;">Pierwszą rzeczą, którą warto zrobić zaczynając jest stworzenie słowników zawierających nasze stałe informacje takie jak czcionki oraz ich rozmiary, kody ikon Font Awesome i kolory z palety. Windows Presentation Foundation pozwala nam na tworzenie <em>Resource Dictionary</em>, z których skorzystam. Zostanie utworzony nowy plik Fonts.xaml zawierający wszelkie informacje na temat czcionek.</p>
+
+<pre class="code-block language-xml" data-title="Fonts.xaml"><code class="language-xml">&lt;ResourceDictionary xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+                    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+                    xmlns:local=&quot;clr-namespace:Archivist&quot;
+                    xmlns:system=&quot;clr-namespace:System;assembly=mscorlib&quot;&gt;
+
+    &lt;FontFamily x:Key=&quot;LatoThin&quot;&gt;pack://appliction;,,,/Fonts/#Lato Thin&lt;/FontFamily&gt;
+    &lt;FontFamily x:Key=&quot;LatoRegular&quot;&gt;pack://appliction;,,,/Fonts/#Lato Regular&lt;/FontFamily&gt;
+    &lt;FontFamily x:Key=&quot;LatoBold&quot;&gt;pack://appliction;,,,/Fonts/#Lato Bold&lt;/FontFamily&gt;
+    &lt;FontFamily x:Key=&quot;LatoLight&quot;&gt;pack://appliction;,,,/Fonts/#Lato Light&lt;/FontFamily&gt;
+    &lt;FontFamily x:Key=&quot;FontAwesome&quot;&gt;pack://appliction;,,,/Fonts/#FontAwesome&lt;/FontFamily&gt;
+
+    &lt;!-- ... --&gt;
+
+    &lt;system:Double x:Key=&quot;FontSizeXXSmall&quot;&gt;5&lt;/system:Double&gt;
+    &lt;system:Double x:Key=&quot;FontSizeXSmall&quot;&gt;8&lt;/system:Double&gt;
+    &lt;system:Double x:Key=&quot;FontSizeSmall&quot;&gt;10&lt;/system:Double&gt;
+    &lt;system:Double x:Key=&quot;FontSizeRegular&quot;&gt;14&lt;/system:Double&gt;
+    &lt;system:Double x:Key=&quot;FontSizeBigger&quot;&gt;16&lt;/system:Double&gt;
+    &lt;system:Double x:Key=&quot;FontSizeLarge&quot;&gt;20&lt;/system:Double&gt;
+    &lt;system:Double x:Key=&quot;FontSizeXLarge&quot;&gt;26&lt;/system:Double&gt;
+    &lt;system:Double x:Key=&quot;FontSizeXXLarge&quot;&gt;32&lt;/system:Double&gt;
+
+    &lt;system:String x:Key=&quot;FontAwesomeSettingsIcon&quot;&gt;&amp;#xf013;&lt;/system:String&gt;
+    &lt;system:String x:Key=&quot;FontAwesomeFileIcon&quot;&gt;&amp;#xf15b;&lt;/system:String&gt;
+    &lt;system:String x:Key=&quot;FontAwesomeFolderIcon&quot;&gt;&amp;#xf07c;&lt;/system:String&gt;
+    &lt;system:String x:Key=&quot;FontAwesomeInfoIcon&quot;&gt;&amp;#xf05a;&lt;/system:String&gt;
+    &lt;system:String x:Key=&quot;FontAwesomeWarrningIcon&quot;&gt;&amp;#xf071;&lt;/system:String&gt;
+
+&lt;/ResourceDictionary&gt;</code></pre>
+
+Tak samo zrobię z kolorami i stworzę Colors.xaml.
+
+<pre class="code-block language-xml" data-title="Colors.xaml"><code class="language-xml">&lt;ResourceDictionary xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+                    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+                    xmlns:local=&quot;clr-namespace:Archivist&quot;&gt;
+
+    &lt;Color x:Key=&quot;DarkerPrimaryColor&quot;&gt;#064887&lt;/Color&gt;
+    &lt;SolidColorBrush x:Key=&quot;DarkerPrimaryColorBrush&quot; Color=&quot;{StaticResource DarkerPrimaryColor}&quot;/&gt;
+
+    &lt;Color x:Key=&quot;DarkPrimaryColor&quot;&gt;#1976d2&lt;/Color&gt;
+    &lt;SolidColorBrush x:Key=&quot;DarkPrimaryColorBrush&quot; Color=&quot;{StaticResource DarkPrimaryColor}&quot;/&gt;
+
+    &lt;Color x:Key=&quot;ActiveDarkPrimaryColor&quot;&gt;#2196f3&lt;/Color&gt;
+    &lt;SolidColorBrush x:Key=&quot;ActiveDarkPrimaryColorBrush&quot; Color=&quot;{StaticResource ActiveDarkPrimaryColor}&quot;/&gt;
+
+    &lt;Color x:Key=&quot;PrimaryColor&quot;&gt;#2196f3&lt;/Color&gt;
+    &lt;SolidColorBrush x:Key=&quot;PrimaryColorBrush&quot; Color=&quot;{StaticResource PrimaryColor}&quot;/&gt;
+
+    &lt;Color x:Key=&quot;LightPrimaryColor&quot;&gt;#bbdefb&lt;/Color&gt;
+    &lt;SolidColorBrush x:Key=&quot;LightPrimaryColorBrush&quot; Color=&quot;{StaticResource LightPrimaryColor}&quot;/&gt;
+
+    &lt;Color x:Key=&quot;TextIconsColor&quot;&gt;#ffffff&lt;/Color&gt;
+    &lt;SolidColorBrush x:Key=&quot;TextIconsColorBrush&quot; Color=&quot;{StaticResource TextIconsColor}&quot;/&gt;
+
+    &lt;Color x:Key=&quot;AccentColor&quot;&gt;#03a9f4&lt;/Color&gt;
+    &lt;SolidColorBrush x:Key=&quot;AccentColorBrush&quot; Color=&quot;{StaticResource AccentColor}&quot;/&gt;
+
+    &lt;Color x:Key=&quot;PrimaryText&quot;&gt;#212121&lt;/Color&gt;
+    &lt;SolidColorBrush x:Key=&quot;PrimaryTextBrush&quot; Color=&quot;{StaticResource PrimaryText}&quot;/&gt;
+
+    &lt;Color x:Key=&quot;SecondaryText&quot;&gt;#212121&lt;/Color&gt;
+    &lt;SolidColorBrush x:Key=&quot;SecondaryTextBrush&quot; Color=&quot;{StaticResource SecondaryText}&quot;/&gt;
+
+    &lt;Color x:Key=&quot;DividerColor&quot;&gt;#212121&lt;/Color&gt;
+    &lt;SolidColorBrush x:Key=&quot;DividerColorBrush&quot; Color=&quot;{StaticResource DividerColor}&quot;/&gt;
+
+&lt;/ResourceDictionary&gt;</code></pre>
+
+<p style="text-align: justify;">Aby posiadać dostęp do dwóch słowników jednocześnie musimy je połączyć w jeden duży. Można to zrobić w głównym pliku konfiguracyjnym aplikacji App.xaml. Podczas łączenia słowników trzeba pamiętać, aby zachować kolejności ich występowania. Jeżeli używamy informacji ze słownika A w słowniku B, to słownik A musi zostać zadeklarowany nad słownikiem B.</p>
+
+<pre class="code-block language-xml" data-title="App.xaml"><code class="language-xml">&lt;Application x:Class=&quot;Archivist.App&quot;
+             xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+             xmlns:local=&quot;clr-namespace:Archivist&quot;
+             StartupUri=&quot;MainWindow.xaml&quot;&gt;
+    &lt;Application.Resources&gt;
+        &lt;ResourceDictionary&gt;
+            &lt;ResourceDictionary.MergedDictionaries&gt;
+                &lt;ResourceDictionary Source=&quot;Styles/Colors.xaml&quot;/&gt;
+                &lt;ResourceDictionary Source=&quot;Styles/Fonts.xaml&quot;/&gt;
+            &lt;/ResourceDictionary.MergedDictionaries&gt;
+        &lt;/ResourceDictionary&gt;
+
+    &lt;/Application.Resources&gt;
+&lt;/Application&gt;</code></pre>
+
+<h3>Style</h3>
+
+<p style="text-align: justify;">Kolejnym etapem będzie tworzenie styli komponentów, z których w późniejszym czasie będę tworzyć aplikacje. Na samym początku stworzę styl bazowy zmieniający typ czcionki na Lato oraz wielkość liter na Regular. Teraz mogę przypisać styl do wszystkich elementów, z których będę później korzystać. Z biegiem czasu w tym miejscu będzie pojawiać się więcej wpisów do kolejnych elementów interfejsu graficznego.</p>
+
+<pre class="code-block language-xml" data-title="Fonts.xaml"><code class="language-xml">&lt;ResourceDictionary xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+                    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+                    xmlns:local=&quot;clr-namespace:Archivist&quot;
+                    xmlns:system=&quot;clr-namespace:System;assembly=mscorlib&quot;&gt;
+
+    &lt;!-- ... --&gt;
+
+    &lt;Style TargetType=&quot;{x:Type Control}&quot; x:Key=&quot;BaseStyle&quot;&gt;
+        &lt;Setter Property=&quot;FontFamily&quot; Value=&quot;{StaticResource LatoRegular}&quot; /&gt;
+        &lt;Setter Property=&quot;FontSize&quot; Value=&quot;{StaticResource FontSizeRegular}&quot; /&gt;
+    &lt;/Style&gt;
+
+    &lt;Style TargetType=&quot;{x:Type TextBlock}&quot; x:Key=&quot;BaseTextBlockStyle&quot;&gt;
+        &lt;Setter Property=&quot;FontFamily&quot; Value=&quot;{StaticResource LatoRegular}&quot; /&gt;
+        &lt;Setter Property=&quot;FontSize&quot; Value=&quot;{StaticResource FontSizeRegular}&quot; /&gt;
+    &lt;/Style&gt;
+
+    &lt;Style TargetType=&quot;{x:Type Button}&quot; BasedOn=&quot;{StaticResource BaseStyle}&quot; /&gt;
+    &lt;Style TargetType=&quot;{x:Type Label}&quot; BasedOn=&quot;{StaticResource BaseStyle}&quot; /&gt;
+    &lt;Style TargetType=&quot;{x:Type TextBox}&quot; BasedOn=&quot;{StaticResource BaseStyle}&quot; /&gt;
+    &lt;Style TargetType=&quot;{x:Type TextBlock}&quot; BasedOn=&quot;{StaticResource BaseTextBlockStyle}&quot; /&gt;
+
+    &lt;!-- ... --&gt;
+
+&lt;/ResourceDictionary&gt;</code></pre>
+
+<p style="text-align: justify;">Posiadając już styl bazowy mogę teraz stworzyć styl dla przycisku posiadającego ikonę Font Awesome. Napiszę całkowicie nowy wygląd pasujący do całej aplikacji, tak jak zostało to <a href="../../../07/29/archiwista-cz-2-projekt-gui/index.html">zaplanowane</a>. Aby tego dokonać muszę pierw wyczyścić styl przycisku. Ustawiam tło na odpowiadający mi kolor, ramkę na 0 pikseli oraz tworzę własną logikę wyzwalaczy.</p>
+
+<pre class="code-block language-xml" data-title="Buttons.xaml"><code class="language-xml">&lt;ResourceDictionary xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+                    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+                    xmlns:local=&quot;clr-namespace:Archivist&quot;&gt;
+
+    &lt;ResourceDictionary.MergedDictionaries&gt;
+        &lt;ResourceDictionary Source=&quot;Colors.xaml&quot; /&gt;
+        &lt;ResourceDictionary Source=&quot;Fonts.xaml&quot; /&gt;
+    &lt;/ResourceDictionary.MergedDictionaries&gt;
+
+    &lt;!-- Icon Button --&gt;
+    &lt;Style x:Key=&quot;IconButton&quot; TargetType=&quot;{x:Type Button}&quot; BasedOn=&quot;{StaticResource BaseStyle}&quot;&gt;
+
+        &lt;Setter Property=&quot;Background&quot; Value=&quot;{StaticResource DarkPrimaryColorBrush}&quot;/&gt;
+        &lt;Setter Property=&quot;Foreground&quot; Value=&quot;{StaticResource TextIconsColorBrush}&quot;/&gt;
+        &lt;Setter Property=&quot;BorderThickness&quot; Value=&quot;0&quot;/&gt;
+        &lt;Setter Property=&quot;FontSize&quot; Value=&quot;{StaticResource FontSizeRegular}&quot;/&gt;
+        &lt;Setter Property=&quot;FontFamily&quot; Value=&quot;{StaticResource FontAwesome}&quot;/&gt;
+        &lt;Setter Property=&quot;Padding&quot; Value=&quot;10&quot;/&gt;
+        &lt;Setter Property=&quot;Margin&quot; Value=&quot;0&quot;/&gt;
+
+        &lt;Setter Property=&quot;Height&quot; Value=&quot;{Binding ActualWidth,RelativeSource={RelativeSource Self}}&quot;/&gt;
+
+        &lt;Setter Property=&quot;Template&quot;&gt;
+            &lt;Setter.Value&gt;
+                &lt;ControlTemplate TargetType=&quot;{x:Type Button}&quot;&gt;
+                    &lt;Border x:Name=&quot;Border&quot;
+                            BorderBrush=&quot;{TemplateBinding BorderBrush}&quot;
+                            BorderThickness=&quot;{TemplateBinding BorderThickness}&quot;
+                            Background=&quot;{TemplateBinding Background}&quot;
+                            &gt;
+                        &lt;Grid&gt;
+                            &lt;Viewbox&gt;
+                                &lt;TextBlock Text=&quot;{TemplateBinding Content}&quot;
+                                       Focusable=&quot;False&quot;
+                                       FontFamily=&quot;{TemplateBinding FontFamily}&quot;
+                                       FontSize=&quot;{TemplateBinding FontSize}&quot;
+                                       HorizontalAlignment=&quot;{TemplateBinding HorizontalContentAlignment}&quot;
+                                       Margin=&quot;{TemplateBinding Padding}&quot;
+                                       VerticalAlignment=&quot;{TemplateBinding VerticalContentAlignment}&quot;/&gt;
+                            &lt;/Viewbox&gt;
+                        &lt;/Grid&gt;
+                    &lt;/Border&gt;
+                    &lt;ControlTemplate.Triggers&gt;
+                        &lt;EventTrigger RoutedEvent=&quot;MouseEnter&quot;&gt;
+                            &lt;BeginStoryboard&gt;
+                                &lt;Storyboard&gt;
+                                    &lt;ColorAnimation To=&quot;{StaticResource ActiveDarkPrimaryColor}&quot;
+                                                    Duration=&quot;0:0:0.3&quot;
+                                                    Storyboard.TargetName=&quot;Border&quot;
+                                                    Storyboard.TargetProperty=&quot;Background.Color&quot;/&gt;
+                                &lt;/Storyboard&gt;
+                            &lt;/BeginStoryboard&gt;
+                        &lt;/EventTrigger&gt;
+                        &lt;EventTrigger RoutedEvent=&quot;MouseLeave&quot;&gt;
+                            &lt;BeginStoryboard&gt;
+                                &lt;Storyboard&gt;
+                                    &lt;ColorAnimation To=&quot;{StaticResource DarkPrimaryColor}&quot;
+                                                    Duration=&quot;0:0:0.3&quot;
+                                                    Storyboard.TargetName=&quot;Border&quot;
+                                                    Storyboard.TargetProperty=&quot;Background.Color&quot;/&gt;
+                                &lt;/Storyboard&gt;
+                            &lt;/BeginStoryboard&gt;
+                        &lt;/EventTrigger&gt;
+                        &lt;Trigger Property=&quot;IsEnabled&quot; Value=&quot;False&quot;&gt;
+                            &lt;Setter Property=&quot;Background&quot; TargetName=&quot;Border&quot; Value=&quot;{StaticResource DarkerPrimaryColor}&quot;/&gt;
+                        &lt;/Trigger&gt;
+                    &lt;/ControlTemplate.Triggers&gt;
+                &lt;/ControlTemplate&gt;
+            &lt;/Setter.Value&gt;
+        &lt;/Setter&gt;
+
+    &lt;/Style&gt;
+
+&lt;/ResourceDictionary&gt;</code></pre>
+
+Cały kod aplikacji można zobaczyć na moim koncie github [icon name="github" size="lg"] <a href="https://github.com/kkolodziejczak/Archivist">/kkolodziejczak/Archivist</a>
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../../07/29/archiwista-cz-2-projekt-gui/index.html">Previous: Archiwista [cz. 2 - Projekt GUI]</a></span>
+        <span><a href="../../12/dodanie-jezyka-xaml-do-crayon/index.html">Next: Dodanie języka XAML do Crayon Syntax Highlighter</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan zajęć cz. 14 - Błędy</title>
+  <meta name="description" content="W tym tygodniu zająłem się diagnostyką oraz optymalizacją odświeżania planu zajęć. Podczas testowania logowania jako nauczyciel pojawiły się błędy logowani">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Plan zajęć cz. 14 - Błędy</h1>
+        <div class="post-meta">
+          <time datetime="2018-03-10">2018-03-10</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/plan-zajec/index.html">#Plan zajęć</a> <a href="../../../../tags/studia/index.html">#Studia</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2018/03/Featured_Image-1.png" alt="">
+      <div class="post-content">
+        W tym tygodniu zająłem się diagnostyką oraz optymalizacją odświeżania planu zajęć. Podczas testowania logowania jako nauczyciel pojawiły się błędy logowania.
+<hr class="more-break">
+
+<h3>Problem</h3>
+
+Wszystkie próby zalogowania się na konto nauczyciela kończyły się niepowodzeniem. Okazało się, że wybór typu konta, na jakie chcemy się zalogować, nie był połączony z logiką kodu. Przez co w wysyłanej wiadomości POST brakowało tego parametru. Ciekawostką było to, że w przypadku braku typu konta domyślnie wybierany był student.
+
+<h3>Optymalizacja odświeżania</h3>
+
+Do wstępnego ukończenia aplikacji brakuje dynamicznego odświeżania planu zajęć. Chcę, aby była możliwość przeglądania planu zajęć i równolegle w tyle pobierany byłby nowy plan i podmieniany w ostatniej chwili. Oczywiście na tym etapie również pojawiłyby się komunikaty o ewentualnych zmianach w planie. Niestety obecny kod nie pozwala w prosty sposób na jego odświeżenie. Dlatego w tym tygodniu nie poczyniłem dużych postępów w tym kierunku.
+
+<h3>Kończąc</h3>
+
+Coraz więcej osób jest zainteresowanych programem. Chciałbym go jak najszybciej skończyć. Jak już uporam się z całą logiką aplikacji desktopowej, której nie zostało dużo. To powinienem szybko zrobić widoki na platformy mobilne. Zwłaszcza przy wykorzystaniu <em> Xamarin Forms </em>gdzie tworzony jest jeden widok dla każdej z platform. Jednym z mankamentów może być przechowywanie <em>UserCredentials </em>wykorzystywanych do automatycznego logowania. Będę się tym martwił, jak przyjdzie czas na implementację wersji mobilnych.
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../03/plan-zajec-cz-13-komunikaty/index.html">Previous: Plan zajęć cz. 13 - Komunikaty</a></span>
+        <span><a href="../../17/plan-zajec-cz-15-xamarin/index.html">Next: Plan zajęć cz. 15 - Xamarin</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

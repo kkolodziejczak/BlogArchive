@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan zajęć cz. 18 - Xamarin cd.</title>
+  <meta name="description" content="Ten tydzień jest ostatnim tygodniem, który całkowicie poświęciłem rozwijaniu frameworka. Od następnego tygodnia zacznę pracę nad aplikacją mobilną. A w ram">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Plan zajęć cz. 18 - Xamarin cd.</h1>
+        <div class="post-meta">
+          <time datetime="2018-04-07">2018-04-07</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/plan-zajec/index.html">#Plan zajęć</a> <a href="../../../../tags/xamarin/index.html">#Xamarin</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2018/04/Featured_Image.png" alt="">
+      <div class="post-content">
+        Ten tydzień jest ostatnim tygodniem, który całkowicie poświęciłem rozwijaniu frameworka.
+Od następnego tygodnia zacznę pracę nad aplikacją mobilną. A w ramach tego muszę poprawić sposób parsowania zajęć oraz ich przechowywania i zapisywania na dysku twardym.
+<hr class="more-break">
+
+<h3>Ekrany przejściowe</h3>
+
+Jedną z ważnych części każdej aplikacji są ekrany przedstawiające informacje użytkownikowi o aktualnym postępie danego procesu. Jeżeli mamy jakąś czynność, którą wykonujemy i nie wiemy ile może potrwać powinniśmy włączyć stronę pokazującą trwające prace. Dzięki temu użytkownik wie, że aplikacja coś liczy i niedługo się to skończy. Gdyby aplikacja po naciśnięciu przycisku nagle przestawała odpowiadać na kliknięcia, użytkownik mógłby pomyśleć, że się zacięła.
+    Framework udostępnia dwie strony przejściowe, ActivityIndicator — która wyświetla animację z tekstem sygnalizującym o tym, że wykonywane są jakieś czynności, oraz ProgressBar — posiadająca pasek postępu, przedstawiający aktualny postęp danej czynności.
+
+<h3>Poprawienie klasy bazowej</h3>
+
+Przeglądając repozytoria na Githubie zauważyłem ciekawy koncept. Mianowicie podczas tworzenia właściwości. Zamiast tworzyć prywatne pole służące do przechowywania wartości, programista stworzył w klasie bazowej Tablice Haszującą. Do której wkładane są wartości zmiennych, na tym etapie od razu wywoływany jest Event OnPropertyChange dzięki czemu nie trzeba go za każdym razem manualnie dodawać i wywoływać. Jest on wołany za każdym razem, kiedy wartość zmiennej się zmienia. Całą implementację można zobaczyć w klasie BaseViewModel.
+
+<h3>Kończąc</h3>
+
+Do skończenia biblioteki zostało bardzo mało. Jedną z ważniejszych rzeczy jest przechodzenie pomiędzy stronami oraz wyświetlanie komunikatów na ekranie. Po stworzeniu tych dwóch rzeczy i przejrzeniu całego kodu dodaniu opisów i dokumentacji myślę, że można zakończyć pierwszą fazę developmentu.
+
+<p class="source-link"><a href="https://github.com/kkolodziejczak/Simple.Xamarin.Framework/tree/8893207df836f315f71940a460b3fa9e1445741d">Kod na GitHub: Simple.Xamarin.Framework</a></p>
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../../03/31/plan-zajec-cz-17-xamarin-cd/index.html">Previous: Plan zajęć cz. 17 - Xamarin cd.</a></span>
+        <span><a href="../../14/plan-zajec-cz-19-mobilny-ekran-logowania/index.html">Next: Plan zajęć cz. 19 - Mobilny ekran logowania</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

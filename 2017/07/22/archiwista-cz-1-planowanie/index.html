@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Archiwista [cz. 1 - Planowanie]</title>
+  <meta name="description" content="Planowanie aplikacji Archiwista, która będzie robiła kopie plików źródłowych nad którym pracujemy dzięki czemu nie musimy się martwić o utracenie danych...">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Archiwista [cz. 1 - Planowanie]</h1>
+        <div class="post-meta">
+          <time datetime="2017-07-22">2017-07-22</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/archiwista/index.html">#Archiwista</a> <a href="../../../../tags/planowanie/index.html">#Planowanie</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/07/Featured_Image-2.png" alt="">
+      <div class="post-content">
+        <p style="text-align: justify;">Jakiś czas temu na zajęciach z programowania prowadzący wspomniał o programie, który napisał. Jego zasada działania była prosta - kiedy użytkownik naciśnie kombinację klawiszy ctrl + s (zazwyczaj jest to skrót zapisu), program automatycznie przeszukuje pliki wyznaczonego projektu i pakuje wszystkie pliki źródłowe do archiwum. <hr class="more-break">Nazywa je odpowiednio z datą, aby można było w przypadku potrzeby wziąć wersję, która nam najbardziej odpowiada.</p>
+
+<p style="text-align: justify;">Program <strong>nie ma na celu zastąpienie systemu kontroli wersji</strong>, ale jego suplementację. Sporej ilości osób, szczególnie na samym początku przydarzyło się zapomnieć zrobić commita. A to edytor tekstowy, którego używali wyłączył się ponieważ wystąpił błąd lub zabrakło prądu. Powodów, przez które możemy stracić dane jest mnóstwo. Program powinien sobie z nimi wszystkimi poradzić i pozwolić nam na bezpieczne pisanie kodu ze świadomością, że mamy dużo kopii, z których w razie czego możemy skorzystać.</p>
+
+<h3>Dlaczego?</h3>
+
+<p style="text-align: justify;">Wybrałem ten program na pierwszy ogień, ponieważ jest w miarę prosty, chociaż oczywiście można dodać więcej funkcjonalności, które odpowiednio go rozbudują. Kolejnym powodem, dla którego go wybrałem jest fakt, że będę mógł go używać w każdym innym projekcie. Wracając do aplikacji musimy zastanowić się nad kilkoma rzeczami.</p>
+
+<h3>Rozmiary plików?</h3>
+
+<p style="text-align: justify;">Pliki źródłowe nie ważą za dużo. W dzisiejszych czasach przestrzeń dyskowa jest również bardziej dostępna niż kiedyś. Nawet jeżeli wziąć to pod uwagę to można czyścić pliki źródłowe np. przy każdym uruchomieniu programu. Czyszczone byłyby wczesne wersje, zostawilibyśmy kilka ostatnich kopii jeśli użytkownik chciałby z nich skorzystać.</p>
+
+<h3>Gdzie zapisywać?</h3>
+
+<p style="text-align: justify;">Wstępnie założę, że program będzie domyślnie zapisywał wszelkie kopie w folderze obok projektu. Dodam opcję, którą będzie można nadpisać ścieżkę zapisu naszych kopii.</p>
+
+<h3>Kilka projektów?</h3>
+
+<p style="text-align: justify;">Kolejną fajną funkcjonalnością byłaby możliwość posiadania listy projektów, nad którymi pracowaliśmy. Tym sposobem nie musimy za każdym razem wskazywać ścieżki do naszego projektu i ustawiać ich parametrów.</p>
+
+<h3>Ustawienia</h3>
+
+<p style="text-align: justify;">Kolejną ważną sprawą, którą trzeba wziąć pod uwagę jest przechowywanie ustawień użytkownika. Powinniśmy być w stanie umożliwić użytkownikowi na zarządzanie jego dodanymi projektami, na dodanie nowego projektu, usuwanie oraz edycję istniejącego. Ustawienia te będą przechowywane w jakimś stałym miejscu zapewne w katalogu domowym użytkownika.</p>
+
+<h3>I co dalej?</h3>
+
+<p style="text-align: justify;">Skoro mamy już opisane funkcje systemu chcę nałożyć kilka limitacji. Pierwszym ograniczeniem będzie to, że aplikacja powinna składać się z jednego pliku uruchamialnego .exe, drugim ograniczeniem będzie konieczność posiadania określonego wolnego miejsca na dysku gdzie znajduje się nasz folder z kopiami zapasowymi. Program powinien być na tyle inteligentny, że jak będzie kończyło się miejsce na dysku, to powinien odpowiednio zwolnić miejsce, aby mógł kontynuować swoją pracę.</p>
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../15/hello-world/index.html">Previous: Hello World!</a></span>
+        <span><a href="../../29/archiwista-cz-2-projekt-gui/index.html">Next: Archiwista [cz. 2 - Projekt GUI]</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

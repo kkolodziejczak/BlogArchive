@@ -1,0 +1,719 @@
+[
+  {
+    "title": "O mnie",
+    "url": "o-mnie/",
+    "date": "2017-07-04",
+    "kind": "page",
+    "categories": [],
+    "tags": []
+  },
+  {
+    "title": "Hello World!",
+    "url": "2017/07/15/hello-world/",
+    "date": "2017-07-15",
+    "kind": "post",
+    "categories": [
+      "Wpis"
+    ],
+    "tags": []
+  },
+  {
+    "title": "git",
+    "url": "git/",
+    "date": "2018-11-16",
+    "kind": "page",
+    "categories": [],
+    "tags": []
+  },
+  {
+    "title": "bitbucket",
+    "url": "bitbucket/",
+    "date": "2018-11-16",
+    "kind": "page",
+    "categories": [],
+    "tags": []
+  },
+  {
+    "title": "Solid",
+    "url": "solid/",
+    "date": "2018-11-22",
+    "kind": "page",
+    "categories": [],
+    "tags": []
+  },
+  {
+    "title": "test",
+    "url": "test/",
+    "date": "2018-12-08",
+    "kind": "page",
+    "categories": [],
+    "tags": []
+  },
+  {
+    "title": "ankieta",
+    "url": "ankieta/",
+    "date": "2019-01-16",
+    "kind": "page",
+    "categories": [],
+    "tags": []
+  },
+  {
+    "title": "3d-printing",
+    "url": "3d-printing/",
+    "date": "2024-08-06",
+    "kind": "page",
+    "categories": [],
+    "tags": []
+  },
+  {
+    "title": "Archiwista [cz. 1 - Planowanie]",
+    "url": "2017/07/22/archiwista-cz-1-planowanie/",
+    "date": "2017-07-22",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "Archiwista",
+      "Planowanie"
+    ]
+  },
+  {
+    "title": "Archiwista [cz. 2 - Projekt GUI]",
+    "url": "2017/07/29/archiwista-cz-2-projekt-gui/",
+    "date": "2017-07-29",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "Archiwista",
+      "GUI"
+    ]
+  },
+  {
+    "title": "Archiwista [cz. 3 – Styl GUI]",
+    "url": "2017/08/05/archiwista-cz-3-styl-gui/",
+    "date": "2017-08-05",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "Archiwista",
+      "GUI",
+      "WPF",
+      "XAML"
+    ]
+  },
+  {
+    "title": "Dodanie języka XAML do Crayon Syntax Highlighter",
+    "url": "2017/08/12/dodanie-jezyka-xaml-do-crayon/",
+    "date": "2017-08-12",
+    "kind": "post",
+    "categories": [
+      "Wpis"
+    ],
+    "tags": [
+      "Crayon",
+      "Kolorowanie",
+      "Regex",
+      "Syntax Highlighter",
+      "WordPress",
+      "XAML"
+    ]
+  },
+  {
+    "title": "Archiwista [cz. 4 - Główny wygląd aplikacji]",
+    "url": "2017/08/19/archiwista-cz-4-glowny-wyglad-aplikacji/",
+    "date": "2017-08-19",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "Archiwista",
+      "GUI",
+      "WPF",
+      "XAML"
+    ]
+  },
+  {
+    "title": "Archiwista [cz. 5 - Główny wygląd aplikacji cd.]",
+    "url": "2017/08/26/archiwista-cz-5-glowny-wyglad-aplikacji-cd/",
+    "date": "2017-08-26",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "Archiwista",
+      "C#",
+      "GUI",
+      "WPF",
+      "XAML"
+    ]
+  },
+  {
+    "title": "Archiwista [cz. 6 - Dokończenie wyglądu aplikacji]",
+    "url": "2017/09/02/archiwista-cz-6-dokonczenie-wygladu-aplikacji/",
+    "date": "2017-09-02",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "Archiwista",
+      "GUI"
+    ]
+  },
+  {
+    "title": "Archiwista [cz. 7 – Skrót klawiszowy]",
+    "url": "2017/09/09/archiwista-cz-7-skrot-klawiszowy/",
+    "date": "2017-09-09",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "Archiwista",
+      "C#",
+      "WPF"
+    ]
+  },
+  {
+    "title": "Archiwista [cz. 8 - Poprawki]",
+    "url": "2017/09/16/archiwista-cz-8-poprawki/",
+    "date": "2017-09-16",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "Archiwista",
+      "C#",
+      "WPF"
+    ]
+  },
+  {
+    "title": "Archiwista [cz. 9 - Kopie zapasowe]",
+    "url": "2017/09/23/archiwista-cz-9-kopie-zapasowe/",
+    "date": "2017-09-23",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "Archiwista",
+      "C#",
+      "WPF"
+    ]
+  },
+  {
+    "title": "Czy warto studiować informatykę?",
+    "url": "2017/09/30/czy-warto-studiowac-informatyke/",
+    "date": "2017-09-30",
+    "kind": "post",
+    "categories": [
+      "Wpis"
+    ],
+    "tags": [
+      "IT",
+      "Studia",
+      "Wpis"
+    ]
+  },
+  {
+    "title": "Archiwista [cz. 10 - Kopie zapasowe cd.]",
+    "url": "2017/10/07/archiwista-cz-10-kopie-zapasowe-cd/",
+    "date": "2017-10-07",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "Archiwista",
+      "C#",
+      "Serializacja",
+      "XmlSerializer"
+    ]
+  },
+  {
+    "title": "Archiwista [cz. 11 - Porządki]",
+    "url": "2017/10/14/archiwista-cz-11-porzadki/",
+    "date": "2017-10-14",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "Archiwista",
+      "C#",
+      "Serializacja",
+      "XmlSerializer"
+    ]
+  },
+  {
+    "title": "Archiwista [cz. 12 - Porządki cd.]",
+    "url": "2017/10/21/archiwista-cz-12-porzadki-w-ustawieniach/",
+    "date": "2017-10-21",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "Archiwista",
+      "C#",
+      "WPF"
+    ]
+  },
+  {
+    "title": "Archiwista [cz. 13 - Kończenie aplikacji]",
+    "url": "2017/10/28/archiwista-cz-13-konczenie-aplikacji/",
+    "date": "2017-10-28",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "Archiwista"
+    ]
+  },
+  {
+    "title": "Archiwista [cz. 14 – Koniec]",
+    "url": "2017/11/04/archiwista-cz-14-koniec/",
+    "date": "2017-11-04",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "Archiwista",
+      "C#",
+      "GUI",
+      "Koniec",
+      "WPF"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 1 - Planowanie",
+    "url": "2017/11/11/plan-zajec-planowanie-cz-1/",
+    "date": "2017-11-11",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "Plan zajęć",
+      "Planowanie",
+      "Studia"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 2 - Projekt GUI",
+    "url": "2017/11/18/plan-zajec-cz-2-projekt-gui/",
+    "date": "2017-11-18",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "GUI",
+      "Plan zajęć",
+      "Planowanie",
+      "Studia"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 3 - Implementacja logiki aplikacji",
+    "url": "2017/11/25/plan-zajec-cz-3-implementacja-logiki-aplikacji/",
+    "date": "2017-11-25",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "C#",
+      "Plan zajęć",
+      "WPF"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 4 - Ekran logowania",
+    "url": "2017/12/02/plan-zajec-cz-4-ekran-logowania/",
+    "date": "2017-12-02",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "C#",
+      "GUI",
+      "Plan zajęć"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 5 - Animacja aktualności",
+    "url": "2017/12/09/plan-zajec-cz-5-animacja-aktualnosci/",
+    "date": "2017-12-09",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "C#",
+      "GUI",
+      "Plan zajęć",
+      "WPF"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 6 - Pobieranie aktualności",
+    "url": "2017/12/16/plan-zajec-cz-6-pobieranie-aktualnosci/",
+    "date": "2017-12-16",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "C#",
+      "Plan zajęć",
+      "Regex",
+      "Studia",
+      "WPF"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 7 - Optymalizacja",
+    "url": "2017/12/23/plan-zajec-cz-7-optymalizacja/",
+    "date": "2017-12-23",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "C#",
+      "Plan zajęć",
+      "Studia",
+      "WPF"
+    ]
+  },
+  {
+    "title": "Podsumowanie roku 2017",
+    "url": "2017/12/30/podsumowanie-roku-2017/",
+    "date": "2017-12-30",
+    "kind": "post",
+    "categories": [
+      "Wpis"
+    ],
+    "tags": [
+      "2017",
+      "Koniec",
+      "Wpis"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 8 - Poprawki",
+    "url": "2018/01/06/plan-zajec-cz-8-poprawki/",
+    "date": "2018-01-06",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "C#",
+      "IoC",
+      "Plan zajęć",
+      "Studia"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 9 - Xamarin gesty",
+    "url": "2018/01/13/plan-zajec-cz-9-xamarin-gesty/",
+    "date": "2018-01-13",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "C#",
+      "Plan zajęć",
+      "Studia"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 10 - Poświadczenia użytkownika",
+    "url": "2018/01/20/plan-zajec-cz-10-poswiadczenia-uzytkownika/",
+    "date": "2018-01-20",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "C#",
+      "Credentials",
+      "Logger",
+      "Plan zajęć"
+    ]
+  },
+  {
+    "title": "Praca Inżynierska - Podsumowanie",
+    "url": "2018/01/27/praca-inzynierska-podsumowanie/",
+    "date": "2018-01-27",
+    "kind": "post",
+    "categories": [
+      "Wpis"
+    ],
+    "tags": [
+      "Koniec",
+      "Studia"
+    ]
+  },
+  {
+    "title": "Przygotowania do obrony - brak wpisu",
+    "url": "2018/02/03/przygotowania-do-obrony-brak-wpisu/",
+    "date": "2018-02-03",
+    "kind": "post",
+    "categories": [
+      "Wpis"
+    ],
+    "tags": [
+      "Studia",
+      "Wpis"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 11 - Uruchamianie wraz z systemem Windows",
+    "url": "2018/02/10/plan-zajec-cz-11-uruchamianie-wraz-z-systemem-windows/",
+    "date": "2018-02-10",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "Auto start",
+      "C#",
+      "Plan zajęć"
+    ]
+  },
+  {
+    "title": "Własny nuget package",
+    "url": "2018/02/17/wlasny-nuget-package/",
+    "date": "2018-02-17",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "C#",
+      "nuget",
+      "Planowanie"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 12 - Adaptacja aplikacji",
+    "url": "2018/02/24/plan-zajec-cz-12-adaptacja-aplikacji/",
+    "date": "2018-02-24",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "html parser",
+      "Plan zajęć",
+      "Regex"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 13 - Komunikaty",
+    "url": "2018/03/03/plan-zajec-cz-13-komunikaty/",
+    "date": "2018-03-03",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "C#",
+      "Plan zajęć"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 14 - Błędy",
+    "url": "2018/03/10/plan-zajec-cz-14-bledy/",
+    "date": "2018-03-10",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "Plan zajęć",
+      "Studia"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 15 - Xamarin",
+    "url": "2018/03/17/plan-zajec-cz-15-xamarin/",
+    "date": "2018-03-17",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "C#",
+      "nuget",
+      "Plan zajęć",
+      "Xamarin"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 16 - Xamarin cd.",
+    "url": "2018/03/24/plan-zajec-cz-16-xamarin-cd/",
+    "date": "2018-03-24",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "C#",
+      "nuget",
+      "Plan zajęć",
+      "Xamarin"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 17 - Xamarin cd.",
+    "url": "2018/03/31/plan-zajec-cz-17-xamarin-cd/",
+    "date": "2018-03-31",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "C#",
+      "nuget",
+      "Plan zajęć",
+      "Studia",
+      "Xamarin"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 18 - Xamarin cd.",
+    "url": "2018/04/07/plan-zajec-cz-18-xamarin-cd/",
+    "date": "2018-04-07",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "C#",
+      "Plan zajęć",
+      "Xamarin"
+    ]
+  },
+  {
+    "title": "Plan zajęć cz. 19 - Mobilny ekran logowania",
+    "url": "2018/04/14/plan-zajec-cz-19-mobilny-ekran-logowania/",
+    "date": "2018-04-14",
+    "kind": "post",
+    "categories": [
+      "Programowanie"
+    ],
+    "tags": [
+      "C#",
+      "Plan zajęć",
+      "WPF",
+      "Xamarin"
+    ]
+  },
+  {
+    "title": "Xamarin - Szablony",
+    "url": "2018/04/21/xamarin-szablony/",
+    "date": "2018-04-21",
+    "kind": "post",
+    "categories": [
+      "Wpis"
+    ],
+    "tags": [
+      "Simple Xamarin Framework",
+      "SXF",
+      "Wpis",
+      "Xamarin"
+    ]
+  },
+  {
+    "title": "Współbieżność w języku C# Recenzja",
+    "url": "2018/04/28/wspolbieznosc-w-jezyku-c-sharp-recenzja/",
+    "date": "2018-04-28",
+    "kind": "post",
+    "categories": [
+      "Książki"
+    ],
+    "tags": [
+      "C#",
+      "Książki",
+      "Recenzja",
+      "Współbieżność"
+    ]
+  },
+  {
+    "title": "Studia magisterskie - Pierwsze wrażenia",
+    "url": "2018/05/05/studia-magisterskie-pierwsze-wrazenia/",
+    "date": "2018-05-05",
+    "kind": "post",
+    "categories": [
+      "Wpis"
+    ],
+    "tags": [
+      "Studia",
+      "Wpis"
+    ]
+  },
+  {
+    "title": "Rzeczy codziennego użytkowania",
+    "url": "2018/05/12/rzeczy-codziennego-uzytkowania/",
+    "date": "2018-05-12",
+    "kind": "post",
+    "categories": [
+      "Wpis"
+    ],
+    "tags": [
+      "edc",
+      "EDU",
+      "iCalendar lite",
+      "idroo",
+      "Keepass",
+      "Mischef-Free",
+      "Narzędzie wycinanie",
+      "Wpis"
+    ]
+  },
+  {
+    "title": "Warsztaty SCRUM",
+    "url": "2018/05/19/warsztaty-scrum/",
+    "date": "2018-05-19",
+    "kind": "post",
+    "categories": [
+      "Wpis"
+    ],
+    "tags": [
+      "Scrum",
+      "Studia",
+      "Wpis"
+    ]
+  },
+  {
+    "title": "Recenzja KursGita.pl",
+    "url": "2018/11/12/kursgita-pl/",
+    "date": "2018-11-12",
+    "kind": "post",
+    "categories": [
+      "Wpis"
+    ],
+    "tags": [
+      "Git",
+      "Kurs",
+      "KursGita",
+      "KursGita.pl"
+    ]
+  }
+]

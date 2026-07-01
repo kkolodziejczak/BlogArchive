@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan zajęć cz. 7 - Optymalizacja</title>
+  <meta name="description" content="W tym tygodniu poprawiłem niektóre funkcjonalności aplikacji desktopowej. Ostatnim razem podczas szybkiego przełączania się pomiędzy tygodniami było odczuw">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Plan zajęć cz. 7 - Optymalizacja</h1>
+        <div class="post-meta">
+          <time datetime="2017-12-23">2017-12-23</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/plan-zajec/index.html">#Plan zajęć</a> <a href="../../../../tags/studia/index.html">#Studia</a> <a href="../../../../tags/wpf/index.html">#WPF</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/12/Featured_Image-3.png" alt="">
+      <div class="post-content">
+        W tym tygodniu poprawiłem niektóre funkcjonalności aplikacji desktopowej. Ostatnim razem podczas szybkiego przełączania się pomiędzy tygodniami było odczuwalne opóźnienie przy przełączaniu. Dodatkowo aplikacja desktopowa została w końcu przekształcona na styl widgetu.
+<hr class="more-break">
+
+<h3>Optymalizacja tygodni</h3>
+
+Kluczową rzeczą podczas tworzenia aplikacji jest płynność jej działania. Opóźnienia psują cały urok aplikacji. Aby mieć pewność, że użytkownik nie będzie musiał czekać, na wyświetlanie kolejnych tygodni zmodernizowałem metody generujące tydzień, aby generował zestawy tygodni. W ten sposób wygeneruje wszystkie tygodnie na samym starcie. Później pozostaje tylko wyświetlić odpowiedni tydzień.
+
+<h3>Widget</h3>
+
+Aplikacja nie powinna posiadać standardowego przycisku umożliwiającego jej zamknięcie czy jakiejkolwiek ramki. Jest to dosyć proste do osiągnięcia wystarczy ustawić parametr <em>WindowStyle </em>okna na <em>None</em>. Dodatkowo aplikacja powinna zmieniać swoją pozycję na pulpicie, kiedy użytkownik trzymając wciśnięty lewy klawisz myszy równocześnie porusza myszką. W tym celu stworzyłem specjalną metodę rozszerzającą <em>UIElement</em> przesuwającą okno aplikacji. Ostatnim elementem pozostaje jakiś sposób na wyłączenie aplikacji. W tym przypadku dodałem menu kontekstowe, które wyświetla się po naciśnięciu prawym przyciskiem myszy na jakikolwiek element aplikacji.
+
+<h3>IoC</h3>
+
+Odwrócenie sterowania w przypadku tworzenia aplikacji na kilka platform jest idealnym rozwiązaniem na implementowanie specyficznych kodów dla każdej platformy, zachowując jednak jedną warstwę logiki bez konieczności sprawdzania, na jakiej platformie jest kod uruchamiany. Pierwotnie zastosowałem kontener <a href="http://www.ninject.org/">Ninject</a>, niestety okazało się, że są jakieś problemy z Xamarinem, więc w ciągu następnego tygodnia będę zmieniał kontener na <a href="https://autofac.org/">Autofac</a>.
+
+<h3>Kończąc</h3>
+
+Coraz bardziej podoba mi się kod aplikacji, który napisałem. Jako że zbliża się koniec roku i mogę śmiało powiedzieć, że moje umiejętności programistyczne od początku roku się znacznie poprawiły. Kod, który piszę, jest ładniejszy, lepiej zorganizowany oraz łatwiej rozszerzalny poprzez zaczęcie korzystania z serwisów, oraz wstrzykiwania zależności.
+
+Aplikacja jest prawie ukończona, pozostało dopisanie automatycznego logowania, aby można było z niej w przyjemny sposób korzystać. Później zostaje tylko dopracowanie mechanizmów przechowujących ustawienia oraz różne powiadomienia o zmianach w planie i jak i ocenach.
+
+[KodNaGicie name="ZUTSchedule"]
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../16/plan-zajec-cz-6-pobieranie-aktualnosci/index.html">Previous: Plan zajęć cz. 6 - Pobieranie aktualności</a></span>
+        <span><a href="../../30/podsumowanie-roku-2017/index.html">Next: Podsumowanie roku 2017</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

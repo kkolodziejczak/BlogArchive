@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Archiwista [cz. 6 - Dokończenie wyglądu aplikacji]</title>
+  <meta name="description" content="Pozostały trzy strony do stworzenia: ustawienia, raport oraz informacje. Strony te nie należą do zaawansowanych powinienem je skończyć już w tym wpisie...">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Archiwista [cz. 6 - Dokończenie wyglądu aplikacji]</h1>
+        <div class="post-meta">
+          <time datetime="2017-09-02">2017-09-02</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/archiwista/index.html">#Archiwista</a> <a href="../../../../tags/gui/index.html">#GUI</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/09/Featured_Image.png" alt="">
+      <div class="post-content">
+        <p style="text-align: justify;">Pozostały trzy strony do stworzenia: ustawienia, raport oraz informacje. Strony te nie należą do bardzo zaawansowanych, więc powinienem je skończyć już w tym wpisie. Dzięki temu będę mógł zacząć implementować logikę aplikacji i zacząć korzystać z gotowego produktu na co dzień.</p>
+
+<h3>Ustawienia</h3>
+
+<p style="text-align: justify;">
+Strona zawierająca ustawienia posiadają dwa parametry, w których użytkownik może ustawić domyślną ścieżkę do archiwów oraz może dokonać wyboru skrótu, który będzie rozpoczynał proces tworzenia kopii. Obecnie wpisy są tworzone na sztywno za pomocą XAML, w przyszłości chciałbym stworzyć coś w miarę dynamicznego. Trzeba jednak być świadomym, że robienie czegoś „na zapas” nie ma sensu, ponieważ istnieje możliwość, że napisana funkcjonalność nigdy nie zostanie użyta. Jeżeli jednak pojawi się więcej parametrów, które użytkownik będzie mógł ustawić, to na pewno rozwinę proces dodawania ustawień.
+
+</p>
+
+<img src="../../../../assets/wp-content/uploads/2017/09/Settings_page2.png" alt="Settings_page2.png" width="569" height="384" class="aligncenter size-full wp-image-757" />
+
+<h3>Zgłaszanie błędów</h3>
+
+<p style="text-align: justify;">
+Błędy w aplikacji są nie do uniknięcia, dlatego postanowiłem dodać możliwość wysyłania raportów poprzez prosty formularz. Dzięki temu użytkownicy będą mogli zgłaszać błędy bezpośrednio z poziomu aplikacji. Inną rzeczą, na którą trzeba zwrócić uwagę jest sposób przesyłania raportów. Jednymi z łatwiejszych sposobów będzie wysłanie wiadomości e-mail na zbiorczy adres e-mail. Innym pomysłem jest dodawanie rekordów do bazy danych na koncie z ograniczonym dostępem do bazy danych. Kolejnym możliwym rozwiązaniem jest utworzenie API, do którego można byłoby wysyłać zapytania. Niestety to rozwiązanie niesie za sobą konieczność posiadania serwera. Decyzję podejmę, kiedy przyjdzie czas na implementację tej funkcjonalności.
+</p>
+
+<img src="../../../../assets/wp-content/uploads/2017/09/Report_page.png" alt="Report_page.png" width="569" height="384" class="aligncenter size-full wp-image-749" />
+
+<h3>Informacje</h3>
+
+<p style="text-align: justify;">
+Według mnie każda aplikacja powinna zawierać informacje o samej aplikacji, numer wersji, krótki opis oraz informacje o jej autorze. W ramach tej strony został stworzony nowy styl przycisku, który wygląda jak hiperłącze sugerujące, otworzenie strony po jego naciśnięciu.
+</p>
+
+<img src="../../../../assets/wp-content/uploads/2017/09/Info_page.png" alt="Info_page.png" width="569" height="384" class="aligncenter size-full wp-image-748" />
+
+<h3>Kończąc</h3>
+
+<p style="text-align: justify;">
+Wygląd aplikacji jest już skończony, drobne poprawki będą robione podczas implementacji logiki aplikacji. Kiedyś w planach mam odwiedzenie wyglądu aplikacji i jego optymalizację. Wraz z używaniem aplikacji na pewno pojawi się wiele pomysłów na jej ulepszenie.
+</p>
+
+Cały kod aplikacji można zobaczyć na moim koncie github [icon name="github" size="lg"] <a href="https://github.com/kkolodziejczak/Archivist">/kkolodziejczak/Archivist</a>
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../../08/26/archiwista-cz-5-glowny-wyglad-aplikacji-cd/index.html">Previous: Archiwista [cz. 5 - Główny wygląd aplikacji cd.]</a></span>
+        <span><a href="../../09/archiwista-cz-7-skrot-klawiszowy/index.html">Next: Archiwista [cz. 7 – Skrót klawiszowy]</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Archiwista [cz. 4 - Główny wygląd aplikacji]</title>
+  <meta name="description" content="Kolejnym krokiem będzie stworzenie głównego szablonu aplikacji, który posłuży później do łatwego dodawania nowych funkcjonalności do aplikacji...">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Archiwista [cz. 4 - Główny wygląd aplikacji]</h1>
+        <div class="post-meta">
+          <time datetime="2017-08-19">2017-08-19</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/archiwista/index.html">#Archiwista</a> <a href="../../../../tags/gui/index.html">#GUI</a> <a href="../../../../tags/wpf/index.html">#WPF</a> <a href="../../../../tags/xaml/index.html">#XAML</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/08/Featured_Image-2.png" alt="">
+      <div class="post-content">
+        <p style="text-align: justify;">Kolejnym krokiem będzie stworzenie głównego szablonu aplikacji, który posłuży później do łatwego dodawania nowych funkcjonalności. Pierwszą rzeczą, którą zrobię będzie podzielenie okna na 2 części za pomocą Grid pozwoli mi to uzyskać 2 kolumny dzięki czemu wydziele przestrzeń na menu oraz część główną, w której będą wyświetlane strony aplikacji.</p>
+
+<hr class="more-break">
+
+<h3>Menu</h3>
+
+<p style="text-align: justify;">Posiadając miejsce wydzielone na menu, podzielę je jeszcze na dwie części. Tym razem nie będę tworzył kolumn, a wiersze, które pozwolą mi na rozdzielenie górnych oraz dolnych ikon. Posiadając taki podział pozostaje tylko użyć StackPanel aby wyświetlić przyciski.</p>
+
+<pre class="code-block language-xml" data-title="MainWindow.xaml"><code class="language-xml">&lt;!-- ... --&gt;
+
+&lt;!-- Main Menu --&gt;
+&lt;Border Background=&quot;{StaticResource DarkPrimaryColorBrush}&quot; Grid.Column=&quot;0&quot;&gt;
+    &lt;Grid &gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition Height=&quot;Auto&quot;/&gt;
+            &lt;RowDefinition Height=&quot;*&quot;/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+
+        &lt;!-- Upper Buttons --&gt;
+        &lt;StackPanel Grid.Row=&quot;0&quot;
+                    VerticalAlignment=&quot;Top&quot;&gt;
+            &lt;!-- Projects Button --&gt;
+            &lt;Button Style=&quot;{StaticResource IconButton}&quot;
+                    Content=&quot;{StaticResource FontAwesomeFileIcon}&quot;
+                    FontSize=&quot;{StaticResource FontSizeXLarge}&quot;
+                    ToolTip=&quot;{StaticResource TooltipProjects}&quot;
+                    Command=&quot;{Binding ProjectsCommand}&quot;
+                    /&gt;
+
+            &lt;!-- Settings Button --&gt;
+            &lt;Button Style=&quot;{StaticResource IconButton}&quot;
+                    Content=&quot;{StaticResource FontAwesomeSettingsIcon}&quot;
+                    FontSize=&quot;{StaticResource FontSizeXLarge}&quot;
+                    ToolTip=&quot;{StaticResource TooltipSettings}&quot;
+                    Command=&quot;{Binding SettingsCommand}&quot;
+                    /&gt;
+
+        &lt;/StackPanel&gt;
+
+        &lt;!-- Lower Buttons--&gt;
+        &lt;StackPanel Grid.Row=&quot;2&quot;
+                    VerticalAlignment=&quot;Bottom&quot;&gt;
+
+            &lt;!-- Report Button --&gt;
+            &lt;Button Style=&quot;{StaticResource IconButton}&quot;
+                    Content=&quot;{StaticResource FontAwesomeWarrningIcon}&quot;
+                    FontSize=&quot;{StaticResource FontSizeLarge}&quot;
+                    ToolTip=&quot;{StaticResource TooltipReport}&quot;
+                    Command=&quot;{Binding ReportCommand}&quot;
+                    /&gt;
+
+            &lt;!-- Info Button --&gt;
+            &lt;Button Style=&quot;{StaticResource IconButton}&quot;
+                    Content=&quot;{StaticResource FontAwesomeInfoIcon}&quot;
+                    FontSize=&quot;{StaticResource FontSizeLarge}&quot;
+                    ToolTip=&quot;{StaticResource TooltipInfo}&quot;
+                    Command=&quot;{Binding InfoCommand}&quot;
+                    /&gt;
+
+        &lt;/StackPanel&gt;
+    &lt;/Grid&gt;
+&lt;/Border&gt;
+
+&lt;!-- ... --&gt;</code></pre>
+
+<p style="text-align: justify;">Wracając do głównej tabeli podzielonej na dwie kolumny. W miejscu przeznaczonym dla zawartości aplikacji umieszczę obiekt ContentPresenter, który pozwala na wyświetlenie utworzonych wcześniej widoków. Poprzez przypisanie prezenterowi contentu np. User Control zostanie on wyświetlony w miejscu prezentera.</p>
+
+<pre class="code-block language-xml" data-title="MainWindow.xaml"><code class="language-xml">&lt;!-- ... --&gt;
+
+&lt;!-- Content presenter --&gt;
+&lt;ContentPresenter Grid.Column=&quot;1&quot;
+                  MinHeight=&quot;300&quot;
+                  MinWidth=&quot;400&quot;
+                  Content=&quot;{Binding Page, Converter={local:ApplicationPageValueConverter}}&quot;/&gt;
+
+&lt;!-- ... --&gt;</code></pre>
+
+<h3>MVVM</h3>
+
+<p style="text-align: justify;">Posiadając już zaprojektowany prawie cały interfejs, muszę się zastanowić jak przedstawić poszczególne strony aplikacji za pomocą kodu. Użyję do tego wzorca projektowego Model-View-ViewModel, który doskonale sprawdza się w Windows Presentation Foundation, pozwalając na używanie bardzo mocnego mechanizmu bindowania informacji do naszego widoku w xaml. Aby aplikacja mogła zmieniać strony z informacjami, będę potrzebował ViewModel, który będzie posiadał wszelkie potrzebne informacje do wyświetlenia aplikacji w każdym stanie. W tym celu stworzę typ wyliczeniowy, o nazwie Pages - będzie on zawierał wszystkie strony aplikacji. Dzięki temu klasa opisująca widok strony będzie posiadała tylko jedną zmienną typu Pages mówiącą, jaka strona powinna być teraz wyświetlana.</p>
+
+<h3>Binding</h3>
+
+<p style="text-align: justify;">Posiadając ViewModel i zmienną, która mówi jaka strona powinna wyświetlona możemy ją przypisać do ContentPresentera za pomocą mechanizmu bindingu jest to bardzo prosta i szybka operacja. Niestety prezenter nie rozpoznaje typu wyliczeniowego Pages i nie wie co ma wyświetlić. W tym celu wykorzystam ValueConverter, konwerter pozwala na zamianę jednego typu danych na inny. W tym celu stworzę ApplicationPageValueConverter, który zamieni zmienną typu Pages na odpowiadający mu obiekt UserControl. W ten oto sposób poprzez zmianę jednej zmiennej, mamy możliwość przechodzenia pomiędzy zakładkami aplikacji.</p>
+
+<pre class="code-block language-csharp" data-title="ApplicationPageValueConverter.cs"><code class="language-csharp">public class ApplicationPageValueConverter : BaseValueConverter&lt;ApplicationPageValueConverter&gt;
+{
+    public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value == null)
+            return null;
+
+        switch ((Pages)value)
+        {
+            case Pages.Projects:
+                return new ProjectsPage();
+            case Pages.Settings:
+                return new SettingsPage();
+            case Pages.Report:
+                return new ReportPage();
+            case Pages.Info:
+                return new InfoPage();
+            default:
+                return new ProjectsPage();
+        }
+    }
+
+    public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}</code></pre>
+
+<p style="text-align: justify;">Teraz pozostało stworzenie stron aplikacji, pierwszą zrobię stronę główną, czyli stronę prezentującą wszystkie projekty oraz możliwość dodania nowego projektu. Podczas tworzenia tej strony podzielę ją na dwie kolumny jak w przypadku całej aplikacji. Tym razem w lewej kolumnie znajdzie się lista projektów, a w prawej formularz umożliwiający dodanie nowego projektu. Dodatkowo formularz zostanie wyposażony w mechanizm walidacji, który pozwoli na sprawdzenie, czy użytkownik podał wymagane informacje już na poziomie interfejsu użytkownika, aby dodać nowy projekt. Efekt można zobaczyć na zdjęciu.</p>
+
+<figure class="wp-caption"><a href="../../../../assets/wp-content/uploads/2017/07/Archiwista2.png"><img src="../../../../assets/wp-content/uploads/2017/07/Archiwista2-300x148.png" alt="Projekt GUI" width="300" height="148" class="size-medium wp-image-429" /></a><figcaption>Projekt GUI</figcaption></figure>
+
+<figure class="wp-caption"><a href="../../../../assets/wp-content/uploads/2017/08/Archivista.png"><img src="../../../../assets/wp-content/uploads/2017/08/Archivista-300x194.png" alt="" width="300" height="194" class="size-medium wp-image-674" /></a><figcaption>Główny wygląd aplikacji</figcaption></figure>
+
+<p style="text-align: justify;">Jest to wstępny wygląd ekranu głównego. Z pewnością zmieni się jeszcze nie jeden raz. Kolejnymi rzeczami do zrobienia są pozostałe widoki aplikacji: Settings, Report, Info. Po stworzeniu widoków będę mógł przejść do implementacji logiki aplikacji.</p>
+
+Cały kod aplikacji można zobaczyć na moim koncie github [icon name="github" size="lg"] <a href="https://github.com/kkolodziejczak/Archivist">/kkolodziejczak/Archivist</a>
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../12/dodanie-jezyka-xaml-do-crayon/index.html">Previous: Dodanie języka XAML do Crayon Syntax Highlighter</a></span>
+        <span><a href="../../26/archiwista-cz-5-glowny-wyglad-aplikacji-cd/index.html">Next: Archiwista [cz. 5 - Główny wygląd aplikacji cd.]</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

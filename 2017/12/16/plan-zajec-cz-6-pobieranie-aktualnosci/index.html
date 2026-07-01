@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan zajęć cz. 6 - Pobieranie aktualności</title>
+  <meta name="description" content="W tym tygodniu napisałem dwa serwisy pozwalające pobierać informacje o aktualnościach ze stron Internetowych. Dodatkowo poprawiłem logowanie w aplikacji...">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Plan zajęć cz. 6 - Pobieranie aktualności</h1>
+        <div class="post-meta">
+          <time datetime="2017-12-16">2017-12-16</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/plan-zajec/index.html">#Plan zajęć</a> <a href="../../../../tags/regex/index.html">#Regex</a> <a href="../../../../tags/studia/index.html">#Studia</a> <a href="../../../../tags/wpf/index.html">#WPF</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/12/Featured_Image-2.png" alt="">
+      <div class="post-content">
+        W tym tygodniu napisałem dwa serwisy pozwalające pobierać informacje o aktualnościach ze stron Internetowych. Dodatkowo poprawiłem logowanie w aplikacji mobilnej. Wykorzystuje ono teraz <em>SecureString</em>, dzięki czemu można wykorzystać ten sam <em>ViewModel</em>.
+
+<hr class="more-break">
+
+<h3>Pobieranie</h3>
+
+Zadanie jest proste. Trzeba pobrać zawartość strony i wytypować rekordy z informacjami o aktualnościach. W tym celu posłużę się wyrażeniami regularnymi. Każda strona posiada inny układ i inaczej wygląda w kodzie źródłowym strony. Ze względu na to stworzyłem interfejs <em>INewsService</em>, który posiada tylko jedną metodę <em>GetNews</em>. Każda strona z informacjami będzie posiadała odpowiednią klasę implementującą logikę pobierania informacji odpowiadającej tej stronie. Dzięki zastosowanemu interfejsowi można później przechowywać wszystkie klasy w jednej kolekcji.
+
+Schemat interpretowania strony jest prosty. Pierwszą czynnością jest pobranie informacji ze strony Internetowej. W tym przypadku posługuję się poleceniem GET, które zwraca mi zawartość strony. Następnie skonstruowałem wyrażenie regularne pobierające interesujące mnie informacji o wiadomości, tytuł, adres internetowy do wiadomości oraz datę dodania. Wszystkie informacje później posłużą do stworzenia kolekcji składającej się z klas <em>NewsRecordViewModel </em>przedstawiających wiadomości wewnątrz aplikacji. Poniżej przykładowy kod klasy dla strony głównej strony uczelni.
+
+<pre class="code-block language-csharp" data-title="ZUTNewsService.cs"><code class="language-csharp">public async Task&lt;IEnumerable&lt;NewsRecordViewModel&gt;&gt; GetNews()
+{
+    var output = new List&lt;NewsRecordViewModel&gt;();
+
+    var website = await GetWebsiteContent(@&quot;http://www.zut.edu.pl/zut-studenci/start/aktualnosci.html#&quot;);
+
+    var News = Regex.Matches(website,
+        &quot;(?:href=\&quot;)(.*?)(?:\&quot;.*?em&gt;)(.*?)(?:&lt;/em&gt;.*?--&gt;)(.*?)(?:&lt;!--)&quot;);
+
+    Console.WriteLine(News.Count);
+
+    for (int i = 0; i &lt; News.Count; i++)
+    {
+        var d = News.getValueAt(i, 2).Trim().Split(&#x27;.&#x27;);
+        var date = new DateTime(d[2].ToInt(), d[1].ToInt(), d[0].ToInt());
+
+        output.Add(new NewsRecordViewModel()
+        {
+            Title = News.getValueAt(i, 3).Trim(),
+            Url = News.getValueAt(i, 1).Trim().Contains(&quot;http&quot;)? News.getValueAt(i, 1).Trim() : $&quot;http://www.zut.edu.pl{News.getValueAt(i, 1).Trim()}&quot;,
+            Type = NewsType.Global,
+            IsNew = date.IsNotOlderThan(3),
+        });
+    }
+
+    return output;
+}
+
+private async Task&lt;string&gt; GetWebsiteContent(string url)
+{
+    using (HttpClient client = new HttpClient())
+    {
+        var getResponse = await client.GetAsync(url);
+        return await getResponse.Content.ReadAsStringAsync();
+    }
+}</code></pre>
+
+<h3>Kończąc</h3>
+
+Pobieranie informacji ze stron Internetowych jest prostą czynnością, nie miej jednak przez to, że każda strona ma inną strukturę, nie można stworzyć uniwersalnego rozwiązania pobierającego informacje z różnych stron.
+
+Kolejnym etapem jest implementacja zmieniania dni na aplikacji mobilnej, jak i ulepszenie nawigacji w aplikacji desktopowej. Jednymi z ostatnich kroków do ukończenia aplikacji będą zrobienie ustawień użytkownika oraz przechowywanie informacji o loginie i haśle w bezpieczny sposób bez względu na platformę. Dodatkowo aplikacja desktopowa musi zostać przerobiona na styl widgetu — jeżeli użytkownik naciśnie na jakąś część aplikacji, która nie jest przyciskiem, powinien być w stanie poruszyć aplikacją, zmieniając w ten sposób jej pozycje na ekranie.
+
+[KodNaGicie name="ZUTSchedule"]
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../09/plan-zajec-cz-5-animacja-aktualnosci/index.html">Previous: Plan zajęć cz. 5 - Animacja aktualności</a></span>
+        <span><a href="../../23/plan-zajec-cz-7-optymalizacja/index.html">Next: Plan zajęć cz. 7 - Optymalizacja</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

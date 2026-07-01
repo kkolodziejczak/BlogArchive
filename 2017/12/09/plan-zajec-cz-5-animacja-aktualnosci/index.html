@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan zajęć cz. 5 - Animacja aktualności</title>
+  <meta name="description" content="Zgodnie z zapowiedzią w ostatnim tygodniu, w tym tygodniu pracowałem nad animacją wiadomości pobranych ze stron Internetowych. Dodatkowo dokonałem parę...">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Plan zajęć cz. 5 - Animacja aktualności</h1>
+        <div class="post-meta">
+          <time datetime="2017-12-09">2017-12-09</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/gui/index.html">#GUI</a> <a href="../../../../tags/plan-zajec/index.html">#Plan zajęć</a> <a href="../../../../tags/wpf/index.html">#WPF</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/12/Featured_Image-1.png" alt="">
+      <div class="post-content">
+        Zgodnie z zapowiedzią w ostatnim tygodniu, w tym tygodniu pracowałem nad animacją wiadomości pobranych ze stron Internetowych. Dodatkowo dokonałem parę zmian. Między innymi dodałem na ekranie logowania automatyczne zaznaczanie pola gdzie użytkownik wprowadza swój login. Dzięki temu użytkownik może od razu zacząć wypełniać formularz bez konieczności manualnego zaznaczenia.
+<hr class="more-break">
+
+<h3>Animacja wiadomości</h3>
+
+Jak się okazało animowanie długich wiadomości nie jest najłatwiejszym zadaniem. Pierwszym moim podejściem było stworzenie długiego łańcucha zawierającego wszystkie informacje. Następnie chciałem go przesunąć poza widoczny obszar aplikacji i powoli go przesuwać w lewą stronę co będzie dawało animację.
+
+Niestety nie obyło się bez problemów. Aplikacja może wyświetlić element graficzny o maksymalnej długości całego okna aplikacji. Jeżeli główne okno jest mniejsze niż cały ciąg z wiadomościami to jest on ucinany do rozmiaru okna bazowego. Przez co nie można wyświetlić w prosty sposób długiego ciągu. Po napotkaniu tego problemu jakiś czas przeszukiwałem Internet w poszukiwaniu potencjalnych podpowiedzi lub też rozwiązań. Niestety nie natrafiłem na nic konkretnego. Już miałem dać sobie spokój na ten dzień, jak wpadłem na pomysł wykorzystania kontenera <em><a href="https://docs.microsoft.com/en-us/dotnet/framework/wpf/controls/scrollviewer-overview">ScrollViewer</a></em>. Kontener ten pozwala nam na dodanie suwaka do dowolnego innego elementu graficznego. Co pozwoliło mi na wyświetlenie całego ciągu wiadomości bez jego ucinania.
+
+Kolejnym etapem była animacja ciągu wiadomości. Zastosowałem tutaj animacje marginesu zaczynając od najbardziej przesuniętego w prawo tak aby wiadomość była niewidoczna w tym przypadku margines z lewej strony wynosił długość samego widoku tygodnia. Powoli przesuwać go w lewą stronę aż wyjedzie poza widziany ekran. Całość zapętlić w nieskończoną pętlę. Tym sposobem mamy animację, która pokaże cały łańcuch wiadomości i przesunie go przez całą widoczną długość okna. Po czym cały proces animowania zacznie się od początku.
+
+Po całej animacji pozostaje długa przerwa w wiadomościach więc postanowiłam dodać kolejny łańcuch, ten sam, który będzie animowany zaraz po pierwszym. Ta część już wymagała trochę planowania i matematyki. Finalnie udało mi się osiągnąć odpowiednie proporcje opóźnienia dwóch animacji w taki sposób, że uruchamiają się jedna po drugiej.
+
+Rozwiązanie to nie jest rozwiązaniem idealnym, znalazłem już pierwszy problem. Kiedy użytkownik naciśnie na przycisk wiadomości w celu otworzenia strony z jej treścią wszystko jest jak najbardziej poprawne. Tylko w przypadku kiedy przycisk jest w połowie niewidoczny, ponieważ jeszcze nie wjechał całkowicie na obszar widzialny, to animacja jest przesuwana do przodu aby wyrenderować cały przycisk. Ostatecznie psując synchronizację obu animacji.
+
+<h3>Kończąc</h3>
+
+Animacje okazały się ciekawym wyzwaniem. Pozostawiają jeszcze trochę możliwości na poprawę. Na chwilę obecną uznaję tą część aplikacji za ukończoną. Pozostaje tylko stworzenie klas pobierających informacje z wcześniej wskazanych stron. Aby można było wypełnić kontener odpowiednimi wiadomościami.
+
+Pisząc ten wpis wpadłem na nowy pomysł w jaki można animować wyświetlane wiadomości. Cały proces opierałby się na animowaniu pojedynczych wiadomości, a nie ich listy jako całości. Tym sposobem nie potrzeba używać <em><a href="https://docs.microsoft.com/en-us/dotnet/framework/wpf/controls/scrollviewer-overview">ScrollViewer</a></em> oraz istnieje możliwość, że pozbycie się tego kontenera pozwoli na zmniejszenie przesunięcia się wiadomości po ich naciśnięciu. Może kiedyś jeszcze przed wypuszczeniem samej aplikacji sprawdzę czy taki sposób nie będzie lepszy.
+
+[KodNaGicie name="ZUTSchedule"]
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../02/plan-zajec-cz-4-ekran-logowania/index.html">Previous: Plan zajęć cz. 4 - Ekran logowania</a></span>
+        <span><a href="../../16/plan-zajec-cz-6-pobieranie-aktualnosci/index.html">Next: Plan zajęć cz. 6 - Pobieranie aktualności</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

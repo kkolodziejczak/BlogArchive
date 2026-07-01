@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Archiwista [cz. 9 - Kopie zapasowe]</title>
+  <meta name="description" content="Nadszedł ten długo oczekiwany moment - w końcu zacznę pracować nad tworzeniem kopii zapasowych. Mniej więcej wiem jak to zrobić, ale nie ukrywam, że będę..">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Archiwista [cz. 9 - Kopie zapasowe]</h1>
+        <div class="post-meta">
+          <time datetime="2017-09-23">2017-09-23</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/archiwista/index.html">#Archiwista</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/wpf/index.html">#WPF</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/09/Featured_Image-3.png" alt="">
+      <div class="post-content">
+        <p style="text-align: justify;">Nadszedł ten długo oczekiwany moment — w końcu zacznę pracować nad tworzeniem kopii zapasowych. Mniej więcej wiem jak to zrobić, ale nie ukrywam, że będę też improwizował.</p>
+
+<hr class="more-break">
+
+<h3>Pliki źródłowe</h3>
+
+<p style="text-align: justify;">Pierwszym krokiem do zrobienia kopii jest zlokalizowanie pliku, który chcemy zarchiwizować. W tym celu trzeba znaleźć plik zawierający wszystkie ścieżki do plików źródłowych. Na całe szczęście Visual Studio robi to w miarę przystępny sposób.</p>
+
+<p style="text-align: justify;">Podczas dodawania projektów do listy jednym z wymogów jest podanie ścieżki do pliku „.sln” jest to plik zawierający informacje na temat podprojektów znajdujących się w głównym projekcie. Wewnątrz znajdziemy informacje na temat projektów oraz ścieżkę do plików zawierających ich ustawienia wraz z wszystkimi plikami źródłowymi. Przykładowy plik sln:</p>
+
+<pre class="code-block language-plaintext" data-title="Archivist.sln"><code class="language-plaintext">Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project(&quot;{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}&quot;) = &quot;Archivist&quot;, &quot;Archivist\Archivist.csproj&quot;, &quot;{077F0975-1DA3-44CC-BFC4-C497C7CFFD88}&quot;
+EndProject
+Project(&quot;{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}&quot;) = &quot;ArchivistTests&quot;, &quot;ArchivistTests\ArchivistTests.csproj&quot;, &quot;{B9B519DA-9E6C-42B3-A9C2-2F7E383B4256}&quot;
+EndProject
+Global
+    GlobalSection(SolutionConfigurationPlatforms) = preSolution
+        Debug|Any CPU = Debug|Any CPU
+        Release|Any CPU = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(ProjectConfigurationPlatforms) = postSolution
+        {077F0975-1DA3-44CC-BFC4-C497C7CFFD88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {077F0975-1DA3-44CC-BFC4-C497C7CFFD88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {077F0975-1DA3-44CC-BFC4-C497C7CFFD88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {077F0975-1DA3-44CC-BFC4-C497C7CFFD88}.Release|Any CPU.Build.0 = Release|Any CPU
+        {B9B519DA-9E6C-42B3-A9C2-2F7E383B4256}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {B9B519DA-9E6C-42B3-A9C2-2F7E383B4256}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {B9B519DA-9E6C-42B3-A9C2-2F7E383B4256}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {B9B519DA-9E6C-42B3-A9C2-2F7E383B4256}.Release|Any CPU.Build.0 = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(SolutionProperties) = preSolution
+        HideSolutionNode = FALSE
+    EndGlobalSection
+EndGlobal</code></pre>
+
+<p style="text-align: justify;">Aby wydobyć informacje z tego pliku skonstruowałem wyrażenie regularne, które zwróci nazwę projektu oraz ścieżkę do pliku z ustawieniami. Metoda odpowiedzialna za zwrócenie listy dostępnych projektów w <em>Solution </em>prezentuje się następująco:</p>
+
+<pre class="code-block language-csharp" data-title="BackupManager.cs"><code class="language-csharp">/// &lt;summary&gt;
+/// Returns information about projects found in .sln file
+/// &lt;/summary&gt;
+/// &lt;param name=&quot;solutionFilePath&quot;&gt;&lt;/param&gt;
+/// &lt;returns&gt;&lt;/returns&gt;
+private static List&lt;ProjectInfo&gt; GetProjectInformation(string solutionFilePath)
+{
+    var ProjectList = new List&lt;ProjectInfo&gt;();
+
+    var SolutionFileContents = IOHelper.GetFileContents(solutionFilePath);
+
+    string BaseSolutionPath = Path.GetDirectoryName(solutionFilePath);
+
+    // Get Project Name and Project file path
+    var output = Regex.Matches(SolutionFileContents, &quot;(?:\\s\&quot;)(.*?)(?:\&quot;,\\s\&quot;)(.*?)(?:\&quot;)&quot;);
+
+    foreach (Match match in output)
+    {
+        ProjectList.Add(new ProjectInfo()
+        {
+            ProjectName = match.Groups[1].Value,
+            ProjectPath = Path.GetFileName(match.Groups[2].Value),
+            BasePath = $&quot;{BaseSolutionPath}\\{match.Groups[1].Value}&quot;,
+        });
+    }
+
+    return ProjectList;
+}</code></pre>
+
+<p style="text-align: justify;">Zasada działania jest prosta — otwierany jest plik, następnie wykonywane jest wyrażenie regularne i tworzone są odpowiednie obiekty reprezentujące poszczególne projekty. Struktura przedstawiająca projekt posiada trzy informacje: Nazwę projektu, ścieżkę do pliku konfiguracyjnego oraz ścieżkę do projektu.</p>
+
+<p style="text-align: justify;">W przypadku języka C# plik konfiguracyjny nosi rozszerzenie „.csproj” i cała zawartość jest zapisana w postaci XML. Dlatego skorzystam z dostępnych narzędzi służących do poruszania się po drzewach. Wybrałem LINQ to XML. Wszystkie informacje znajdują się w środku znacznika <em>Project</em>. Dane na temat plików źródłowych znajdują się w kilku znacznikach <em>ItemGroup</em>, poza tym są one przechowywane jako atrybut bądź też wartość znacznika. Dlatego stworzyłem zapytanie LINQ, które zwraca wszystkie elementy znajdujące się wewnątrz <em>Project->ItemGroup</em> nie nazywające się <em>Reference</em>, <em>Resource </em>bądź <em>Import</em>. Dzięki temu będę posiadał tylko te pola, które posiadają potencjalne pliki źródłowe. Kolejnym krokiem jest wyciągnięcie wszystkich informacji na temat plików czy to z atrybutu, czy wartości. Wstępnie sprawdzam również, czy wartość posiada co najmniej jedną kropkę, co będzie sugerowało, że jest to plik.</p>
+
+<pre class="code-block language-csharp" data-title="BackupManager.cs"><code class="language-csharp">private static List&lt;string&gt; GetSourceFiles(ProjectInfo project)
+{
+    XNamespace msbuild = &quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;;
+    XDocument proj = XDocument.Load($&quot;{project.BasePath}\\{project.ProjectConfigPath}&quot;);
+
+    var SourceFiles = proj.Element(msbuild + &quot;Project&quot;)
+                          .Elements(msbuild + &quot;ItemGroup&quot;)
+                          .Elements()
+                          .Where(s =&gt; s.Name.LocalName != &quot;Reference&quot;
+                                   &amp;&amp; s.Name.LocalName != &quot;Resource&quot;
+                                   &amp;&amp; s.Name.LocalName != &quot;Import&quot;);
+
+    List&lt;string&gt; SourceFileNames = new List&lt;string&gt;
+    {
+        // Add Projectfile for backup
+        Path.GetFileName(project.ProjectConfigPath)
+    };
+
+    foreach (var data in SourceFiles)
+    {
+        // For all compile files that
+        var attribute = data.Attribute(&quot;Include&quot;);
+        if (attribute.Value != String.Empty)
+        {
+            SourceFileNames.Add(attribute.Value);
+        }
+        // If value contains &#x27;.&#x27; that mean it is a file
+        if (data.Value.Contains(&#x27;.&#x27;))
+        {
+            SourceFileNames.Add(data.Value);
+        }
+    }
+
+    return SourceFileNames;
+}</code></pre>
+
+<h3> Tworzenie kopii</h3>
+
+<p style="text-align: justify;">Mając listę plików źródłowych można przystąpić do tworzenia ich kopii. Zanim jednak program zacznie kopiować pliki musi się upewnić, że jest wystarczająco dużo miejsca na kopię zapasową. W tym celu zakładam, że jeżeli jest mniej wolnego miejsca niż 10MB to program ma przystąpić do procedury czyszczenia. Najpierw spróbuje wyczyścić kopie zapasowe, które najprawdopodobniej nie będą już użyteczne zostawiając po jednej kopii na dany dzień. Natomiast jeżeli nie ma kopii do zwolnienia, bądź zwolnione miejsce nie wystarczy to zostanie wyświetlony komunikat wraz z anulowaniem procesu tworzenia kopii.</p>
+
+<p style="text-align: justify;">Następnym etapem jest kopiowanie plików źródłowych do tymczasowego folderu, który posłuży do tworzenia archiwum. Po skopiowaniu wszystkich plików program jeszcze raz upewni się, czy posiada wystarczającą ilość miejsca na dysku, które użytkownik wskazał jako miejsce docelowe kopii zapasowych. Występuje tutaj identyczny proces jak wcześniej. Jeżeli istnieje taka możliwość, to pamięć jest zwalniana a w innym wypadku jest wyświetlany komunikat i następuje sprzątanie po procesie kopiowania.</p>
+
+<p style="text-align: justify;">Na tym etapie program stworzył nowy folder tymczasowy zawierający wszystkie pliki źródłowe z danego projektu. Następną rzeczą jest wygenerowanie pliku archiwum. Posłużę się w tym przypadku klasą <em>ZipFile </em>dostępną po dodaniu referencji <span class="lang:txt decode:true  crayon-inline ">System.IO.Compression.FileSystem</span>. W tym celu stworzyłem metodę <em>CreateZipFile</em>, która pobiera ścieżkę do tymczasowego folderu, ścieżkę do folderu w którym mają pojawić się kopie zapasowe, a także informacje odnośnie do projektu z którego one są.</p>
+
+<pre class="code-block language-csharp" data-title="BackupManager.cs"><code class="language-csharp">private static void CreateZipFile(string temporaryDirectoryPath, string archivePath, ProjectInfo project)
+{
+
+    var TodaysDateAsString = $&quot;{ DateTime.Now.ToShortDateString()}&quot;.Replace(&#x27;-&#x27;, &#x27;_&#x27;);
+    var TimeAsString = $&quot;{DateTime.Now.ToLongTimeString()}&quot;.Replace(&#x27;:&#x27;, &#x27;_&#x27;);
+
+    string NewFilePath = $&quot;{archivePath}\\Archivist\\{TodaysDateAsString}\\{project.ProjectName}&quot;;
+
+    if (!Directory.Exists(NewFilePath))
+    {
+        Directory.CreateDirectory(NewFilePath);
+    }
+
+    ZipFile.CreateFromDirectory(temporaryDirectoryPath, $&quot;{NewFilePath}\\Archivist_{TimeAsString}.zip&quot;);
+}</code></pre>
+
+Po stworzeniu Pliku archiwum następuje usunięcie folderu tymczasowego. Program może teraz przystąpić do tworzenia kopii następnego projektu.
+
+<h3>Kończąc</h3>
+
+<p style="text-align: justify;">Jedną z ważnych rzeczy do zauważenia jest <em>„Co się stanie gdy użytkownik będzie naciskał bardzo szybko skrót klawiszowy?”</em>. Jedną z możliwości jest blokada tworzenia kopii, ponieważ proces tworzenia jeszcze się nie zakończył — co będzie skutkowało pewnymi odstępami między kopiami, które akurat mogą być potrzebne. Inną możliwością jest stworzenie kolejki, która tworzyłaby kolejno kopie zapasowe. Jeżeli tak się stanie trzeba też pamiętać o tym, że użytkownik ciągle będzie zmieniał pliki więc trzeba by podzielić proces tworzenia kopii na tworzenie folderów tymczasowych oraz archiwizację. Tym sposobem mamy pewność, że za każdym razem kiedy użytkownik użyje skrótu klawiszowego odpowiednia kopia zostanie stworzona i do kolejki zostanie dodana konieczność archiwizowania utworzonego wcześniej folderu tymczasowego. Oczywiście ciężko przewidzieć, który proces zajmuje więcej czasu — kopiowanie pliku czy tworzenie archiwum. Na to pytanie postaram się znaleźć odpowiedź w następnym tygodniu.</p>
+
+[KodNaGit]
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../16/archiwista-cz-8-poprawki/index.html">Previous: Archiwista [cz. 8 - Poprawki]</a></span>
+        <span><a href="../../30/czy-warto-studiowac-informatyke/index.html">Next: Czy warto studiować informatykę?</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

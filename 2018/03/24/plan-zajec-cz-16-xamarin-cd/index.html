@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan zajęć cz. 16 - Xamarin cd.</title>
+  <meta name="description" content="W tym tygodniu skupiłem się na dalszej implementacji prostego frameworka do Xamarina. Zaczyna on już nabierać kształtów, niedługo będzie można z niego korz">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Plan zajęć cz. 16 - Xamarin cd.</h1>
+        <div class="post-meta">
+          <time datetime="2018-03-24">2018-03-24</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/nuget/index.html">#nuget</a> <a href="../../../../tags/plan-zajec/index.html">#Plan zajęć</a> <a href="../../../../tags/xamarin/index.html">#Xamarin</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2018/03/Featured_Image-3.png" alt="">
+      <div class="post-content">
+        W tym tygodniu skupiłem się na dalszej implementacji prostego frameworka do Xamarina. Zaczyna on już nabierać kształtów, niedługo będzie można z niego korzystać.
+<hr class="more-break">
+
+<h3>Podstawowa strona</h3>
+
+Cały framework opiera się na bazowej stronie, która robi za szablon strony. Wystarczy po niej dziedziczyć, aby szablon się wyświetlił obok zawartości strony. Dzięki temu w pliku *.xaml posiadamy tylko i wyłącznie rzeczy związane z widokiem danej strony, a nie obiekty odpowiedzialne za nawigację pokazywanie progress barów i innych kontrolek.
+
+<a href="../../../../assets/wp-content/uploads/2018/03/Simple.Framework.Sample.png"><img src="../../../../assets/wp-content/uploads/2018/03/Simple.Framework.Sample-169x300.png" alt="" width="169" height="300" class="aligncenter size-medium wp-image-1433" /></a>
+
+Na chwilę obecną wydzieliłem 3 kontrolki, które za każdym razem będą dostępne w każdej stronie.
+Pierwszą kontrolką dostępną jest <em>NavigationBar</em>, jest on własną implementacją paska nawigacji. Dzięki temu z platformy na platformę uzyskujemy taki sam wygląd. Kolejnymi komponentami są dwa <em>ToolBary </em>- górny i dolny, pozwalają one na dodanie dowolnej ilości przycisków z odpowiadającymi im komendami do wywołania. Dodatkowo na każdej stronie dziedziczącej po stronie bazowej istnieje możliwość wyświetlenia paska postępu oraz wskaźnika aktywności.
+
+<h3>Kończąc</h3>
+
+Niestety nie wszystko idzie zgodnie z planem. Jedną z większych funkcjonalności, której nie udało mi się jeszcze zaimplementować jest możliwość przeładowania szablonu Pasków narzędzi. Dzięki temu można by zmienić sposób, w który wyświetla on przedmioty.
+
+<p class="source-link"><a href="https://github.com/kkolodziejczak/Simple.Xamarin.Framework/tree/54c14e78024d41478b8d8d5fea99eeff3a5d719b">Kod na GitHub: Simple.Xamarin.Framework</a></p>
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../17/plan-zajec-cz-15-xamarin/index.html">Previous: Plan zajęć cz. 15 - Xamarin</a></span>
+        <span><a href="../../31/plan-zajec-cz-17-xamarin-cd/index.html">Next: Plan zajęć cz. 17 - Xamarin cd.</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

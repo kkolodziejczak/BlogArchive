@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Archiwista [cz. 13 - Kończenie aplikacji]</title>
+  <meta name="description" content="W tym tygodniu skupiłem się głównie na dokańczaniu aplikacji. Aplikacja jest w pełni sprawna. Co prawda nie zostały zrobione wszystkie rzeczy...">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Archiwista [cz. 13 - Kończenie aplikacji]</h1>
+        <div class="post-meta">
+          <time datetime="2017-10-28">2017-10-28</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/archiwista/index.html">#Archiwista</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/10/Featured_Image-3.png" alt="">
+      <div class="post-content">
+        <p style="text-align: justify;">W tym tygodniu skupiłem się głównie na dokańczaniu aplikacji. Aplikacja jest w pełni sprawna. Co prawda nie zostały zrobione wszystkie rzeczy, które bym chciał mowa tutaj o zaawansowanym tworzeniu kopii zapasowych, ale nie przeszkadza to w jej użytkowaniu.</p>
+
+<hr class="more-break">
+
+<h3>Zmiany</h3>
+
+<p style="text-align: justify;">Postanowiłem pozbyć się zakładki <em>Report</em>, gdyż aplikacja jest przeznaczona dla osób umiejących programować. Z pewnością znajdą inną drogę, aby poinformować mnie o zaistniałym błędzie.</p>
+
+<p style="text-align: justify;">Przejrzałem również całą aplikację w poszukiwaniu napisów wpisanych na sztywno i dodałem je do słownika. Dzięki czemu istnieje łatwa możliwość zmiany jakiegokolwiek napisu w całej aplikacji.</p>
+
+<p style="text-align: justify;">Porzuciłem pomysł na przewijanie dodanej ścieżki na jej koniec. Celem tej operacji było pokazanie końcówki, aby użytkownik mógł zweryfikować czy wybrał dobrą ścieżkę. Zamiast tego dodałem <em>Tooltip</em>, który wyświetli całą ścieżkę po najechaniu na pole tekstowe. Wydaje mi się, że to rozwiązanie jest lepsze niż konieczność przewijania ścieżki. </p>
+
+<h3>Styl przycisków</h3>
+
+<p style="text-align: justify;">W zeszłym tygodniu wspominałem o konieczności sygnalizacji o dokonanych zmianach w zakładce z ustawieniami. Bez tego użytkownik nie wie, czy wprowadził już jakieś zmiany i musi je zapisać, czy też odrzucić. Napotkałem tutaj problem. Aktualnie każdy przycisk posiada animację, która sygnalizuje najechanie na niego poprzez zmianę tła na jaśniejsze oraz gdy użytkownik opuści pole przycisku wygaszenie tła. Cały proces ma na celu umilenie korzystania z aplikacji. </p>
+
+<p style="text-align: justify;">Sygnałem, jakim chciałem przekazać informacje o zmianie jest wyłączenie przycisku zapisu oraz odrzucenia. Niestety podczas implementacji napotkałem problem. Przyciski, kiedy nie wykryto zmian w ustawieniach pozostają wyłączone poprzez właściwość <em>IsEnabled</em>. Gdy użytkownik najedzie na przycisk w celu odrzucenia zmian. Wciśnie go, przycisk zmieni swój wygląd na wyłączony, ponieważ nie ma już zmian, które mógłby odrzucić. Niestety, kiedy użytkownik zabierze kursor z przycisku, mimo iż przycisk jest wyłączony wywoła się animacja wygaszania tła zmieniając tło na niebieskie. Znalazłem częściowe rozwiązanie. Jest nim ustawienie <em>FillBehavior </em>na <em>Stop </em>dzięki temu animacja nie nadpisze wartości koloru tła. Niestety nie zmienia to faktu, że animacja się wykona i przez okres jej działania będziemy widzieć zmieniający się kolor. Aby tego uniknąć ustawiłem czas animacji na bardzo krótki, przez co nie widać przejścia animacji. Wygaszenie koloru od teraz na każdym przycisku następuje gwałtownie bez płynnego przejścia.</p>
+
+<p style="text-align: justify;">Rozwiązaniem, które może się sprawdzić to <em>ValueConverter</em>, który po podaniu czy przycisk jest w trybie edycji, będzie zwracał odpowiednią szybkość animacji 0 sekund lub 0.3 sekudny co teoretycznie rozwiązałoby problem. Niestety to rozwiązanie jest bardzo specyficzne co mnie nie zadowala. W ciągu następnego tygodnia rozważę jeszcze jakieś inne możliwości. </p>
+
+<h3>Kończąc</h3>
+
+<p style="text-align: justify;">Proces tworzenia aplikacji dobiega końca. Z tygodnia na tydzień jest coraz mniej rzeczy do zrobienia. Głównymi zadaniami do ukończenia aplikacji są: utworzenie ikony aplikacji, przejrzenie całego kodu źródłowego w poszukiwaniu brakujących komentarzy i ewentualnych błędów, wygenerowanie dokumentacji do aplikacji oraz stworzenie landing page przedstawiającego wszystkie funkcjonalności.</p>
+
+[KodNaGit]
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../21/archiwista-cz-12-porzadki-w-ustawieniach/index.html">Previous: Archiwista [cz. 12 - Porządki cd.]</a></span>
+        <span><a href="../../../11/04/archiwista-cz-14-koniec/index.html">Next: Archiwista [cz. 14 – Koniec]</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>kkolodziejczak archive</title>
+  <link>https://kkolodziejczak.net/</link>
+  <description>Static archive of kkolodziejczak.net</description>
+  <item>
+    <title>Recenzja KursGita.pl</title>
+    <link>https://kkolodziejczak.net/2018/11/12/kursgita-pl/</link>
+    <guid>https://kkolodziejczak.net/2018/11/12/kursgita-pl/</guid>
+    <pubDate>Mon, 12 Nov 2018 13:30:56 +0000</pubDate>
+    <description>Dnia 24 Września o godzinie 08:09 dostałem e-mail o tym, że ruszyła przedsprzedaż kursu gita. O godzinie 08:42 dostałem już potwierdzenie zakupu...</description>
+  </item>
+  <item>
+    <title>Warsztaty SCRUM</title>
+    <link>https://kkolodziejczak.net/2018/05/19/warsztaty-scrum/</link>
+    <guid>https://kkolodziejczak.net/2018/05/19/warsztaty-scrum/</guid>
+    <pubDate>Sat, 19 May 2018 22:10:11 +0000</pubDate>
+    <description>W ostatnim tygodniu na uczelni mieliśmy warsztaty z Scrum. Jeden prowadzący zalecił, byśmy się zapisali w ramach zajęć na te warsztaty, ponieważ współgrają z tematyką zajęć. W tym wpisie chcę się podzielić moimi wrażeniami z takiego warsztatu.</description>
+  </item>
+  <item>
+    <title>Rzeczy codziennego użytkowania</title>
+    <link>https://kkolodziejczak.net/2018/05/12/rzeczy-codziennego-uzytkowania/</link>
+    <guid>https://kkolodziejczak.net/2018/05/12/rzeczy-codziennego-uzytkowania/</guid>
+    <pubDate>Sat, 12 May 2018 23:02:57 +0000</pubDate>
+    <description>Listy EDC zalewają Internet, postanowiłem zrobić własną listę rzeczy, z których korzystam prawie codziennie w pracy, jak i w domu.</description>
+  </item>
+  <item>
+    <title>Studia magisterskie - Pierwsze wrażenia</title>
+    <link>https://kkolodziejczak.net/2018/05/05/studia-magisterskie-pierwsze-wrazenia/</link>
+    <guid>https://kkolodziejczak.net/2018/05/05/studia-magisterskie-pierwsze-wrazenia/</guid>
+    <pubDate>Sat, 05 May 2018 22:46:01 +0000</pubDate>
+    <description>26 lutego 2018 rozpocząłem studia drugiego stopnia na Wydziale Informatyki. Tym wpisem chcę przedstawić moje pierwsze wrażenia, względem studiów pierwszego stopnia. Przedmioty Zajęcia zarówno na studiach pierwszego, jak i drugiego stopnia wyglądają tak samo. Jeżeli chodzi o ich formę. Co prawda wykładowcy zakładają, że posiadamy już pewną wiedzę i wymagają jej od nas. Tym sposobem wychodzą nasze wszystkie zaległości. Co nie jest takie złe, ponieważ pozwala to załatać wszystkie braki, jakie możem</description>
+  </item>
+  <item>
+    <title>Współbieżność w języku C# Recenzja</title>
+    <link>https://kkolodziejczak.net/2018/04/28/wspolbieznosc-w-jezyku-c-sharp-recenzja/</link>
+    <guid>https://kkolodziejczak.net/2018/04/28/wspolbieznosc-w-jezyku-c-sharp-recenzja/</guid>
+    <pubDate>Sat, 28 Apr 2018 23:34:20 +0000</pubDate>
+    <description>Książka Współbieżność w języku C# autorstwa Stephena Cleary jest według mnie dobrą pozycją dla każdego. Należy jednak zauważyć to, że książka nie wchodzi w głąb działania samej współbieżności, a pokazuje tylko gotowe rozwiązania i metody oparte na mechanizmach języka lub też zewnętrznych bibliotek.</description>
+  </item>
+  <item>
+    <title>Xamarin - Szablony</title>
+    <link>https://kkolodziejczak.net/2018/04/21/xamarin-szablony/</link>
+    <guid>https://kkolodziejczak.net/2018/04/21/xamarin-szablony/</guid>
+    <pubDate>Sat, 21 Apr 2018 23:49:50 +0000</pubDate>
+    <description>Możliwość posiadania szablonów jest jedna z kluczowych, a zarazem koniecznych rzeczy w każdej technologii. Na całe szczęście Xamarin pozwala nam na tworzenie własnych szablonów do naszych kontrolek. W tym krótkim wpisie postaram się przedstawić przykładowy szablon strony bazowej. Szablon Xamarin pozwala nam na tworzenie ControlTemplate . Tak stworzony szablon można przypisać danej kontrolce, aby wyglądała zgodnie z tym, co zaprojektowaliśmy. Takie rozwiązanie pozwala na wyciągnięcie wspólnych ce</description>
+  </item>
+  <item>
+    <title>Plan zajęć cz. 19 - Mobilny ekran logowania</title>
+    <link>https://kkolodziejczak.net/2018/04/14/plan-zajec-cz-19-mobilny-ekran-logowania/</link>
+    <guid>https://kkolodziejczak.net/2018/04/14/plan-zajec-cz-19-mobilny-ekran-logowania/</guid>
+    <pubDate>Sat, 14 Apr 2018 22:30:39 +0000</pubDate>
+    <description>Tydzień ten spędziłem nad pisaniem ekranu logowania do systemu. Niestety nie poszło to tak prosto jak sądziłem. Napotkałem parę błędów, z którymi musiałem się pierw uporać...</description>
+  </item>
+  <item>
+    <title>Plan zajęć cz. 18 - Xamarin cd.</title>
+    <link>https://kkolodziejczak.net/2018/04/07/plan-zajec-cz-18-xamarin-cd/</link>
+    <guid>https://kkolodziejczak.net/2018/04/07/plan-zajec-cz-18-xamarin-cd/</guid>
+    <pubDate>Sat, 07 Apr 2018 23:21:53 +0000</pubDate>
+    <description>Ten tydzień jest ostatnim tygodniem, który całkowicie poświęciłem rozwijaniu frameworka. Od następnego tygodnia zacznę pracę nad aplikacją mobilną. A w ramach tego muszę poprawić sposób parsowania zajęć oraz ich przechowywania i zapisywania na dysku twardym...</description>
+  </item>
+  <item>
+    <title>Plan zajęć cz. 17 - Xamarin cd.</title>
+    <link>https://kkolodziejczak.net/2018/03/31/plan-zajec-cz-17-xamarin-cd/</link>
+    <guid>https://kkolodziejczak.net/2018/03/31/plan-zajec-cz-17-xamarin-cd/</guid>
+    <pubDate>Sat, 31 Mar 2018 21:25:42 +0000</pubDate>
+    <description>W tym tygodniu udało się osiągnąć cel, jaki sobie założyłem. Strona bazowa ma możliwość wyświetlania widoków jako górnego i dolnego paska narzędzi. Dodatkowo zacząłem pracę nad stworzeniem rozszerzonych kontrolek widokowych...</description>
+  </item>
+  <item>
+    <title>Plan zajęć cz. 16 - Xamarin cd.</title>
+    <link>https://kkolodziejczak.net/2018/03/24/plan-zajec-cz-16-xamarin-cd/</link>
+    <guid>https://kkolodziejczak.net/2018/03/24/plan-zajec-cz-16-xamarin-cd/</guid>
+    <pubDate>Sat, 24 Mar 2018 21:46:05 +0000</pubDate>
+    <description>W tym tygodniu skupiłem się na dalszej implementacji prostego frameworka do Xamarina. Zaczyna on już nabierać kształtów, niedługo będzie można z niego korzystać...</description>
+  </item>
+  <item>
+    <title>Plan zajęć cz. 15 - Xamarin</title>
+    <link>https://kkolodziejczak.net/2018/03/17/plan-zajec-cz-15-xamarin/</link>
+    <guid>https://kkolodziejczak.net/2018/03/17/plan-zajec-cz-15-xamarin/</guid>
+    <pubDate>Sat, 17 Mar 2018 22:00:21 +0000</pubDate>
+    <description>Skonstruowanie odpowiedniej architektury przechowującej dni tygodnia to nie lada wyzwanie. Dlatego nie chcę się z tym śpieszyć. I podejść do tej sprawy na spokojnie. Dlatego w tym tygodniu zabrałem się za implementację prostego Frameworka do Xamarina...</description>
+  </item>
+  <item>
+    <title>Plan zajęć cz. 14 - Błędy</title>
+    <link>https://kkolodziejczak.net/2018/03/10/plan-zajec-cz-14-bledy/</link>
+    <guid>https://kkolodziejczak.net/2018/03/10/plan-zajec-cz-14-bledy/</guid>
+    <pubDate>Sat, 10 Mar 2018 21:34:43 +0000</pubDate>
+    <description>W tym tygodniu zająłem się diagnostyką oraz optymalizacją odświeżania planu zajęć. Podczas testowania logowania jako nauczyciel pojawiły się błędy logowania...</description>
+  </item>
+  <item>
+    <title>Plan zajęć cz. 13 - Komunikaty</title>
+    <link>https://kkolodziejczak.net/2018/03/03/plan-zajec-cz-13-komunikaty/</link>
+    <guid>https://kkolodziejczak.net/2018/03/03/plan-zajec-cz-13-komunikaty/</guid>
+    <pubDate>Sat, 03 Mar 2018 23:30:29 +0000</pubDate>
+    <description>Informowanie użytkownika o różnych stanach aplikacji jest bardzo ważne. Aplikacja, która nagle się wyłącza po napotkaniu błędu, nie zachęca użytkownika do korzystania z niej. Dlatego w tym tygodniu dodałem system komunikatów, które informują użytkownika o różnych stanach aplikacji. ..</description>
+  </item>
+  <item>
+    <title>Plan zajęć cz. 12 - Adaptacja aplikacji</title>
+    <link>https://kkolodziejczak.net/2018/02/24/plan-zajec-cz-12-adaptacja-aplikacji/</link>
+    <guid>https://kkolodziejczak.net/2018/02/24/plan-zajec-cz-12-adaptacja-aplikacji/</guid>
+    <pubDate>Sat, 24 Feb 2018 23:40:22 +0000</pubDate>
+    <description>Wraz z zapisem się na studia drugiego stopnia zmienił się sposób logowania do systemu. W związku z tym w tym tygodniu zmodyfikowałem etapy logowania do systemu e-Dziekanat...</description>
+  </item>
+  <item>
+    <title>Własny nuget package</title>
+    <link>https://kkolodziejczak.net/2018/02/17/wlasny-nuget-package/</link>
+    <guid>https://kkolodziejczak.net/2018/02/17/wlasny-nuget-package/</guid>
+    <pubDate>Sat, 17 Feb 2018 23:58:51 +0000</pubDate>
+    <description>Jakiś czas temu chciałem zrobić program, który by grał za mnie w gre. Taki program potocznie nazywany jest botem. Przeszukiwałem w tamtym czasie Internet w poszukiwaniu informacji na temat tego, jak wysyłać informacje o kliknięciach do aplikacji...</description>
+  </item>
+  <item>
+    <title>Plan zajęć cz. 11 - Uruchamianie wraz z systemem Windows</title>
+    <link>https://kkolodziejczak.net/2018/02/10/plan-zajec-cz-11-uruchamianie-wraz-z-systemem-windows/</link>
+    <guid>https://kkolodziejczak.net/2018/02/10/plan-zajec-cz-11-uruchamianie-wraz-z-systemem-windows/</guid>
+    <pubDate>Sat, 10 Feb 2018 20:36:12 +0000</pubDate>
+    <description>W tym tygodniu dodałem możliwość uruchamiania aplikacji wraz z Windowsem. Dodatkowo poprawiłem parę niuansów. Od tej chwili ustawienia użytkownika są też zapisywane na dysku twardym.</description>
+  </item>
+  <item>
+    <title>Przygotowania do obrony - brak wpisu</title>
+    <link>https://kkolodziejczak.net/2018/02/03/przygotowania-do-obrony-brak-wpisu/</link>
+    <guid>https://kkolodziejczak.net/2018/02/03/przygotowania-do-obrony-brak-wpisu/</guid>
+    <pubDate>Sat, 03 Feb 2018 15:09:54 +0000</pubDate>
+    <description>W tym tygodniu nie będzie wpisu Za bardzo pochłonęły mnie przygotowania na obronę pracy inżynierskiej.</description>
+  </item>
+  <item>
+    <title>Praca Inżynierska - Podsumowanie</title>
+    <link>https://kkolodziejczak.net/2018/01/27/praca-inzynierska-podsumowanie/</link>
+    <guid>https://kkolodziejczak.net/2018/01/27/praca-inzynierska-podsumowanie/</guid>
+    <pubDate>Sat, 27 Jan 2018 20:52:56 +0000</pubDate>
+    <description>Niedawno skończyłem pisać moją pracę inżynierską. W związku z tym postanowiłem zrobić podsumowanie procesu jej pisania. Co się udało, co się nie udało, co następnym razem zrobiłbym lepiej. ..</description>
+  </item>
+  <item>
+    <title>Plan zajęć cz. 10 - Poświadczenia użytkownika</title>
+    <link>https://kkolodziejczak.net/2018/01/20/plan-zajec-cz-10-poswiadczenia-uzytkownika/</link>
+    <guid>https://kkolodziejczak.net/2018/01/20/plan-zajec-cz-10-poswiadczenia-uzytkownika/</guid>
+    <pubDate>Sat, 20 Jan 2018 12:12:57 +0000</pubDate>
+    <description>Napotykając problemy z aplikacją mobilną, postanowiłem ukończyć pierw aplikację desktopową. W tym tygodniu skupiłem się głównie na przechowywaniu poświadczeń użytkownika w celu ich późniejszego odczytania. Wraz z przechowywaniem poświadczeń istnieje możliwość automatycznego logowania do serwisu...</description>
+  </item>
+  <item>
+    <title>Plan zajęć cz. 9 - Xamarin gesty</title>
+    <link>https://kkolodziejczak.net/2018/01/13/plan-zajec-cz-9-xamarin-gesty/</link>
+    <guid>https://kkolodziejczak.net/2018/01/13/plan-zajec-cz-9-xamarin-gesty/</guid>
+    <pubDate>Sat, 13 Jan 2018 16:49:56 +0000</pubDate>
+    <description>W związku ze zbliżającym się terminem oddania pracy inżynierskiej nie miałem dużo czasu, aby poczynić jakieś znaczące postępy w aplikacji. W tym tygodniu skupiłem się na gestach użytkownika...</description>
+  </item>
+  <item>
+    <title>Plan zajęć cz. 8 - Poprawki</title>
+    <link>https://kkolodziejczak.net/2018/01/06/plan-zajec-cz-8-poprawki/</link>
+    <guid>https://kkolodziejczak.net/2018/01/06/plan-zajec-cz-8-poprawki/</guid>
+    <pubDate>Sat, 06 Jan 2018 20:25:24 +0000</pubDate>
+    <description>Ten tydzień poświęciłem na poprawki w aplikacji. Nazbierało się trochę błędów, które trzeba naprawić. Pierwszy problem występuje podczas przejścia za bardzo wstecz na planie zajęć aplikacja się crashuje. Innym błędem jest możliwość rozpoczęcia procesu logowania kilkukrotnie...</description>
+  </item>
+  <item>
+    <title>Podsumowanie roku 2017</title>
+    <link>https://kkolodziejczak.net/2017/12/30/podsumowanie-roku-2017/</link>
+    <guid>https://kkolodziejczak.net/2017/12/30/podsumowanie-roku-2017/</guid>
+    <pubDate>Sat, 30 Dec 2017 19:21:21 +0000</pubDate>
+    <description>Wraz z końcem roku postanowiłem zrobić jego podsumowanie. Fajnie będzie kiedyś w przyszłości mieć możliwość przeczytania o moich postępach, postanowieniach oraz zobowiązaniach...</description>
+  </item>
+  <item>
+    <title>Plan zajęć cz. 7 - Optymalizacja</title>
+    <link>https://kkolodziejczak.net/2017/12/23/plan-zajec-cz-7-optymalizacja/</link>
+    <guid>https://kkolodziejczak.net/2017/12/23/plan-zajec-cz-7-optymalizacja/</guid>
+    <pubDate>Sat, 23 Dec 2017 20:11:57 +0000</pubDate>
+    <description>W tym tygodniu poprawiłem niektóre funkcjonalności aplikacji desktopowej. Ostatnim razem podczas szybkiego przełączania się pomiędzy tygodniami było odczuwalne opóźnienie przy przełączaniu. Dodatkowo aplikacja desktopowa została w końcu przekształcona na styl widgetu...</description>
+  </item>
+  <item>
+    <title>Plan zajęć cz. 6 - Pobieranie aktualności</title>
+    <link>https://kkolodziejczak.net/2017/12/16/plan-zajec-cz-6-pobieranie-aktualnosci/</link>
+    <guid>https://kkolodziejczak.net/2017/12/16/plan-zajec-cz-6-pobieranie-aktualnosci/</guid>
+    <pubDate>Sat, 16 Dec 2017 18:44:36 +0000</pubDate>
+    <description>W tym tygodniu napisałem dwa serwisy pozwalające pobierać informacje o aktualnościach ze stron Internetowych. Dodatkowo poprawiłem logowanie w aplikacji...</description>
+  </item>
+  <item>
+    <title>Plan zajęć cz. 5 - Animacja aktualności</title>
+    <link>https://kkolodziejczak.net/2017/12/09/plan-zajec-cz-5-animacja-aktualnosci/</link>
+    <guid>https://kkolodziejczak.net/2017/12/09/plan-zajec-cz-5-animacja-aktualnosci/</guid>
+    <pubDate>Sat, 09 Dec 2017 14:05:40 +0000</pubDate>
+    <description>Zgodnie z zapowiedzią w ostatnim tygodniu, w tym tygodniu pracowałem nad animacją wiadomości pobranych ze stron Internetowych. Dodatkowo dokonałem parę...</description>
+  </item>
+</channel>
+</rss>

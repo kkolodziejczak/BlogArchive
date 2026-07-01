@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Archiwista [cz. 8 - Poprawki]</title>
+  <meta name="description" content="W tym tygodniu postanowiłem zrobić poprawki do istniejących funkcjonalności. Pierwszą rzeczą, jaką poprawiłem, było przerobienie nagrywania skrótów...">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Archiwista [cz. 8 - Poprawki]</h1>
+        <div class="post-meta">
+          <time datetime="2017-09-16">2017-09-16</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/archiwista/index.html">#Archiwista</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/wpf/index.html">#WPF</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/09/Featured_Image-2.png" alt="">
+      <div class="post-content">
+        <p style="text-align: justify;">W tym tygodniu skupiłem się głównie na doskonaleniu istniejącej funkcjonalności. Pierwszą rzeczą, jaką zrobiłem, było przerobienie <em>Managera </em>w taki sposób, aby istniała możliwość zwrócenia skrótów. Dodatkowo podczas wyboru ścieżki dostępu do pliku ".sln" tekst był wyrównany do lewej strony. Zmieniłem, aby był wyrównywany do prawej. Dzięki temu jesteśmy świadomi, czy wybraliśmy odpowiedni plik bez konieczności przewijania w prawo.</p>
+
+<hr class="more-break">
+
+<h3>Skróty</h3>
+
+<p style="text-align: justify;">Skróty klawiszowe są jedną z kluczowych funkcjonalności aplikacji, dlatego chcę aby działały najlepiej jak to tylko możliwe. Jako, że nagrywanie skrótu klawiszowego może trwać nieokreśloną ilość czasu w tym miejscu użyję metody asynchronicznej. Podczas poszukiwań natknąłem się na informację, która zrewolucjonizowała metodę nagrywania skrótów. Istnieje możliwość zwrócenia wartości z metody asynchronicznej zwracającej <em>Task</em>, poprzez zastosowanie typu generycznego <em>Task&lt;TResult&gt;</em>. Takim sposobem powstała nowa metoda <em>RecordKeyboardShortcut</em>, która wygląda następująco:</p>
+
+<pre class="code-block language-csharp" data-title="KeyboardShortcutManager.cs"><code class="language-csharp">public async Task&lt;KeyboardShortcut&gt; RecordKeyboardShortcut()
+{
+    _IsRecording = true;
+
+    // While recording wait for user to press key combination
+    while (_IsRecording)
+    {
+        // Wait for user
+        await Task.Delay(100);
+    }
+
+    // Return new Shortcut;
+    return _RecordedShortcut;
+}</code></pre>
+
+<p style="text-align: justify;">Reszta mechanizmu nagrywania nie zmieniła się od ostatniego wpisu. Ustawiana jest flaga informująca o tym, że nagrywany jest nowy skrót. Kiedy użytkownik zwolni klawisz zostanie on zapisany jako nowa kombinacja klawiszy. Aby cały proces odbył się poprawnie zaistniała potrzeba zawieszenia metody poprzez użycie pętli while. Pętla ta czeka co jakiś czas, aby nie zajmować czasu procesora ciągłym jej wywoływaniem. Jako, że całość wykonuje się asynchronicznie nagrywanie skrótu zakończy się kiedy flaga zostanie ustawiona na <em>false  </em>- czyli skrót został nagrany. Następnie pętla przestanie się wykonywać i zwróci nagrany skrót.</p>
+
+<p style="text-align: justify;">Nagrywanie przykładowego skrótu klawiszowego można zobaczyć na kodzie załączonym poniżej. Pierwszą rzeczą, która jest robiona to odłączenie aktualnego skrótu klawiszowego z listy. Następnie nagrywany jest nowy skrót i ustawiany event <em>OnShortcutActivated</em>. Posiadając już przygotowany skrót pozostaje dodanie go do listy skrótów.</p>
+
+<pre class="code-block language-csharp" data-title="SettingsViewModel.cs"><code class="language-csharp">private async void RecordBackupShortcut()
+{
+    // Clear old Shortcut from manager
+    KeyboardShortcutManager.Instance.UnregisterKeyboardShortcut(BackupShortcut);
+
+    //Record new shortcut and attach CreateBackup method
+    BackupShortcut = await KeyboardShortcutManager.Instance.RecordKeyboardShortcut();
+    BackupShortcut.OnShortcutActivated += CreateBackup;
+
+    // Register new Shortcut
+    // TODO: save new Shortcut into user settings
+    KeyboardShortcutManager.Instance.RegisterKeyboardShortcut(BackupShortcut);
+
+}</code></pre>
+
+<h3>Wyrównanie do prawej</h3>
+
+<p style="text-align: justify;">Podczas wyboru ścieżki do pliku ".sln" zawartość pola tekstowego była wyrównana do lewej strony. Przez to prawa część zawierająca nazwę pliku, która bardziej nas interesuje, była ucięta. Rozwiązaniem okazało się zrobienie <em>AttachedProperty</em>. Jest to własna opcja, którą możemy ustawić w dowolnym elemencie graficznym. Aby wyrównać zawartość pola do prawej strony stworzyłem <em>ScrollToEndProperty</em>. Niestety na samym początku nie wyglądało to za dobrze. Ponieważ metoda <em>ScrollToEnd </em>nie działała tak, jak przewidywałem. Okazało się, że aby metoda zadziałała, należy ustawić <em>Focus </em>na obiekcie, który chcemy przewinąć. Następnie należy przesunąć kursor na koniec tekstu i dopiero wtedy metoda <em>ScrollToEnd </em>przewinie do prawej strony zawartość pola tekstowego.</p>
+
+<pre class="code-block language-csharp" data-title="ScrollToEndProperty.cs"><code class="language-csharp">public class ScrollToEndProperty : BaseAttachedProperty&lt;ScrollToEndProperty, bool&gt;
+{
+    public override void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+    {
+        if (!(sender is TextBox textbox))
+            return;
+        textbox.TextChanged -= ScrollToEnd;
+        textbox.TextChanged += ScrollToEnd;
+    }
+
+    private void ScrollToEnd(object sender, TextChangedEventArgs e)
+    {
+        if (!(sender is TextBox box))
+            return;
+
+        box.Focus();
+        box.CaretIndex = box.Text.Length;
+        box.ScrollToEnd();
+
+    }
+
+}</code></pre>
+
+<h3>Kończąc</h3>
+
+<p style="text-align: justify;">Mechanizm nagrywania nowych skrótów działa tak jak tego chciałem. Etap prac nad tym elementem uznaję za zamknięty. Poprawiłem sposób wyświetlania informacji w polu tekstowym reprezentującym ścieżkę do plików. W przyszłości zbuduję komponent pozwalający na pobranie ścieżki do pliku lub folderu. Aktualnie istnieją trzy takie wpisy i w każdym z nich musiałem dodać nowy parametr wyrównujący tekst do prawej strony. Co jest błędem, docelowo powinno się to zrobić w jednym miejscu i zmiana powinna być widoczna wszędzie.</p>
+
+[KodNaGit]
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../09/archiwista-cz-7-skrot-klawiszowy/index.html">Previous: Archiwista [cz. 7 – Skrót klawiszowy]</a></span>
+        <span><a href="../../23/archiwista-cz-9-kopie-zapasowe/index.html">Next: Archiwista [cz. 9 - Kopie zapasowe]</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

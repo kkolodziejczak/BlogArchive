@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan zajęć cz. 19 - Mobilny ekran logowania</title>
+  <meta name="description" content="Tydzień ten spędziłem nad pisaniem ekranu logowania do systemu. Niestety nie poszło to tak prosto jak sądziłem. Napotkałem parę błędów, z którymi musiałem ">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Plan zajęć cz. 19 - Mobilny ekran logowania</h1>
+        <div class="post-meta">
+          <time datetime="2018-04-14">2018-04-14</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/plan-zajec/index.html">#Plan zajęć</a> <a href="../../../../tags/wpf/index.html">#WPF</a> <a href="../../../../tags/xamarin/index.html">#Xamarin</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2018/04/Featured_Image-1.png" alt="">
+      <div class="post-content">
+        Tydzień ten spędziłem nad pisaniem ekranu logowania do systemu. Niestety nie poszło to tak prosto jak sądziłem. Napotkałem parę błędów, z którymi musiałem się pierw uporać.
+<hr class="more-break">
+
+<h3>LayoutOptions</h3>
+
+Xamarin pozwala programiście na ustawienie opcji layoutu. Pionowych oraz poziomych, do wyboru mamy <em>Start</em>, <em>End</em>, <em>Center</em>, <em>Fill</em>. Dodatkowo każda z opcji posiada dodatkowy przełącznik <em>Expand</em>, mówiący o tym, że kontrolka ma zająć całe dostępne miejsce. I właśnie ten mechanizm sprawił sporo problemów przy tworzeniu pozornie prostego widoku, jakim jest ekran logowania.
+
+Na samym początku <em>ExtendedLabel </em>dziedziczyło z klasy bazowej <em>Grid</em>. Dzięki temu do kontrolki został dodany <em>Padding </em>pozwalający na większą swobodę przy używaniu etykiet. Niestety w momencie umieszczenia <em>Grida </em>w jakimkolwiek kontenerze zajmuje on całe dostępne miejsce nawet w przypadku ustawienia opcji layoutu na takie bez opcji <em>Expand</em>. Rozwiązaniem okazała się zmiana klasy bazowej z <em>Grid </em>na <em>StackLayout</em>, po czym <em>ExtendedLabel </em>działa tak jak powinien.
+
+<h3>Kończąc</h3>
+
+Podczas pierwszego tworzenia widoku aplikacji okazało się, że logika napisana wcześniej do aplikacji desktopowej niekoniecznie pasuje do przełożenia na aplikację mobilną. Myślę o tym, aby zrobić podobnego frameworka do WPF jak do Xamarina. Wspólny byłby core frameworka.
+
+Dodatkową opcją, nad którą muszę się zastanowić to wymiana statycznych danych takich jak tłumaczenia interfejsu, kolory i inne zasoby. Niestety <em>ResourceDictionary </em>różnią się nieco pomiędzy WPF i Xamarinem.
+
+<p class="source-link"><a href="https://github.com/kkolodziejczak/ZUTSchedule/tree/a49e8df655a321fbb4ff8146ba5c8119bf1bbcab">Kod na GitHub: ZUTSchedule</a></p>
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../07/plan-zajec-cz-18-xamarin-cd/index.html">Previous: Plan zajęć cz. 18 - Xamarin cd.</a></span>
+        <span><a href="../../21/xamarin-szablony/index.html">Next: Xamarin - Szablony</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

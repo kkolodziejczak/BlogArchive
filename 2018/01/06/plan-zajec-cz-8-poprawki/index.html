@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan zajęć cz. 8 - Poprawki</title>
+  <meta name="description" content="Ten tydzień poświęciłem na poprawki w aplikacji. Nazbierało się trochę błędów, które trzeba naprawić. Pierwszy problem występuje podczas przejścia za bardz">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Plan zajęć cz. 8 - Poprawki</h1>
+        <div class="post-meta">
+          <time datetime="2018-01-06">2018-01-06</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/ioc/index.html">#IoC</a> <a href="../../../../tags/plan-zajec/index.html">#Plan zajęć</a> <a href="../../../../tags/studia/index.html">#Studia</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2018/01/Featured_Image.png" alt="">
+      <div class="post-content">
+        Ten tydzień poświęciłem na poprawki w aplikacji. Nazbierało się trochę błędów, które trzeba naprawić. Pierwszy problem występuje podczas przejścia za bardzo wstecz na planie zajęć aplikacja się crashuje. Innym błędem jest możliwość rozpoczęcia procesu logowania kilkukrotnie.
+<hr class="more-break">
+
+<h3>Przewijanie planu zajęć</h3>
+
+Podczas cofania się w planie zajęć dochodziło do zdarzenia, kiedy aplikacja przestawała działać. Błąd okazał się banalny, gdyż okazało się, że wartość przesunięcia przechodziła na liczby ujemne. Naprawienie tego błędu było bardzo proste, po prostu, jeżeli liczba ma zmienić się na ujemną to przerywam akację.
+
+<h3>Problem z logowaniem</h3>
+
+Po rozpoczęciu procesu logowania przycisk był cały czas aktywny przez co użytkownik mógł rozpocząć kilka operacji logowania. Dodałem nową  zmienną sygnalizującą trwający proces logowania. Jeżeli jest aktywny przycisk jest wyłączany i użytkownik nie może nacisnąć ponownie na przycisk logowania.
+
+<a href="../../../../assets/wp-content/uploads/2018/01/loginPage.png"><img src="../../../../assets/wp-content/uploads/2018/01/loginPage.png" alt="" width="377" height="436" class="aligncenter size-full wp-image-1326" /></a>
+
+Dodatkowo dodałem możliwość wyboru liczby wyświetlanych dni tygodnia na ekranie logowania.
+Użytkownik przed zalogowaniem może zmienić domyślne ustawienie pięciu dni na siedem dni lub jeden dzień, odpowiednio według jego zapotrzebowania.
+
+<h3>Nowy kontener IoC</h3>
+
+Aby korzystać z udogodnień biblioteki .NET Standard której używam zarówno w aplikacji desktopowej jak i mobilnych musiałem skorzystać z innego kontenera jak <a href="http://www.ninject.org/">Ninject</a>. Wybór padł na kontener <a href="https://autofac.org/">Autofac</a>. Współpracuje zarówno z Xamarinem jak i WPF więc nie będzie problemów z przenoszalnością kodu pomiędzy aplikacjami. Zasada działania jest identyczna jak w przypadku Ninjecta tworzony jest kontener z którego później można wyłuskiwać obiekty.
+
+<h3>Optymalizacja aktualności</h3>
+
+Niektóre wiadomości pobrane ze stron były strasznie długie dlatego postanowiłem je ukrócić. Każda wiadomość dłuższa niż 50 znaków jest teraz ucinana dzięki czemu zachowana jest spójność wiadomości. I nie zdarzy się taka sytuacja, że jedna wiadomość będzie przesuwać się po całej długości dostępnego ekranu.
+
+<h3>Kończąc</h3>
+
+Ten tydzień spędziłem pracowicie naprawiając parę błędów. Przy okazji również postarałem się w dużej mierze wyczyścić i ujednolicić kod aplikacji. Niestety tego procesu nie można przeprowadzić tylko raz, od czasu do czasu trzeba się za to zabrać, aby kod wyglądał schludnie.
+
+[KodNaGicie name="ZUTSchedule"]
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../../../2017/12/30/podsumowanie-roku-2017/index.html">Previous: Podsumowanie roku 2017</a></span>
+        <span><a href="../../13/plan-zajec-cz-9-xamarin-gesty/index.html">Next: Plan zajęć cz. 9 - Xamarin gesty</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

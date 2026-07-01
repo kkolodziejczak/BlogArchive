@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan zajęć cz. 15 - Xamarin</title>
+  <meta name="description" content="Skonstruowanie odpowiedniej architektury przechowującej dni tygodnia to nie lada wyzwanie. Dlatego nie chcę się z tym śpieszyć. I podejść do tej sprawy na ">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Plan zajęć cz. 15 - Xamarin</h1>
+        <div class="post-meta">
+          <time datetime="2018-03-17">2018-03-17</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/nuget/index.html">#nuget</a> <a href="../../../../tags/plan-zajec/index.html">#Plan zajęć</a> <a href="../../../../tags/xamarin/index.html">#Xamarin</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2018/03/Featured_Image-2.png" alt="">
+      <div class="post-content">
+        Skonstruowanie odpowiedniej architektury przechowującej dni tygodnia to nie lada wyzwanie. Dlatego nie chcę się z tym śpieszyć. I podejść do tej sprawy na spokojnie. Dlatego w tym tygodniu zabrałem się za implementację prostego Frameworka do Xamarina.
+<hr class="more-break">
+
+<h3>Framework</h3>
+
+Mając większe doświadczenie pracy z aplikacjami mobilnymi, postanowiłem stworzyć prosty Framework, który pozwoli mi na proste i przyjemne implementowanie aplikacji. Po spotkaniu się z wieloma problemami w pracy i nie tylko znalazłem podstawowy zbiór funkcjonalności, które chce zaimplementować.
+
+Pierwszą, a zarazem jedną z najważniejszych jest to, aby była tylko jedna strona bazowa. Powinna ona posiadać wszystkie toolbary i wszelkie funkcjonalności takie jak wyświetlanie komunikatów ProgressBarów i innych widoków. Tym sposobem omijamy niepotrzebną duplikację kodu, która zazwyczaj prowadzi do problemów. Kolejną rzeczą do rozwiązania jest stworzenie odpowiedniej klasy komendy, która będzie pozwalała na uruchomienie tylko i wyłącznie w sposób synchroniczny. Zaoszczędzi to wielu problemów, kiedy użytkownik zacznie bardzo szybko naciskać na wiele klawiszy naraz. Z czasem będę dodawał inne funkcjonalności, jak i komponenty pozwalające dodać funkcjonalności, których w zwykłym Xamarinie nie ma.
+
+<h3>Kończąc</h3>
+
+Napisałem już sporą część kodu. Co prawda nie wszystko da radę skończyć w ciągu jednego tygodnia. Będę potrzebował jeszcze kilku. Nie widzę też potrzebny do pośpiechu.
+
+Kod frameworka jest pisany w osobnym projekcie i repozytorium, dzięki temu w przyszłości stworzę z niego nuget package, co pozwoli na wykorzystanie klas bazowych w innych projektach w przyszłości.
+
+<p class="source-link"><a href="https://github.com/kkolodziejczak/Simple.Xamarin.Framework/tree/fcab9014ba548a54796e17984a9eb6a7a3ba130d">Kod na GitHub: Simple.Xamarin.Framework</a></p>
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../10/plan-zajec-cz-14-bledy/index.html">Previous: Plan zajęć cz. 14 - Błędy</a></span>
+        <span><a href="../../24/plan-zajec-cz-16-xamarin-cd/index.html">Next: Plan zajęć cz. 16 - Xamarin cd.</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

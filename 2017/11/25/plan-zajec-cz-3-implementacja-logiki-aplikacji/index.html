@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan zajęć cz. 3 - Implementacja logiki aplikacji</title>
+  <meta name="description" content="Podczas tego tygodnia miałem zabrać się za tworzenie interfejsu graficznego aplikacji desktopowej i mobilnej. Niestety logika aplikacji nie dała mi ...">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Plan zajęć cz. 3 - Implementacja logiki aplikacji</h1>
+        <div class="post-meta">
+          <time datetime="2017-11-25">2017-11-25</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/plan-zajec/index.html">#Plan zajęć</a> <a href="../../../../tags/wpf/index.html">#WPF</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/11/Featured_Image-3.png" alt="">
+      <div class="post-content">
+        Podczas tego tygodnia miałem zabrać się za tworzenie interfejsu graficznego aplikacji desktopowej i mobilnej. Niestety logika aplikacji nie dała mi spokoju i za bardzo mnie pochłonęła przez co skupiłem się głównie na niej.
+<hr class="more-break">
+
+<h3>Logowanie</h3>
+
+Głównym problem do rozwiązania w aplikacji jest zalogowanie się do systemu oraz pobranie informacji o zajęciach. W pierwotnej wersji tej aplikacji wykorzystałem gotowy element z <em>Windows Forms WebBrowser</em>. Używałem go do nawigowania, logowania oraz pobierania informacji ze strony. Niestety nie posiadałem szczegółowych informacji na temat zawartości przeglądarki. Zadania wykonywały się asynchronicznie i nie miałem łatwego sposobu na sprawdzenie poprawności logowania i pobierania informacji.
+
+Tym razem będę wysyłał wiadomości POST do strony wraz z informacjami o loginie i haśle. Dzięki temu otrzymana odpowiedź będzie miała informacje o aktualnym stanie strony — czy jestem zalogowany, czy wystąpił jakiś błąd… Pobieranie informacji w ten sposób jest bardzo łatwe i niezawodne, ponieważ istnieje możliwość reagowania na sygnały otrzymane po wysłaniu wiadomości do serwera.
+
+Oczywiście nie odbyło się bez żadnych problemów. Przed wysłaniem POST request trzeba skonstruować jego zawartość tak, aby serwer myślał, że jest to zawartość wypełnionego formularza na stronie. System uczelni posiada bardzo dużo informacji akurat w tej wiadomości. Co nie pozwalało na łatwe wybranie informacji, które trzeba przesłać. Z pomocą przyszedł mój znajomy, który już jakiś czas temu zrobił podobną aplikację na telefon. Napisał ją za pomocą JavaScriptu, z którym nie byłem do tej pory zaprzyjaźniony na tyle, aby stwierdzić jak to zrobić prawidłowo w C#. Spędziłem parę dni na kombinowaniu i sprawdzaniu metod z jego kodu. Ostatecznie okazało się, że komenda z JQuery serialize(), której używał, generuje na podstawie formularza string przedstawiający zawartość wiadomości, która będzie przesłana za pomocą wiadomości POST. W związku z tym znalazłem na Internecie przykład jej wykorzystania i pobrałem przykładową stronę, skopiowałem cały formularz ze strony i wkleiłem do przykładu.
+
+<pre class="code-block language-xml" data-title="SerializeDemo.html"><code class="language-xml">&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;serialize demo&lt;/title&gt;
+  &lt;style&gt;
+  body, select {
+    font-size: 12px;
+  }
+  form {
+    margin: 5px;
+  }
+  p {
+    color: red;
+    margin: 5px;
+    font-size: 14px;
+  }
+  b {
+    color: blue;
+  }
+  &lt;/style&gt;
+  &lt;script src=&quot;https://code.jquery.com/jquery-1.10.2.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;!-- Tutaj wkleić formularz &lt;form&gt;...&lt;/form&gt; --&gt;
+
+&lt;tt id=&quot;results&quot;&gt;&lt;/tt&gt;
+
+&lt;script&gt;
+  function showValues() {
+    var str = $( &quot;form&quot; ).serialize();
+    $( &quot;#results&quot; ).text( str );
+  }
+  $( &quot;input[type=&#x27;checkbox&#x27;], input[type=&#x27;radio&#x27;]&quot; ).on( &quot;click&quot;, showValues );
+  $( &quot;select&quot; ).on( &quot;change&quot;, showValues );
+  showValues();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+Po załadowaniu strony w przeglądarce na dole strony pojawia się ciąg zawierający informacje, które zostaną przesłane poprzez wysłanie tego formularza. Posiadając już informacje na temat treści wiadomości, przystąpiłem do tworzenia usługi która będzie logowała się do systemu, pobierała informacje na temat zajęć i zwracała listę dni z zajęciami.
+
+<h3>Kończąc</h3>
+
+W ciągu tego tygodnia skupiłem się głównie na logice aplikacji, co nie znaczy, że wcale nie pracowałem nad interfejsem graficznym. Zostało już dużo rzeczy zrobionych, pozostało dokończenie wyświetlania planu zajęć w trybie jedno, pięcio oraz siedmiodniowym. Jak i przechodzenie pomiędzy tygodniami.
+
+Kolejnym dużym zadaniem będzie stworzenie karuzeli wyświetlającej aktualne informacje ze stron wydziału oraz uczelni. Nigdy jeszcze czegoś takiego nie zrobiłem, ale myślę, że nie będzie to jakoś bardzo trudne. W ciągu następnego tygodnia chciałbym już mieć aplikację w dużej części skończoną.
+
+[KodNaGicie name="ZUTSchedule"]
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../18/plan-zajec-cz-2-projekt-gui/index.html">Previous: Plan zajęć cz. 2 - Projekt GUI</a></span>
+        <span><a href="../../../12/02/plan-zajec-cz-4-ekran-logowania/index.html">Next: Plan zajęć cz. 4 - Ekran logowania</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

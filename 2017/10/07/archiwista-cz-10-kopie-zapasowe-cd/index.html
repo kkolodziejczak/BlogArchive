@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Archiwista [cz. 10 - Kopie zapasowe cd.]</title>
+  <meta name="description" content="W tym tygodniu pracowałem głównie nad tworzeniem kopii. Ostatnim razem zabrakło czasu na stworzenie metody, która zwalnia miejsce na dysku w przypadku...">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Archiwista [cz. 10 - Kopie zapasowe cd.]</h1>
+        <div class="post-meta">
+          <time datetime="2017-10-07">2017-10-07</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/archiwista/index.html">#Archiwista</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/serializacja/index.html">#Serializacja</a> <a href="../../../../tags/xmlserializer/index.html">#XmlSerializer</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/10/Featured_Image.png" alt="">
+      <div class="post-content">
+        <p style="text-align: justify;">W tym tygodniu pracowałem głównie nad tworzeniem kopii. Ostatnim razem zabrakło czasu na stworzenie metody, która zwalnia miejsce na dysku w przypadku jego przepełnienia. Pozostawia ona również ostatnią kopię z każdego dnia dzięki czemu będziemy mieli jakąś historię do której możemy wrócić jeżeli będziemy mieli taką potrzebę.</p>
+
+<hr class="more-break">
+
+<h3>Ustawienia</h3>
+
+<p style="text-align: justify;">Usunięcie stworzonych kopii wiążę się z ich odnalezieniem na dysku twardym. W związku z tym potrzebna jest baza projektów, które użytkownik dodał. Z pomocą przychodzą ustawienia, w których będą przechowywane wszelkie informacje użytkownika. Stworzyłem dwie klasy. <em>Settings</em> przechowującą wszelkie informacje, które użytkownik może zmieniać. Drugą klasą jest <em>Storage </em>odpowiada ona za wczytywanie i zapisywanie ustawień. W celu łatwego odzwierciedlenia klasy w pliku wykorzystałem <em>XmlSerializer</em>, pozwala on w prosty sposób zamienić każdą klasę na strukturę XML. Działa to również w drugą stronę. <em>XmlSerializer </em>umożliwia odczytanie tak zapisanej struktury z pliku i tworzy gotowy obiekt, z którego można korzystać.</p>
+
+<p style="text-align: justify;">Procedura zapisu jest prosta wystarczy stworzyć obiekt Serializera podając odpowiedni typ danych. Aby utworzyć plik wystarczy wywołać metodę <em>Serialize </em>podając otwarty strumień oraz obiekt do zapisania.</p>
+
+<pre class="code-block language-csharp" data-title="Storage.cs"><code class="language-csharp">public static void Save()
+{
+    if (Settings == null)
+        return;
+
+    XmlSerializer xs = new XmlSerializer(typeof(UserSettings));
+
+    using (TextWriter tw = new StreamWriter(SettingsPath))
+    {
+        xs.Serialize(tw, Settings);
+    }
+
+}</code></pre>
+
+<p style="text-align: justify;">Odczyt danych wygląda podobnie nie mniej jednak napotkałem tutaj problem. Podczas odczytu cała procedura odbywa się prawidłowo i dane w zwróconym obiekcie są prawidłowe mimo to rzucany jest wyjątek o tym że plik już jest odczytywany przez jakiś proces. Postaram się rozwiązać ten problem następnym razem.</p>
+
+<pre class="code-block language-csharp" data-title="Storage.cs"><code class="language-csharp">public static void Load()
+{
+
+    XmlSerializer xs = new XmlSerializer(typeof(UserSettings));
+    try
+    {
+        using (var sr = new StreamReader(SettingsPath))
+        {
+            Settings = xs.Deserialize(sr) as UserSettings;
+        }
+    }
+    catch (InvalidOperationException e)
+    {
+        // Some error with settings file, create Default one.
+        Settings = new UserSettings();
+        Save();
+    }
+    catch (IOException e)
+    {
+        //TODO: find out why this error occurs, that something is reading file already,
+        // even if it gets good data.
+        Console.WriteLine(e.Message);
+    }
+}</code></pre>
+
+<h3>Czyszczenie</h3>
+
+<p style="text-align: justify;">Wracając do głównego celu tego wpisu czyli procesu oczyszczania dysku z utworzonych kopii. Stworzyłem metodę <em>ClearDriveSpace </em>pobiera ona z ustawień użytkownika wszystkie projekty, następnie przeszukuje je w poszukiwaniu kopii zapasowych. Cały proces okazał się trochę skomplikowany przez zastosowaną strukturę katalogów nie mniej jednak metoda działa. Poszukuje ona kopie i usuwa wszystkie oprócz ostatniej z danego dnia. Patrząc teraz na ten kod widzę tutaj miejsce na poprawę, na pewno wrócę do tej metody jeszcze raz, aby poprawić jej czytelność.</p>
+
+<pre class="code-block language-csharp" data-title="DriveHelper.cs"><code class="language-csharp">public static ClearResult ClearDriveSpace()
+{
+    var result = ClearResult.Fail;
+
+    // -Get into projcet copies
+    foreach (var project in Storage.Settings.Projects)
+    {
+        var Projects = GetAllDirectories(project.ArchivePath);
+
+        foreach(var projectPath in Projects)
+        {
+            var Days = GetAllDirectories(projectPath);
+
+            foreach(var day in Days)
+            {
+                var ProjectArchiveDirectories = GetAllDirectories(day);
+
+                foreach(var archiveDirectory in ProjectArchiveDirectories)
+                {
+                    var ProjectCopies = GetAllFiles(archiveDirectory);
+
+                    // If there is only 1 copie leave it
+                    if (ProjectCopies.Length &gt; 1)
+                    {
+                        // Else clear all but lastest copie assuming that they are sorted
+                        for (int i = 0; i &lt; ProjectCopies.Length - 1; i++)
+                        {
+                            if (File.Exists(ProjectCopies[i]))
+                            {
+                                File.Delete(ProjectCopies[i]);
+                                result = ClearResult.Success;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    if (result == ClearResult.Fail)
+    {
+        MessageBox.Show(&quot;Hard Drive is full.\nMake more space!&quot;, &quot;No space left!&quot;, MessageBoxType.Ok);
+    }
+
+    return result;
+}</code></pre>
+
+<h3>Kończąc</h3>
+
+<p style="text-align: justify;">W tym tygodniu zrobiłem duży krok ku końcowi tworząc mechanizm ustawień. Poprawiłem kilka drobnych błędów oraz znalazłem kilka nowych, nad których rozwiązaniem jeszcze będę musiał się zastanowić. Pierwszym z błędów, jaki znalazłem jest brak przewijania tekstu do końca w polu kodu źródłowego. Wstępna diagnoza pokazała, że dzieje się tak poprzez zastosowanie stylu weryfikującego poprawność wypełnienia pola. Kolejnym błędem, jaki znalazłem jest przytrzymanie skrótu klawiszowego zakleszcza program. Będę musiał tutaj zastosować jakiś mechanizm opóźniający kolejne wywoływania tworzenia kopii bądź kolejkę, o której wspominałem w jednym z wcześniejszych wpisów. Ostatni rzucający się w oczy jest błąd występujący podczas wczytywania ustawień. Proces wczytania następuje prawidłowo po czym rzucany jest wyjątek o tym że plik jest odczytywany przez inny proces. Nie znalazłem jeszcze przyczyny będę musiał to zdiagnozować dokładniej. Aplikacja nabiera już kształtów niedługo będzie można z niej normalnie korzystać. Do jej skończenia pozostało jeszcze parę tygodni, ale jest już bliżej niż dalej.</p>
+
+[KodNaGit]
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../../09/30/czy-warto-studiowac-informatyke/index.html">Previous: Czy warto studiować informatykę?</a></span>
+        <span><a href="../../14/archiwista-cz-11-porzadki/index.html">Next: Archiwista [cz. 11 - Porządki]</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

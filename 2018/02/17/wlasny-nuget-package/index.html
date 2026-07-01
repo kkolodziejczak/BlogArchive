@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Własny nuget package</title>
+  <meta name="description" content="Jakiś czas temu chciałem zrobić program, który by grał za mnie w gre. Taki program potocznie nazywany jest botem. Przeszukiwałem w tamtym czasie Internet w">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Własny nuget package</h1>
+        <div class="post-meta">
+          <time datetime="2018-02-17">2018-02-17</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/nuget/index.html">#nuget</a> <a href="../../../../tags/planowanie/index.html">#Planowanie</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2018/02/Featured_Image-2.png" alt="">
+      <div class="post-content">
+        Jakiś czas temu chciałem zrobić program, który by grał za mnie w gre. Taki program potocznie nazywany jest botem. Przeszukiwałem w tamtym czasie Internet w poszukiwaniu informacji na temat tego, jak wysyłać informacje o kliknięciach do aplikacji. Moim celem jest stworzenie paczki nuget zawierającą klasy umożliwiające w prosty sposób napisanie dedykowanego bota do dowolnego zadania.
+<hr class="more-break">
+
+<h3>Messages — Wiadomości</h3>
+
+Sposobem na przekazywanie informacji do aplikacji jest wysyłanie wiadomości systemowych. Każda aplikacja nasłuchuje na takie wiadomości i odpowiednio je interpretuje. System udostępnia nam API dostępne w pliku user32.dll. Znajdziemy tam metodę SendMessage. Przy pomocy tej metody możliwe jest wysłanie wiadomości do dowolnej, uruchomionej, aplikacji.
+
+Wedle wstępnych testów udało mi się napisać prosty program rysujący kwadrat w programie graficznym. Niestety pierwotne próby zautomatyzowania gry napisanej w Javie zakończyły się niepowodzeniem. Były to też moje początki z językiem C# oraz platformą .NET. Od tego czasu sporo się nauczyłem i zdobyłem dużo doświadczenia. Na pewno tym razem będzie dużo lepiej.
+
+<h3>Skróty klawiszowe</h3>
+
+Skróty klawiszowe według mnie są bardzo ważną częścią każdej aplikacji desktopowej. Tym sposobem aplikacja pozwala na zarządzanie nią, nawet jeżeli jest zminimalizowana. Daje to dużą swobodę w tworzeniu naszej aplikacji i późniejszym jej konsumowaniu.
+
+W ramach <a href="../../../../2017/07/22/archiwista-cz-1-planowanie/index.html">Archivista</a> napisałem już moduł pozwalający na nagrywanie oraz nasłuchiwanie skrótów klawiszowych. Z pewnością przejrzę jeszcze raz ten kod i poprawiony zostanie dodany do paczki.
+
+<h3>Kończąc</h3>
+
+Finalnie chcę zbudować paczkę, którą każdy będzie mógł dodać do swojego projektu i szybko napisać dedykowanego bota. Mam sporo pomysłów jak rozwinąć to rozwiązanie w przyszłości umożliwiając tworzenie poszczególnych bodźców, na które aplikacja mogłaby reagować w przyszłości.
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../10/plan-zajec-cz-11-uruchamianie-wraz-z-systemem-windows/index.html">Previous: Plan zajęć cz. 11 - Uruchamianie wraz z systemem Windows</a></span>
+        <span><a href="../../24/plan-zajec-cz-12-adaptacja-aplikacji/index.html">Next: Plan zajęć cz. 12 - Adaptacja aplikacji</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

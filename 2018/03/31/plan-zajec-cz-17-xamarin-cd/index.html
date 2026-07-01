@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan zajęć cz. 17 - Xamarin cd.</title>
+  <meta name="description" content="W tym tygodniu udało się osiągnąć cel, jaki sobie założyłem. Strona bazowa ma możliwość wyświetlania widoków jako górnego i dolnego paska narzędzi. Dodatko">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Plan zajęć cz. 17 - Xamarin cd.</h1>
+        <div class="post-meta">
+          <time datetime="2018-03-31">2018-03-31</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/nuget/index.html">#nuget</a> <a href="../../../../tags/plan-zajec/index.html">#Plan zajęć</a> <a href="../../../../tags/studia/index.html">#Studia</a> <a href="../../../../tags/xamarin/index.html">#Xamarin</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2018/03/Featured_Image-4.png" alt="">
+      <div class="post-content">
+        W tym tygodniu udało się osiągnąć cel, jaki sobie założyłem. Strona bazowa ma możliwość wyświetlania widoków jako górnego i dolnego paska narzędzi. Dodatkowo zacząłem pracę nad stworzeniem rozszerzonych kontrolek widokowych.
+<hr class="more-break">
+
+<h3>Strona bazowa</h3>
+
+Od teraz strona bazowa jest klasą abstrakcyjną, z której każda nowa strona powinna dziedziczyć. Pierwotnie chciałem przekazać <em>DataTemplate ToolBara</em> ze strony bazowej do komponentu <em>ToolBar</em>. Niestety nie przynosiło to dobrych rezultatów. Rozwiązaniem okazało się umieszczenie w miejscu <em>Toolbarów </em>widoków, którym wstrzykiwane są widoki przekazywane przez stronę bazową.
+
+<pre class="code-block language-xml" data-title="MainPage.xaml"><code class="language-xml">&lt;!-- ... --&gt;
+    &lt;base:BaseContentPage.UpperToolBarContent&gt;
+        &lt;!-- Widok górnego paska --&gt;
+    &lt;/base:BaseContentPage.UpperToolBarContent&gt;
+
+    &lt;base:BaseContentPage.BottomToolBarContent&gt;
+        &lt;!-- Widok dolnego paska --&gt;
+    &lt;/base:BaseContentPage.BottomToolBarContent&gt;
+
+    &lt;base:BaseContentPage.Content&gt;
+        &lt;!-- Widok wewnętrzny strony --&gt;
+    &lt;/base:BaseContentPage.Content&gt;
+&lt;!-- ... --&gt;</code></pre>
+
+<h3>Rozszerzone kontrolki</h3>
+
+W życiu każdej aplikacji prędzej czy później nadejdzie ten czas, kiedy będziemy chcieli uruchomić ją na urządzeniu z większym wyświetlaczem lub też rozdzielczością. Wpisywanie wartości pikseli na sztywno w aplikacji nie jest dobrym rozwiązaniem. Xamarin posiada na to odpowiedź, w kontrolce <em>Label </em>mamy możliwość wpisania wartości słownych co do wielkości liter. Wartości słowne są dobierane w zależności od urządzenia, na którym aplikacja została uruchomiona. Niestety takich wartości jest mało i można ich użyć tylko w przypadku wielkości czcionki. Dlatego postanowiłem zrobić własny rozszerzony system wartości słownych. Poza większą liczbą wartości do wyboru użytkownik może również używać słów do określania wartości <em>Margin </em>czy <em>Padding</em>. Takie rozwiązanie zapewnia skalowalność całej aplikacji za pomocą jednej zmiennej, którą możemy ustawić na dowolną wielkość w zależności od naszych zachcianek.
+
+<pre class="code-block language-xml" data-title="NavigationBar.xaml"><code class="language-xml">&lt;sxf:ExtendedLabel Grid.Column=&quot;2&quot;
+                    FontSize=&quot;Normal&quot;
+                    Padding=&quot;xSmall, Small&quot;
+                    Text=&quot;{Binding RightButtonTitle}&quot;
+                    TapCommand=&quot;{Binding RightButtonCommand}&quot;
+                    /&gt;</code></pre>
+
+<h3>Kończąc</h3>
+
+Prace nad Frameworkiem powoli wymykają się spod kontroli. Miał to być prosty system, który zdołałbym napisać w tydzień może dwa, a zapowiada się na to, że mogę z niego stworzyć osobną serię wpisów. Dlatego postanowiłem, że w następny tydzień jest ostatnim tygodniem pracy nad biblioteką. Dopóki nie skończę planu zajęć.
+
+<p class="source-link"><a href="https://github.com/kkolodziejczak/Simple.Xamarin.Framework/tree/baed27a148e0e93a612192d75f7243f1ad37fb64">Kod na GitHub: Simple.Xamarin.Framework</a></p>
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../24/plan-zajec-cz-16-xamarin-cd/index.html">Previous: Plan zajęć cz. 16 - Xamarin cd.</a></span>
+        <span><a href="../../../04/07/plan-zajec-cz-18-xamarin-cd/index.html">Next: Plan zajęć cz. 18 - Xamarin cd.</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

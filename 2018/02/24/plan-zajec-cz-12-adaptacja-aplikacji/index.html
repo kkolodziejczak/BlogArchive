@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan zajęć cz. 12 - Adaptacja aplikacji</title>
+  <meta name="description" content="Wraz z zapisem się na studia drugiego stopnia zmienił się sposób logowania do systemu. W związku z tym w tym tygodniu zmodyfikowałem etapy logowania do sys">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Plan zajęć cz. 12 - Adaptacja aplikacji</h1>
+        <div class="post-meta">
+          <time datetime="2018-02-24">2018-02-24</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/html-parser/index.html">#html parser</a> <a href="../../../../tags/plan-zajec/index.html">#Plan zajęć</a> <a href="../../../../tags/regex/index.html">#Regex</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2018/02/Featured_Image-3.png" alt="">
+      <div class="post-content">
+        Wraz z zapisem się na studia drugiego stopnia zmienił się sposób logowania do systemu. W związku z tym w tym tygodniu zmodyfikowałem mechanizm logowania do systemu e-Dziekanat.
+<hr class="more-break">
+
+<h3>Nowy etap</h3>
+
+Okazało się, że student studiujący na wielu kierunkach studiów po zalogowaniu ma możliwość wyboru kierunku, który chce zobaczyć. W związku z tym konieczne były poprawki w aktualnej aplikacji. Na chwilę obecną wybieram ostatni kierunek studiów. W moim przypadku są to studia magisterskie.
+
+<h3>Problem</h3>
+
+Jakiś czas temu doświadczyłem problemu w aplikacji. Dane na planie zajęć były wyświetlane nieprawidłowo. Okazało się, że została dodana nowa kolumna do tabeli. Przez co wcześniejsza logika kolejności wartości była błędna. W tym tygodniu zacząłem używać parsera <em>HTML</em>, aby uniknąć w przyszłości takich samych problemów. Wybór padł na <a href="http://html-agility-pack.net/">Html Agility Pack</a>. Obecnie wykorzystuję go do znalezienia wszystkich kierunków studiów dostępnych po zalogowaniu do systemu. W przyszłości każdy element aplikacji posiadający kontakt z samym <em>HTML </em>będzie używał parsera.
+
+<h3>Kończąc</h3>
+
+Wyrażenia regularne są szybkim i prostym sposobem na wyciągnięcie interesujących nas informacji. Niestety stworzenie wystarczająco dobrego wyrażenia, odpornego na zmiany i na tyle elastycznego, aby przetrwało próbę czasu jest bardzo trudne. Szczególnie w przypadku wyszukiwania informacji na stronie, która może ulec zmianie. Było to trochę naiwne z mojej strony. Nie mniej jednak działało prawidłowo. Postanowiłem w najbliższym czasie przerobić całą logikę parsowania <em>HTML’a</em>, aby używała <a href="http://html-agility-pack.net/">HAP</a>.
+
+Dodam również możliwość wyboru kierunku studiów, z którego chcemy wyświetlić aktualny plan zajęć. Pozwoli to osobom studiującym na kilku kierunkach swobodnie przełączać się pomiędzy planami zajęć.
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../17/wlasny-nuget-package/index.html">Previous: Własny nuget package</a></span>
+        <span><a href="../../../03/03/plan-zajec-cz-13-komunikaty/index.html">Next: Plan zajęć cz. 13 - Komunikaty</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

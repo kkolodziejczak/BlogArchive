@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dodanie języka XAML do Crayon Syntax Highlighter</title>
+  <meta name="description" content="Podczas pisania pierwszego wpisu zawierającego kod źródłowy natknąłem się na problem. Potrzebowałem pluginu pozwalającego na zaprezentowanie kodu źródłoweg">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Dodanie języka XAML do Crayon Syntax Highlighter</h1>
+        <div class="post-meta">
+          <time datetime="2017-08-12">2017-08-12</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/wpis/index.html">Wpis</a> <a href="../../../../tags/crayon/index.html">#Crayon</a> <a href="../../../../tags/kolorowanie/index.html">#Kolorowanie</a> <a href="../../../../tags/regex/index.html">#Regex</a> <a href="../../../../tags/syntax-highlighter/index.html">#Syntax Highlighter</a> <a href="../../../../tags/wordpress/index.html">#WordPress</a> <a href="../../../../tags/xaml/index.html">#XAML</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/08/Featured_Image-1.png" alt="">
+      <div class="post-content">
+        <p style="text-align: justify;">Podczas pisania pierwszego wpisu zawierającego kod źródłowy natknąłem się na problem. Potrzebowałem pluginu pozwalającego na zaprezentowanie kodu źródłowego w przystępnej formie. Wypróbowałem chyba każdy darmowy plugin, jaki wpadł mi w ręce. I „chyba” znalazłem najlepszy.<hr class="more-break"></p>
+
+<h3>Crayon Syntax Highlighter</h3>
+
+<p style="text-align: justify;">Według mnie <a href="https://pl.wordpress.org/plugins/crayon-syntax-highlighter/">Crayon </a>jest najlepszym pluginem do prezentacji kodu. Możemy praktycznie wszystko w nim ustawić od wielkości czcionki aż po kolor tła, na którym wyświetla się kod. Oczywiście posiada on również swoje wady, ale o tym później.</p>
+
+<p style="text-align: justify;">Crayon pozwala nam na wyświetlenie kodu w bardzo czysty, przejrzysty sposób. Jest bardzo dużo stylów do wyboru, więc na pewno każdy znajdzie coś dla siebie - nawet jeśli nie, to ma możliwość edycji dowolnego stylu pod swoje potrzeby. Mamy również dostęp do bogatej gamy języków, z których możemy wybierać. Jako że piszę aplikację <a href="../../../07/22/archiwista-cz-1-planowanie/index.html">Archiwista </a>potrzebowałem wyświetlić kod napisany w języku XAML, którego niestety nie było na liście. Zajrzałem więc do  dokumentacji i zobaczyłem, że można go dodać w miarę prosty sposób. Postanowiłem spróbować swoich sił i dodać własny styl kolorowania składni dla tego języka.</p>
+
+<h3>Własny język</h3>
+
+<p style="text-align: justify;">W <a href="https://github.com/aramk/crayon-syntax-highlighter#languages">dokumentacji </a>znajdziemy rozdział odnośnie dodawania nowego języka, aby dodać nowy język należy utworzyć nowy folder z nazwą języka i umieścić w nim plik tekstowy o takiej samej nazwie. W pliku powinny znajdować się wyrażenia regularne reprezentujące poszczególne elementy języka, przypisane atrybutom ze stylów nadającym im odpowiedni kolor.</p>
+
+<h3>Badanie</h3>
+
+<p style="text-align: justify;">Przed przystąpieniem do tworzenia pliku zawierającego opis języka, utworzę wyrażenia regularne przedstawiające elementy XAML, które chce pokolorować. Aby tego dokonać pierw skopiowałem kod źródłowy do publikacji, wkleiłem go na stronę <a href="http://regexr.com/">regexr.com</a>  — która pozwala nam na wizualizację naszych wyrażeń regularnych w sposób graficzny. Skonstruowałem wyrażenia regularne i zacząłem testować jak wygląda kolorowanie składni i na co mogę sobie pozwolić a na co nie. Zajęło mi trochę czasu rozgryzienie, w jaki sposób działa kolorowanie składni. Okazało się, że tekst jest kolorowany względem pliku od góry do dołu.</p>
+
+<p style="text-align: justify;">Dużym zdziwieniem dla mnie był fakt, że operacja niegrupująca nie działała - mam tutaj na myśli <span class="lang:txt decode:true  crayon-inline">(?:#wyrazenie#)</span>. Za każdym razem, kiedy używałem jej w moich wyrażeniach była ona pomijana i brana i tak pod uwagę. Kiedy przyjrzałem się dokładnie co zwraca maszyna wyrażeń regularnych okazało się, że są zwracane dwie grupy. Grupa 0 posiada wszystko łącznie z elementem, który zakwalifikował się do zignorowania, a w grupie 1 znajdował się łańcuch mnie interesujący spełniający wszelkie kryteria wyrażenia. Wychodzi na to, że plugin bierze pod uwagę tylko pierwszą grupę, czyli 0, a druga jest ignorowana.</p>
+
+<p style="text-align: justify;">Kolejną ciekawostką było to, że po pokolorowaniu tekstu nie można go drugi raz pokolorować w połowie tylko trzeba go pomalować całkowicie. Na przykład, jeżeli pokoloruję <span class="lang:xaml decode:true  crayon-inline " >&lt;!-- Komentarz --&gt;</span>  i później będę chciał pokolorować wszystkie znaki <, > na inny kolor, to wyrażenie, mimo iż wykryje symbol i go pokoloruje nie zobaczymy widocznych zmian. Aby była widoczna zmiana koloru musimy pomalować cały obszar objęty wcześniejszym wyrażeniem lub większy.</p>
+
+<h3>Implementacja</h3>
+
+<p style="text-align: justify;">Skoro wiem jak działa mechanizm wyrażeń regularnych oraz kolorowania mogę zabrać się za kolorowanie składni. Jednak przed przystąpieniem do kolorowania składni ze względu na problem ze zmianą koloru muszę przyjąć odpowiednią strategię, aby później nie okazało się, że czegoś nie mogę pokolorować, ponieważ przyjąłem złą kolejność.
+
+Pierwszą rzeczą, jaką zrobię będzie wytyczenie elementów do pokolorowania a następnie kolejność umożliwiająca ich bezkonfliktowe pokolorowanie.
+
+Wytypowałem 6 elementów do pokolorowania:</p>
+
+<ul>
+    <li>Nazwa znacznika, </li>
+    <li>Atrybuty znacznika, </li>
+    <li>Ciągi znaków, </li>
+    <li>Ciągi znaków posiadających “{}”, </li>
+    <li>Komentarze, </li>
+    <li>Znaki: <, >, &lt;/, =.</li>
+</ul>
+
+<p style="text-align: justify;">Następnym krokiem będzie ułożenie ich w odpowiedniej kolejności. Przyjąłem strategię od najbardziej ogólnego do szczegółowego. Najbardziej ogólnym typem pola jest nazwa znacznika, ponieważ jest to zwykły ciąg znaków, który może wystąpić wszędzie, dlatego jako pierwsze pokoloruje nazwy znaczników. Kolejnymi będą atrybuty znaczników, następnie zwykłe łańcuchy znaków i zaraz po nich specjalne łańcuchy znaków. Na sam koniec zostaje pokolorowanie komentarzy oraz znaków rozpoczynających i kończących każdy znacznik. W tym momencie napotkałem problem. Jeżeli pokoloruję znaczniki początku oraz końca bloków jako pierwsze, to komentarze będą posiadały ten kolor na bokach i wtedy nie będzie to wyglądało ładnie. Dlatego zdecydowałem się na skorzystanie z jednej z własności, którą opisałem wcześniej. Jeżeli pokolorujemy już jakiś element tekstu kolorem, to aby go przemalować musimy zmienić cały tekst małe zmiany jak zmiana koloru jednego znaku nic nie zmienia. Tym sposobem, jeżeli pierw pokoloruje komentarze, to nieważne jakbym próbował, nie pokoloruję znaków rozpoczynających i kończących komentarze przez przypadek. Na koniec prezentuję gotowy plik tekstowy zawierający wyrażenia regularne wraz z odpowiadającymi im atrybutami kolorów ze stylów.</p>
+
+<pre class="code-block language-plaintext" data-title="xaml.txt"><code class="language-plaintext">### XAML LANGUAGE ###
+
+    NAME                XAML
+    VERSION             1.0.0
+
+    ### &lt;Something ...&gt;
+    KEYWORD         [A-Za-z]+[A-Za-z:.]*
+
+    ### x:Key, Grid.Column, ...
+    ENTITY          \s+[A-Za-z]+[:\.]?[A-Za-z]*
+
+    ### &quot;something&quot;
+    STRING          &quot;[^{}]*?&quot;
+
+    ### &quot;{something}&quot;
+    PREPROCESSOR    &quot;{(.*?)}&quot;
+
+    ### &lt;!-- Comment --&gt;
+    COMMENT         &lt;!--.*?--&gt;
+
+    ###  Color chars that end &lt; &gt; &lt;/ and text in between
+    SYMBOL          &lt;|&gt;[^\s].*?&lt;\/|&gt;</code></pre>
+
+<h3>Kończąc</h3>
+
+<p style="text-align: justify;">Kolorowanie składni można zobaczyć w akcji na innych moich wpisach, jeżeli chcesz zobaczyć posty zawierające kody xaml kliknij <a href="../../../../tags/xaml/index.html">tutaj</a>.</p>
+
+<p style="text-align: justify;">Względem dewelopera Crayon nie jest ideałem - posiada parę wad między innymi problem z operacjami niegrupującymi, przez co bardziej zaawansowane wyrażenia regularne nie mają tutaj sensu. A co za tym idzie powstają niepotrzebne kolizje w kolorowaniu elementów składni danego języka. Co prawda brak możliwości przekolorowania można zaliczyć do minusów, jak i plusów, ponieważ można go wykorzystać tak jak ja to zrobiłem z komentarzami. Jednak jest to dodatkowa gimnastyka, która według mnie jest niepotrzebna.</p>
+
+<p style="text-align: justify;">Koniec końców uważam, że Crayon Syntax Highlighter jest najlepszym pluginem pozwalającym na kolorowanie składni z bogatym dostępem do języków oraz stylów z możliwością ich modyfikacji do własnych potrzeb.</p>
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../05/archiwista-cz-3-styl-gui/index.html">Previous: Archiwista [cz. 3 – Styl GUI]</a></span>
+        <span><a href="../../19/archiwista-cz-4-glowny-wyglad-aplikacji/index.html">Next: Archiwista [cz. 4 - Główny wygląd aplikacji]</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Archiwista [cz. 11 - Porządki]</title>
+  <meta name="description" content="W tym tygodniu przeprowadziłem porządki. Pierwszą rzeczą, którą poprawiłem był wyjątek pojawiający się podczas odczytywania...">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Archiwista [cz. 11 - Porządki]</h1>
+        <div class="post-meta">
+          <time datetime="2017-10-14">2017-10-14</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/archiwista/index.html">#Archiwista</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/serializacja/index.html">#Serializacja</a> <a href="../../../../tags/xmlserializer/index.html">#XmlSerializer</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/10/Featured_Image-1.png" alt="">
+      <div class="post-content">
+        <p style="text-align: justify;">W tym tygodniu skupiłem się na poprawieniu funkcjonalności aplikacji. Pierwszą rzeczą, którą poprawiłem był wyjątek pojawiający się podczas odczytywania pliku z ustawieniami. Następnie zająłem się wyświetlaniem projektu nad którym aktualnie pracujemy. Resztę tygodnia spędziłem na testowaniu rozwiązań, które pozwoliłyby na prawidłowe działanie skrótów klawiszowych.</p>
+
+<hr class="more-break">
+
+<h3>Wczytywanie ustawień</h3>
+
+<p style="text-align: justify;">Problem z ustawieniami występował podczas wczytywania z pliku.</p>
+
+<pre class="code-block language-csharp" data-title="OldStorage.cs"><code class="language-csharp">public static void Load()
+{
+
+    XmlSerializer xs = new XmlSerializer(typeof(UserSettings));
+    try
+    {
+        using (var sr = new StreamReader(SettingsPath))
+        {
+            Settings = xs.Deserialize(sr) as UserSettings;
+        }
+    }
+    catch (InvalidOperationException e)
+    {
+        // Some error with settings file, create Default one.
+        Settings = new UserSettings();
+        Save();
+    }
+    catch (IOException e)
+    {
+        //TODO: find out why this error occurs, that something is reading file already,
+        // even if it gets good data.
+        Console.WriteLine(e.Message);
+    }
+}</code></pre>
+
+<p style="text-align: justify;">Po użyciu <em>XmlSerializer </em>do odczytania informacji z pliku zostawał rzucany wyjątek typu <em>IOException </em>informujący o tym, że plik został już otwarty przez inny proces. Próbowałem zapisać dokładnie ten sam kod bez użycia klauzuli <em>using()</em>, niestety błąd cały czas występował. Rozwiązaniem okazał się strumień przygotowany wcześniej ze zdefiniowanymi prawami dostępu do pliku. Metoda wczytująca ustawienia wygląda następująco:</p>
+
+<pre class="code-block language-csharp" data-title="Storage.cs"><code class="language-csharp">public static void Load()
+{
+
+    XmlSerializer xs = new XmlSerializer(typeof(UserSettings));
+    try
+    {
+        using (var sr = new StreamReader(new FileStream(SettingsPath,
+                                                        FileMode.Open,
+                                                        FileAccess.Read,
+                                                        FileShare.ReadWrite)))
+        {
+            Settings = xs.Deserialize(sr) as UserSettings;
+        }
+    }
+    catch (Exception e)
+    {
+        // Some error with settings file, create new one from scratch.
+        Settings = new UserSettings();
+        Save();
+    }
+}</code></pre>
+
+<h3>Wybrany projekt</h3>
+
+<p style="text-align: justify;">Mechanizm tworzenia kopii potrzebuje mieć informacje o projekcie, aby wykonać kopię zapasową. W tym celu napisałem mechanizm pozwalający nacisnąć na nazwę projektu dwukrotnie — co wywoła metodę powiadamiającą o zmianie wybranego projektu.</p>
+
+<pre class="code-block language-csharp" data-title="ProjectsViewModel.cs"><code class="language-csharp">private void SelectProjectClick(object sender, EventArgs e)
+{
+    if (sender is ProjectItemControlViewModel project)
+    {
+        Storage.Settings.SelectedProject = project.Project;
+    }
+}</code></pre>
+
+<p style="text-align: justify;">Dzięki temu w ustawieniach posiadamy wybrany projekt i możemy odczytać informacje gdzie znajdują się jego pliki źródłowe. Ważną rzeczą jest też poinformowanie użytkownika, który projekt jest aktualnie wybrany. Podczas przypisania projektu w ustawieniach w akcesorze <em>set </em>wywoływana jest metoda <em>UpdateWindowTitle </em>informująca główny <em>ViewModel </em>o tym co ma wyświetlić jako tytuł aplikacji.</p>
+
+<pre class="code-block language-csharp" data-title="UserSettings.cs"><code class="language-csharp">public Project SelectedProject
+{
+    get
+    {
+        return _SelectedProject;
+    }
+    set
+    {
+        if (_SelectedProject == value)
+            return;
+
+        _SelectedProject = value;
+
+        // Update window title
+        Storage.UpdateWindowTitle();
+    }
+}</code></pre>
+
+<h3>Skróty klawiszowe</h3>
+
+<p style="text-align: justify;">Skróty klawiszowe sprawiły mi w tym tygodniu najwięcej problemów. Pierwszym rozwiązaniem, jakie wypróbowałem było stworzenie mechanizmu tasków na które oczekiwałem z nadzieją że przytrzymanie klawisza nie wywoła go jeszcze raz. Niestety dosyć szybko zauważyłem, że takie rozwiązanie nie ma prawa działać. Kolejną rzeczą, którą spróbowałem było stworzenie flagi informującej o tym że zaczął się proces wywołania metody eventu oraz metodę informującą o jego zakończeniu. Niestety i to nie spełniło swojego zadania. Problemem cały czas był mechanizm eventów. Mianowicie nie byłem w stanie zablokować ich przychodzenia. Ostatni pomysł, który mi przyszedł do głowy okazał się być dobry. Pierwszą rzeczą, jaką zrobiłem było stworzenie mechanizmu kolejki. Kiedy zostanie wywołany skrót klawiszowy zamiast rozpoczęcia procesu tworzenia kopii wybrany projekt zostanie dodany do kolejki. Kolejka posiada własną nieskończoną pętlę, która w przypadku pojawienia się zadania wykonuje je. Nieskończona pętla jest uruchamiana na samym początku i kończona, kiedy główny <em>ViewModel </em>wywoła swój <em>Destruktor</em>.</p>
+
+<pre class="code-block language-csharp" data-title="Backup.cs"><code class="language-csharp">public static async Task ProcessTask()
+{
+    while (true)
+    {
+        if (Tasks.Count &gt; 0)
+        {
+            var TaskToProcess = Tasks.Dequeue();
+
+            foreach (var project in TaskToProcess)
+            {
+                BackupFiles(project);
+            }
+        }
+
+        await Task.Delay(TimeSpan.FromSeconds(1), MainWindowViewModel.wtoken.Token);
+    }
+}</code></pre>
+
+<p style="text-align: justify;">Mechanizm kolejki sam w sobie nie rozwiązuje problemu dużej ilości inputów ze strony skrótów klawiszowych. Rozwiązaniem, które zastosowałem jest porównywanie czasu ostatniej kopii. Jeżeli kopia była zrobiona co najmniej 10 sekund temu mechanizm pozwala na dodanie nowej kopii do kolejki. Następnie nieskończona pętla wykonuje kopie zapasową.</p>
+
+<pre class="code-block language-csharp" data-title="Backup.cs"><code class="language-csharp">public static void Create(object sender, EventArgs e)
+{
+    if (Storage.Settings.SelectedProject == null)
+    {
+        return;
+    }
+
+    // Where &gt;= 0 mean that last copy was made at least 10 sec ago
+    if (DateTime.Now.AddSeconds(-10).CompareTo(LastTask) &gt;= 0)
+    {
+        LastTask = DateTime.Now;
+
+        var projects = GetProjectInformation(Storage.Settings.SelectedProject.SourcePath, Storage.Settings.SelectedProject);
+
+        Tasks.Enqueue(projects);
+    }
+
+}</code></pre>
+
+<h3>Kończąc</h3>
+
+<p style="text-align: justify;">Aplikacja obecnie jest całkowicie funkcjonalna. Można już z niej korzystać przy pracy z projektami. Co prawda nie wszystkie funkcjonalności są jeszcze dostępne, ale nie przeszkadza to przy tworzeniu kopii. </p>
+
+<p style="text-align: justify;">Podczas pisania tego wpisu zauważyłem pewną rzecz. Mianowicie teraz mechanizm zabezpieczający przed ciągłym trzymaniem skrótu klawiszowego generuje tylko i wyłącznie zestaw informacji o wybranym projekcie. Następnie dodaję go do kolejki, gdzie zostanie utworzona na podstawie tych informacji kopia. Niestety między czasem, kiedy projekt zostaje przekazany do kolejki, która może w tym czasie już coś robić, a czasem zaczęcia tworzenia kopii mogą wystąpić już jakieś zmiany w plikach źródłowych. W związku z tym kolejnym rozwinięciem tego mechanizmu będzie stworzenie tymczasowego folderu ze skopiowanymi plikami dla każdego zestawu dodanego do kolejki. To już w następnym tygodniu.</p>
+
+<p style="text-align: justify;">Do skończenia aplikacji pozostało poprawienie błędu z przewijaniem tekstu ścieżki do końca, dodanie możliwości edycji informacji o projekcie, podłączenie ustawień użytkownika, możliwość wysłania wiadomości o znalezionym błędzie oraz możliwość wygenerowania projektu do wysyłki.
+</p>
+
+[KodNaGit]
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../07/archiwista-cz-10-kopie-zapasowe-cd/index.html">Previous: Archiwista [cz. 10 - Kopie zapasowe cd.]</a></span>
+        <span><a href="../../21/archiwista-cz-12-porzadki-w-ustawieniach/index.html">Next: Archiwista [cz. 12 - Porządki cd.]</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

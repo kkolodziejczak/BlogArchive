@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan zajęć cz. 1 - Planowanie</title>
+  <meta name="description" content="Uczelnia, na której studiuję jakiś czas temu zrezygnowała z standardowych indeksów na rzecz elektronicznych. Od tamtej pory plan zajęć, jak i oceny są dost">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Plan zajęć cz. 1 - Planowanie</h1>
+        <div class="post-meta">
+          <time datetime="2017-11-11">2017-11-11</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/plan-zajec/index.html">#Plan zajęć</a> <a href="../../../../tags/planowanie/index.html">#Planowanie</a> <a href="../../../../tags/studia/index.html">#Studia</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/11/Featured_Image-1.png" alt="">
+      <div class="post-content">
+        Uczelnia, na której studiuję jakiś czas temu zrezygnowała z standardowych indeksów na rzecz elektronicznych. Od tamtej pory plan zajęć, jak i oceny są dostępne tylko w tym systemie. Kilka osób już zrobiło aplikacje na system Android wyświetlające plan zajęć. Nie spotkałem się jeszcze z aplikacją typu widget na system Windows, która wyświetlałby aktualny plan z systemu. Dzięki temu nie trzeba by się logować za każdym razem, aby sprawdzić aktualny plan zajęć.
+<hr class="more-break">
+
+<h3>Plan zajęć planowanie</h3>
+
+Na początku tego roku w ramach zajęć stworzyłem aplikację pobierającą plan zajęć z systemu uczelni. Nie była ona super zaawansowana można powiedzieć że uczyłem się dopiero <em>WPF</em>. Aplikacja wykorzystywała metodę pobierania informacji z serwisu uczelni, która nie zawsze działała poprawnie. Po napisaniu Archiwisty zdobyłem sporo doświadczenia w programowaniu i sądzę że tym razem nowa aplikacja będzie dużo lepsza. Dodatkowo znalazłem lepsze rozwiązanie na pobieranie informacji z serwisu. Dzięki czemu znacząco poprawi niezawodność aplikacji.
+
+<h3>Wymagania</h3>
+
+<ul>
+  <li>Aplikacja desktopowa[<em>WPF</em>] i aplikacja mobilna[<em>Xamarin</em>]</li>
+    <ul>
+      <li>Wyświetlanie planu zajęć</li>
+      <li>Wyświetlanie aktualności ze strony uczelni</li>
+      <li>Informująca o zmianach w planie</li>
+      <li>Kalendarz pozwalający przechodzić pomiędzy dniami</li>
+    </ul>
+  <li>Tylko aplikacja desktopowa</li>
+    <ul>
+      <li>Tryb 1/5/7-dniowy</li>
+    </ul>
+</ul>
+
+<h3>Wygląd</h3>
+
+Aplikacja na system Windows powinna pozwolić na wyświetlenie planu zajęć w trybie 1, 5 i 7-dniowym wedle wskazania użytkownika. Będzie to tabela zawierająca nagłówek mówiący o dniu tygodnia oraz dacie. Poniżej będą wyświetlane kolejne zajęcia w ciągu danego dnia. Jeżeli dane zajęcia zostały odwołane zostaną wyświetlone odpowiednim kolorem sygnalizując ich odwołanie. Aplikacja mobilna będzie się różnić jedynie trybami wyświetlania ilości dni. Ponieważ na ekranie urządzeń mobilnych nie ma tak dużo miejsca, aby wyświetlić cały tydzień.
+
+<h3>Zasada działania</h3>
+
+Użytkownik powinien mieć możliwość zalogowania się do systemu poprzez formularz w aplikacji. Po poprawnym zalogowaniu zostanie pobrany plan zajęć i zapisany na dysku do powtórnego odtworzenia. W razie błędnych danych do logowania użytkownik zostanie o tym poinformowany. Aby aplikacja mogła odświeżyć plan zajęć istnieje potrzeba przechowywania informacji o loginie i haśle na dysku. Dane te zostaną zaszyfrowane i zapisane w pliku wykorzystując <em><a href="https://msdn.microsoft.com/en-us/library/ms995355.aspx">Windows Data Protection API</a></em>. Tylko ten użytkownik, który je zapisał będzie w stanie je odtworzyć. Kiedy program wykryje zmianę w planie, poinformuje o tym użytkownika w sposób adekwatny do platformy. Dodatkowo będą pobierane aktualności ze strony wydziału, aby użytkownik mógł być na bieżąco.
+
+<h3>Kończąc</h3>
+
+Plan jest ambitny, ale to nie znaczy, że trudny. Przez to, że napisałem już taką aplikację wcześniej istnieje możliwość wykorzystania części kodu w nowej. Pozwoli mi to zaoszczędzić sporo czasu. Głównym problemem w jej tworzeniu będzie stanowić jej wygląd. Ponieważ samej logiki jest bardzo mało. Wygląd oraz animacje zajmą sporą część czasu jej wytwarzania. Ostatnia aplikacja zajęła mi 14 tygodni, myślę, że ta aplikacja zajmie mi dużo mniej czasu. Już za tydzień przygotuję pierwszy wygląd interfejsu graficznego aplikacji desktopowej.
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../04/archiwista-cz-14-koniec/index.html">Previous: Archiwista [cz. 14 – Koniec]</a></span>
+        <span><a href="../../18/plan-zajec-cz-2-projekt-gui/index.html">Next: Plan zajęć cz. 2 - Projekt GUI</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Xamarin - Szablony</title>
+  <meta name="description" content="Możliwość posiadania szablonów jest jedna z kluczowych, a zarazem koniecznych rzeczy w każdej technologii. Na całe szczęście Xamarin pozwala nam na tworzen">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Xamarin - Szablony</h1>
+        <div class="post-meta">
+          <time datetime="2018-04-21">2018-04-21</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/wpis/index.html">Wpis</a> <a href="../../../../tags/simple-xamarin-framework/index.html">#Simple Xamarin Framework</a> <a href="../../../../tags/sxf/index.html">#SXF</a> <a href="../../../../tags/wpis/index.html">#Wpis</a> <a href="../../../../tags/xamarin/index.html">#Xamarin</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2018/04/Featured_Image-2.png" alt="">
+      <div class="post-content">
+        Możliwość posiadania szablonów jest jedna z kluczowych, a zarazem koniecznych rzeczy w każdej technologii. Na całe szczęście Xamarin pozwala nam na tworzenie własnych szablonów do naszych kontrolek. W tym krótkim wpisie postaram się przedstawić przykładowy szablon strony bazowej.
+<hr class="more-break">
+
+<h3>Szablon</h3>
+
+Xamarin pozwala nam na tworzenie <a href="https://docs.microsoft.com/pl-pl/xamarin/xamarin-forms/app-fundamentals/templates/control-templates/creating">ControlTemplate</a>. Tak stworzony szablon można przypisać danej kontrolce, aby wyglądała zgodnie z tym, co zaprojektowaliśmy. Takie rozwiązanie pozwala na wyciągnięcie wspólnych cech widoków i zapisanie ich w postaci szablonu. Posiadając szablon aplikacji mamy dużo łatwiejsze zadanie w konieczności wprowadzenia jakichkolwiek zmian, oszczędzając tym samym nerwów i czasu na znalezienie wszystkich zakamarków, w których ustawiamy nasz widok.
+
+<h3>Przykładowy szablon</h3>
+
+Przykładowym szablonem, jaki pokażę, będzie strona bazowa całej aplikacji. Będzie to uproszczona wersja strony, którą tworzę w <a href="https://github.com/kkolodziejczak/Simple.Xamarin.Framework">SXF</a>. Znajdzie się w niej tylko panel nawigacji.
+
+<pre class="code-block language-xml" data-title="BaseContentPage.xaml"><code class="language-xml">&lt;ControlTemplate x:Key=&quot;BaseContentPageTemplate&quot;&gt;
+    &lt;Grid BackgroundColor=&quot;{TemplateBinding BackgroundColor}&quot;&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition Height=&quot;Auto&quot;/&gt;
+            &lt;RowDefinition Height=&quot;*&quot;/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+
+        &lt;!--  NavigationBar --&gt;
+        &lt;local:NavigationBar Grid.Row=&quot;0&quot;
+                            IsVisible=&quot;{Binding IsVisible}&quot;
+                            BindingContext=&quot;{TemplateBinding BindingContext.NavigationBar}&quot;
+                            BackgroundColor=&quot;{DynamicResource SXF_NavigationBar_BackgroundColor}&quot;
+                            /&gt;
+
+        &lt;!-- Content Presenter --&gt;
+        &lt;Grid Grid.Row=&quot;1&quot;&gt;
+            &lt;ContentPresenter /&gt;
+        &lt;/Grid&gt;
+
+    &lt;/Grid&gt;
+&lt;/ControlTemplate&gt;</code></pre>
+
+Szablon wygląda identycznie jak widok zwykłej strony. Możemy go natomiast stosować do wszystkich stron w aplikacji. Zawartość strony zostanie automatycznie wyświetlona w miejscu, gdzie znajduje się <em>ContentPresenter</em>. Pozostałe części widoku będą zawsze wyświetlane na postawie widoku bazowego.
+
+<h3>Wykorzystanie</h3>
+
+Wykorzystać ten szablon możemy na kilka sposobów. Jednym z nich jest umieszczenie go w <em>ResourceDictionary </em>i ustawianie <em>ControlTemplate </em>na każdej nowej stronie. Jest to rozwiązanie dobre, lecz wymaga od użytkownika, aby za każdym razem ustawiał szablon.
+
+<pre class="code-block language-xml" data-title="BaseContentPage.xaml"><code class="language-xml">&lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+             xmlns:local=&quot;clr-namespace:Simple.Xamarin.Framework&quot;
+             ControlTemplate=&quot;{StaticResource BaseContentPageTemplate}&quot;
+             x:Class=&quot;Simple.Xamarin.Framework.BaseContentPage&quot;
+             &gt;</code></pre>
+
+Moim preferowanym rozwiązaniem jest stworzenie klasy bazowej, po której będziemy dziedziczyli. Tym sposobem ustawiamy szablon tylko raz i możemy przeładować metody klasy <em>ContentPage </em>takie jak np. <em>OnBackButtonPressed</em>, pisząc tylko jedną implementację logiki. Bez konieczności powtarzania kodu w każdej nowej stronie.
+
+<h3>Kończąc</h3>
+
+Tworzenie własnych szablonów pozwala nam na stworzenie własnego stylu aplikacji. Dzięki widokowi znajdującemu się w jednym pliku dokonywanie jakichkolwiek zmian jest bardzo przyjemne, ponieważ wszystkie ustawienia posiadamy w jednym miejscu. Powielanie kodu i widoków jest bardzo złą praktyką, prędzej czy później wpłynie negatywnie na wprowadzenie jakichkolwiek zmian w całej aplikacji.
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../14/plan-zajec-cz-19-mobilny-ekran-logowania/index.html">Previous: Plan zajęć cz. 19 - Mobilny ekran logowania</a></span>
+        <span><a href="../../28/wspolbieznosc-w-jezyku-c-sharp-recenzja/index.html">Next: Współbieżność w języku C# Recenzja</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

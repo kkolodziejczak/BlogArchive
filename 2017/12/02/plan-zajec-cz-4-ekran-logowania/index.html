@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan zajęć cz. 4 - Ekran logowania</title>
+  <meta name="description" content="Aplikacja zaczyna nabierać kształtów. W tym tygodniu głównie skupiłem swoją uwagę na zrobieniu ekranu logowania. Dodatkowo prawie ukończyłem część wizualną">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Plan zajęć cz. 4 - Ekran logowania</h1>
+        <div class="post-meta">
+          <time datetime="2017-12-02">2017-12-02</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/gui/index.html">#GUI</a> <a href="../../../../tags/plan-zajec/index.html">#Plan zajęć</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/12/Featured_Image.png" alt="">
+      <div class="post-content">
+        Aplikacja zaczyna nabierać kształtów. W tym tygodniu głównie skupiłem swoją uwagę na zrobieniu ekranu logowania. Dodatkowo prawie ukończyłem część wizualną aplikacji desktopowej, z wizualnych rzeczy pozostała tylko do zrobienia karuzela wyświetlająca informacje pobrane ze stron internetowych.
+<hr class="more-break">
+
+<h3>Ekran logowania</h3>
+
+W odróżnieniu od Xamarina WPF ma możliwość podłączenia pola z hasłem ze zmienną typu <em>StringSecure</em>, co gwarantuje bezpieczeństwo hasła w pamięci komputera. Prawdą jest, że w celu zalogowania będzie konieczność wyciągnięcia wartości pierwotnej, ale z tym niestety nie można nic zrobić. W przyszłości użytkownik będzie mógł zapisać w ustawieniach aplikacji swój login i hasło, aby aplikacja mogła sama pobierać najnowsze informacje z systemu. Login i hasło będą szyfrowane za pomocą <a href="https://msdn.microsoft.com/en-us/library/ms995355.aspx">DPAPI </a>dostarczonego od systemu Windows. Jeszcze będę się rozglądał, może znajdę jakieś rozwiązanie na każdą platformę.
+
+<a href="../../../../assets/wp-content/uploads/2017/12/Ekran_Logowania.png"><img src="../../../../assets/wp-content/uploads/2017/12/Ekran_Logowania.png" alt="Plan zajęć cz 4 ekran logowania" width="403" height="405" class="aligncenter size-full wp-image-1275" /></a>
+
+<h3>Wygląd aplikacji desktopowej</h3>
+
+W tym tygodniu również dokończyłem wygląd aplikacji pod względem trybów 1, 5 oraz 7-dniowych. Aplikacja pokazuje prawidłowo aktualny dzień wraz z aktualnymi zajęciami. Każdy <em>ViewModel </em>ma informacje odnośnie do jego aktualności.
+
+Dodałem jeszcze kolorowanie według statusów zajęć. Jeżeli zajęcia są odwołane, wpis będzie pokolorowany na czerwono, odwołane z polecenia Rektora na zielono, a jeżeli na zajęciach będzie egzamin, będą pokolorowane na fioletowo.
+
+<h3>Wydajność</h3>
+
+Podczas przełączania tygodni od czasu do czasu przyciski nie reagują na kliknięcie. Obecnie nie wiem, czym jest to spowodowane, ale w następnym tygodniu na pewno postaram się rozwiązać ten problem. Gdyż płynne działanie aplikacji to jest priorytet.
+
+<h3>Kończąc</h3>
+
+Niestety w tym tygodniu napotkałem na jakiś błąd w aplikacji mobilnej. Nie pojawia się żaden komunikat o błędzie i aplikacja nie chce się uruchomić. Postaram się w najbliższym tygodniu lub dwóch zdiagnozować problem i go naprawić. Nie przejmuję się jednak postojem aplikacji mobilnej, ponieważ i tak cała logika z aplikacji desktopowej będzie używana w mobilnej. Więc postoju jako takiego nie ma. Po prostu aplikacja desktopowa będzie skończona szybciej.
+
+[KodNaGicie name="ZUTSchedule"]
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../../11/25/plan-zajec-cz-3-implementacja-logiki-aplikacji/index.html">Previous: Plan zajęć cz. 3 - Implementacja logiki aplikacji</a></span>
+        <span><a href="../../09/plan-zajec-cz-5-animacja-aktualnosci/index.html">Next: Plan zajęć cz. 5 - Animacja aktualności</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

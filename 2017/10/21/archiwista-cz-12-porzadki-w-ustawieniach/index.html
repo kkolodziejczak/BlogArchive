@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Archiwista [cz. 12 - Porządki cd.]</title>
+  <meta name="description" content="W ciągu tego tygodnia robiłem głównie porządki w ustawieniach oraz edytowaniu informacji o projekcie. Podczas pracy nad interfejsem znalazłem...">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Archiwista [cz. 12 - Porządki cd.]</h1>
+        <div class="post-meta">
+          <time datetime="2017-10-21">2017-10-21</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/archiwista/index.html">#Archiwista</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/wpf/index.html">#WPF</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/10/Featured_Image-2.png" alt="">
+      <div class="post-content">
+        <p style="text-align: justify;">W ciągu tego tygodnia skupiłem się głównie na ustawieniach oraz edytowaniu informacji o projekcie. Podczas pracy nad interfejsem znalazłem sporo wartości tekstowych wpisanych na sztywno. Nie powinno to tak wyglądać, więc dodałem je do słownika, który może w przyszłości posłużyć do przetłumaczenia całego interfejsu aplikacji na inny język. Podczas pracy nad aplikacją napotkałem parę problemów kwestii graficznej podczas stylizacji przycisków w ustawieniach. Zajmę się nimi w następnym tygodniu.</p>
+
+<hr class="more-break">
+
+<h3>Ustawienia</h3>
+
+<p style="text-align: justify;">W zakładce z ustawieniami dodałem możliwość wyczyszczenia kopii zapasowych. Naprawiłem również możliwość wyboru domyślnej ścieżki, w której mają lądować kopie. Dodatkowo zostały dodane trzy przyciski pozwalające przywrócić domyślne ustawienia, zapisać ustawienia oraz przycisk pozwalający anulować wszelkie zmiany. W przyszłości zrobię styl przycisków, który będzie sygnalizował czy jakieś zmiany są do zapisu bądź do odrzucenia. Mechanizm zapisu wywołuje statyczną metodę klasy <em>Storage</em>, która zapisuje wszelkie informacje do pliku. Przycisk anulujący zmiany po prostu wczytuje dane z pliku, dzięki czemu mamy ostatnią wersję ustawień. Domyślne ustawienia są ustawiane poprzez przypisanie nowego obiektu typu <em>UserSettings</em> do zmiennej przechowującej ustawienia użytkownika.</p>
+
+<h3>Edytowanie</h3>
+
+<p style="text-align: justify;">Jedną z kluczowych funkcjonalności, które pozostały do zrobienia jest możliwość edycji informacji już utworzonych projektów. Funkcjonalność ta okazała się łatwa w implementacji. W tym celu stworzyłem zmienną sygnalizującą czy jesteśmy w trybie edycji oraz zmienną przechowującą projekt przed dokonaniem jakichkolwiek zmian. Gdy użytkownik naciśnie przycisk edycji projektu aplikacja jest ustawiana w tryb edycji. Po czym tekst przycisku dodaj zmieni nazwę na zapisz oraz pojawi się nowy przycisk umożliwiający anulowanie edycji. Przez wykorzystanie przycisku dodającego projekty do listy musiałem zmodernizować metodę, do której był on przypisany. Kiedy metoda stworzy nowy obiekt zawierający nowe informacje zamiast dodawać go do listy projektów sprawdzam czy program jest w trybie edycji, jeżeli tak to uruchamiam metodę <em>SwapEditedProjectInformation</em>, która podmienia informacje projektu na nowe.</p>
+
+<pre class="code-block language-csharp" data-title="ProjectsViewModel.cs"><code class="language-csharp">private void SwapEditedProjectInformation(Project newProjectItem)
+{
+    var projIndex = Projects.IndexOf(EditedProject);
+    var oldProjIndex = Storage.Settings.Projects.IndexOf(Projects[projIndex].Project);
+
+    Projects[projIndex].Title = Title;
+    Projects[projIndex].Project = newProjectItem;
+
+    Storage.Settings.Projects[oldProjIndex] = newProjectItem;
+    Storage.Save();
+
+    ClearInputFields();
+    Editing = false;
+}</code></pre>
+
+<p style="text-align: justify;">Dodatkowo poprawiłem błąd informujący o tym, że tytuł projektu już istnieje w przypadku jego edycji. Po naciśnięciu przycisku anuluj tryb edycji jest włączany oraz pola są czyszczone z wprowadzonych informacji.</p>
+
+<h3>Kończąc</h3>
+
+<p style="text-align: justify;">Zakładkę z ustawieniami uważam za skończoną, tak samo główną zakładkę aplikacji. Zastanawiam się nad dodaniem dodatkowych przycisków do każdego z projektów. Przyciski miałby by na celu otwieranie folderu, w którym znajdują się kopie bądź pliki źródłowe. Muszę się jeszcze zastanowić czy na pewno taka funkcjonalność się przyda. Ze względu na grono ludzi, dla których jest celowana aplikacja zastanawiam się nad usunięciem zakładki umożliwiającej wysyłanie informacji o błędach. Gdyż użytkownicy będą wiedzieli jak poinformować o tym na githubie bądź moim blogu.</p>
+
+<p style="text-align: justify;">Kolejny tydzień będzie głównie tygodniem stylistycznym, pozostały same wizualne rzeczy do zrobienia. No może oprócz zaawansowanego tworzenia kopii zapasowych, o którym wspominałem w zeszłym tygodniu. Do poprawienia zostały style przycisków w ustawieniach, przesuwanie tekstu ścieżek po ich wybraniu oraz logo aplikacji.</p>
+
+[KodNaGit]
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../14/archiwista-cz-11-porzadki/index.html">Previous: Archiwista [cz. 11 - Porządki]</a></span>
+        <span><a href="../../28/archiwista-cz-13-konczenie-aplikacji/index.html">Next: Archiwista [cz. 13 - Kończenie aplikacji]</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

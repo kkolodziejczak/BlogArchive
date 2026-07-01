@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Archiwista [cz. 7 – Skrót klawiszowy]</title>
+  <meta name="description" content="Jedną z kluczowych funkcjonalności aplikacji jest tworzenie kopii zapasowych. Za każdym razem, gdy użytkownik przyciśnie skrót klawiszowy program ma...">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Archiwista [cz. 7 – Skrót klawiszowy]</h1>
+        <div class="post-meta">
+          <time datetime="2017-09-09">2017-09-09</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/archiwista/index.html">#Archiwista</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/wpf/index.html">#WPF</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/09/Featured_Image-1.png" alt="">
+      <div class="post-content">
+        <p style="text-align: justify;">Jedną z kluczowych funkcjonalności aplikacji jest tworzenie kopii zapasowych plików źródłowych. Za każdym razem, gdy użytkownik przyciśnie skrót klawiszowy program ma rozpocząć proces archiwizacji. W tym wpisie przedstawię etapy tworzenia klas, które pozwolą na nasłuchiwanie klawiatury oraz interpretację skrótów.</p>
+
+<hr class="more-break">
+
+<h3>Nasłuchiwanie</h3>
+
+<p style="text-align: justify;">Pierwszą rzeczą potrzebną do rozpoznania skrótu klawiszowego jest jego otrzymanie, więc pierwszą czynnością, jaką zrobiłem było przeszukanie Internetu na temat różnych możliwości nasłuchiwania klawiatury komputera. Jak się okazało istnieje wiele możliwości, jednak każda niosła ze sobą jakieś korzyści i limitacje. Jednak jedna pojawiała się w prawie każdym wpisie, jaki odwiedziłem. <em>Global keyboard hooks</em> pozwalają na słuchanie informacji z kolejki systemu operacyjnego dzięki czemu istnieje możliwość nasłuchiwania wszystkich klawiszy.</p>
+
+<p style="text-align: justify;">W ramach tej aplikacji wybrałem wersję <em>low level keyboard hook</em> poszukując informacji jak używać tego mechanizmu natknąłem się na <a href="http://www.dylansweb.com/2014/10/low-level-global-keyboard-hook-sink-in-c-net/">wpis</a> zawierający gotową klasę umożliwiającą podłączenie się oraz nasłuchiwanie klawiszy. Dlatego użyję tej klasy niestety nie posiada ona wszystkich funkcjonalności, jakich potrzebuję dlatego dokonam modyfikacji. Bez żadnych modyfikacji klasa informuje użytkownika tylko o tym, który klawisz został naciśnięty, ale nie o tym, czy klawisz został puszczony. Aby wykryć skróty klawiszowe będę potrzebował informacji o tym, czy klawisze typu: Alt, Ctrl, Shift są wciśnięte, w tym celu zmodyfikowałem kod dodając dwa eventy <em>OnKeyDown</em> oraz <em>OnKeyUp</em>. Mając informacje, czy dany klawisz jest wciśnięty czy puszczony mogę przystąpić do pisania klasy zarządzającej całością. </p>
+
+<pre class="code-block language-csharp" data-title="LowLevelKeyboardListener.cs"><code class="language-csharp">/*
+* Source:
+* http://www.dylansweb.com/2014/10/low-level-global-keyboard-hook-sink-in-c-net/
+*
+* Modified by: ../../../../index.html
+*/
+public class LowLevelKeyboardListener
+{
+    private const int WH_KEYBOARD_LL = 13;
+    private const int WM_KEYDOWN = 0x0100;
+    private const int WM_KEYUP = 0x0101;
+    private const int WM_SYSKEYDOWN = 0x0104;
+    private const int WM_SYSKEYUP = 0x0105;
+
+    [DllImport(&quot;user32.dll&quot;, CharSet = CharSet.Auto, SetLastError = true)]
+    private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
+
+    [DllImport(&quot;user32.dll&quot;, CharSet = CharSet.Auto, SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool UnhookWindowsHookEx(IntPtr hhk);
+
+    [DllImport(&quot;user32.dll&quot;, CharSet = CharSet.Auto, SetLastError = true)]
+    private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+
+    [DllImport(&quot;kernel32.dll&quot;, CharSet = CharSet.Auto, SetLastError = true)]
+    private static extern IntPtr GetModuleHandle(string lpModuleName);
+
+    public delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
+
+    public event EventHandler&lt;KeyPressedArgs&gt; OnKeyDown;
+    public event EventHandler&lt;KeyPressedArgs&gt; OnKeyUp;
+
+    private LowLevelKeyboardProc _proc;
+    private IntPtr _hookID = IntPtr.Zero;
+
+    public LowLevelKeyboardListener()
+    {
+        _proc = HookCallback;
+    }
+
+    public void HookKeyboard()
+    {
+        _hookID = SetHook(_proc);
+    }
+
+    public void UnHookKeyboard()
+    {
+        UnhookWindowsHookEx(_hookID);
+    }
+
+    private IntPtr SetHook(LowLevelKeyboardProc proc)
+    {
+        using (Process curProcess = Process.GetCurrentProcess())
+        using (ProcessModule curModule = curProcess.MainModule)
+        {
+            return SetWindowsHookEx(WH_KEYBOARD_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
+        }
+    }
+
+    private IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+    {
+        if (nCode &gt;= 0 &amp;&amp; wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN)
+        {
+            int vkCode = Marshal.ReadInt32(lParam);
+
+            if (OnKeyDown != null)
+            {
+                OnKeyDown(this, new KeyPressedArgs(KeyInterop.KeyFromVirtualKey(vkCode)));
+            }
+        }
+        if (nCode &gt;= 0 &amp;&amp; wParam == (IntPtr)WM_KEYUP || wParam == (IntPtr)WM_SYSKEYUP)
+        {
+            int vkCode = Marshal.ReadInt32(lParam);
+
+            if (OnKeyUp != null)
+            {
+                OnKeyUp(this, new KeyPressedArgs(KeyInterop.KeyFromVirtualKey(vkCode)));
+            }
+        }
+        return CallNextHookEx(_hookID, nCode, wParam, lParam);
+    }
+}
+
+public class KeyPressedArgs : EventArgs
+{
+    public Key KeyPressed { get; private set; }
+
+    public KeyPressedArgs(Key key)
+    {
+        KeyPressed = key;
+    }
+}</code></pre>
+
+<h3>Skrót klawiszowy</h3>
+
+<p style="text-align: justify;">Jeszcze przed przystąpieniem do tworzenia klasy, która będzie zarządzała całością muszę zaprojektować obiekt przedstawiający skrót klawiszowy. Klasa ta będzie miała informacje o tym, jakie klawisze muszą zostać wciśnięte jednocześnie, aby skrót był uznany za prawidłowy oraz event <em>OnShortcutActivated</em>, który zostanie uruchomiony w przypadku wykrycia odpowiedniej kombinacji klawiszy.</p>
+
+<pre class="code-block language-csharp" data-title="KeyboardShortcut.cs"><code class="language-csharp">/// &lt;summary&gt;
+/// Class that represents keyboard shortcut
+/// &lt;/summary&gt;
+public class KeyboardShortcut
+{
+
+    #region Public Properties
+
+    /// &lt;summary&gt;
+    /// Shotcut Key
+    /// &lt;/summary&gt;
+    public Key Key { get; set; }
+
+    /// &lt;summary&gt;
+    /// Indicates if Alt key is pressed
+    /// &lt;/summary&gt;
+    public bool Alt { get; set; }
+
+    /// &lt;summary&gt;
+    /// Indicates if Ctrl key is pressed
+    /// &lt;/summary&gt;
+    public bool Ctrl { get; set; }
+
+    /// &lt;summary&gt;
+    /// Indicates if Shift key is pressed
+    /// &lt;/summary&gt;
+    public bool Shift { get; set; }
+
+    #endregion
+
+    #region Event
+
+    /// &lt;summary&gt;
+    /// Event that is fired when shortcut criteria are meet
+    /// &lt;/summary&gt;
+    public event EventHandler OnShortcutActivated;
+
+    #endregion
+
+    #region Constructor
+
+    /// &lt;summary&gt;
+    /// Default Constructor
+    /// &lt;/summary&gt;
+    public KeyboardShortcut()
+    {
+
+    }
+
+    /// &lt;summary&gt;
+    /// Copy Constructor
+    /// &lt;/summary&gt;
+    public KeyboardShortcut(KeyboardShortcut source)
+    {
+        this.Key = source.Key;
+        this.Alt = source.Alt;
+        this.Ctrl = source.Ctrl;
+        this.Shift = source.Shift;
+        this.OnShortcutActivated = source.OnShortcutActivated;
+    }
+
+    #endregion
+
+    #region Public Methods
+
+    /// &lt;summary&gt;
+    /// Fires shortcut methods that are connected to &lt;see cref=&quot;OnShortcutActivated&quot;/&gt;.
+    /// &lt;/summary&gt;
+    public void Execute()
+    {
+        if (OnShortcutActivated != null)
+        {
+            OnShortcutActivated(this, new EventArgs());
+        }
+    }
+
+    #endregion
+
+    #region Override
+
+    public override string ToString()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        if (Ctrl)
+            sb.Append(&quot;Ctrl + &quot;);
+        if (Alt)
+            sb.Append(&quot;Alt + &quot;);
+        if (Shift)
+            sb.Append(&quot;Shift + &quot;);
+
+        return $&quot;{sb.ToString()}{Key.ToString()}&quot;;
+    }
+
+    #endregion
+
+}</code></pre>
+
+<h3>Zarządzanie skrótami</h3>
+
+<p style="text-align: justify;">Aby nie tworzyć dużej ilości połączeń i nasłuchiwać każdy klawisz w każdym obiekcie reprezentującym skrót stworzę klasę zarządzającą skrótami. <em>KeyboardShortcutManager</em> posiada listę skrótów, gdy tylko zostanie jakikolwiek skrót z listy wciśnięty uruchomi się odpowiedni event. Dodatkowo w celu łatwej obsługi manager posiada interfejs składający się jak na razie z trzech metod <em>RegisterKeyboardShortcut</em>, <em>UnRegisterKeyboardShortcut</em>. Metody odpowiednio pozwalają na dodanie oraz usunięcie skrótu z listy nasłuchiwanych skrótów klawiszowych. Oraz metodę <em>RecordKeyboardShortcut</em>,  która nagrywa następny skrót klawiszowy i zostanie on podmieniony dla skrótu podanego jako argument. Niestety podczas projektowania tej metody wystąpiło kilka problemów logicznych przez sposób, w jaki otrzymuję informację nie jestem w stanie zwrócić utworzonego skrótu. Aktualne rozwiązanie bazuje na fladze, która jest ustawiana dzięki temu manager wie, że kolejnym razem, kiedy użytkownik puści klawisz ma zapisać skrót klawiszowy jako nowy. </p>
+
+<pre class="code-block language-csharp" data-title="KeyboardShortcutManager.cs"><code class="language-csharp">/// &lt;summary&gt;
+/// Class that manages shortcuts.
+/// Manager is listening to keyboard strokes
+/// when registered key combination appear will execute shortcuts action.
+/// &lt;/summary&gt;
+public class KeyboardShortcutManager
+{
+    #region Private Fields
+
+    /// &lt;summary&gt;
+    /// Listener that allows to perform sertent action on Key Presses.
+    /// &lt;/summary&gt;
+    private LowLevelKeyboardListener _KeyboardListener;
+
+    /// &lt;summary&gt;
+    /// Singleton
+    /// &lt;/summary&gt;
+    private static KeyboardShortcutManager _Instance;
+
+    /// &lt;summary&gt;
+    /// Indicate if &lt;see cref=&quot;KeyboardShortcutManager&quot;/&gt; is recording new &lt;see cref=&quot;KeyboardShortcut&quot;/&gt;.
+    /// &lt;/summary&gt;
+    private bool _IsRecording;
+
+    /// &lt;summary&gt;
+    /// Shortcut type that will be replaced after recording
+    /// &lt;/summary&gt;
+    private KeyboardShortcut _ShortcutToRecord;
+
+    /// &lt;summary&gt;
+    /// ShortcutSelected by user
+    /// &lt;/summary&gt;
+    public List&lt;KeyboardShortcut&gt; _RegisteredShortcuts { get; private set; }
+
+    #endregion
+
+    #region Public Properties
+
+    /// &lt;summary&gt;
+    /// Indicates if Alt key is holded (Left and Right are the same)
+    /// &lt;/summary&gt;
+    public bool IsAltPressed { get; private set; }
+
+    /// &lt;summary&gt;
+    /// Indicates if Ctrl key is holded (Left and Right are the same)
+    /// &lt;/summary&gt;
+    public bool IsCtrlPressed { get; private set; }
+
+    /// &lt;summary&gt;
+    /// Indicates if Shift key is holded (Left and Right are the same)
+    /// &lt;/summary&gt;
+    public bool IsShiftPressed { get; private set; }
+
+    /// &lt;summary&gt;
+    /// Key that is holded
+    /// &lt;/summary&gt;
+    public Key KeyPressed { get; private set; }
+
+    /// &lt;summary&gt;
+    /// ShortcutManager Singleton instance
+    /// &lt;/summary&gt;
+    public static KeyboardShortcutManager Instance
+    {
+        get
+        {
+            if (_Instance == null)
+                _Instance = new KeyboardShortcutManager();
+
+            return _Instance;
+        }
+        private set
+        {
+            _Instance = value;
+        }
+    }
+
+    #endregion
+
+    #region Constructor
+
+    /// &lt;summary&gt;
+    /// Default constructor
+    /// &lt;/summary&gt;
+    private KeyboardShortcutManager()
+    {
+
+        // Prepare Keyboard listener
+        _KeyboardListener = new LowLevelKeyboardListener();
+        _KeyboardListener.OnKeyUp += OnKeyUp;
+        _KeyboardListener.OnKeyDown += OnKeyDown;
+
+        // Start to listen
+        _KeyboardListener.HookKeyboard();
+
+    }
+
+    #endregion
+
+    #region Destructor
+
+    /// &lt;summary&gt;
+    /// Default destructor
+    /// &lt;/summary&gt;
+    ~KeyboardShortcutManager()
+    {
+        // Cleanup
+        _KeyboardListener.OnKeyUp -= OnKeyUp;
+        _KeyboardListener.OnKeyDown -= OnKeyDown;
+        _KeyboardListener.UnHookKeyboard();
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    /// &lt;summary&gt;
+    /// OnKeyDown Event Method
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;sender&quot;&gt;&lt;/param&gt;
+    /// &lt;param name=&quot;e&quot;&gt;&lt;/param&gt;
+    private void OnKeyDown(object sender, KeyPressedArgs e)
+    {
+        SwitchKey(e.KeyPressed, true);
+
+        if (_IsRecording == true)
+            return;
+
+        foreach (var shortcut in _RegisteredShortcuts)
+        {
+            if (IsShortcutPressed(shortcut))
+            {
+                shortcut.Execute();
+            }
+        }
+
+    }
+
+    /// &lt;summary&gt;
+    /// Checks if shortcut is pressed
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;shortcut&quot;&gt;&lt;/param&gt;
+    /// &lt;returns&gt;&lt;/returns&gt;
+    private bool IsShortcutPressed(KeyboardShortcut shortcut)
+    {
+        return (IsAltPressed == shortcut.Alt &amp;&amp;
+                IsCtrlPressed == shortcut.Ctrl &amp;&amp;
+                IsShiftPressed == shortcut.Shift &amp;&amp;
+                KeyPressed == shortcut.Key);
+    }
+
+    /// &lt;summary&gt;
+    /// OnKeyUp Event Method
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;sender&quot;&gt;&lt;/param&gt;
+    /// &lt;param name=&quot;e&quot;&gt;&lt;/param&gt;
+    private void OnKeyUp(object sender, KeyPressedArgs e)
+    {
+        SwitchKey(e.KeyPressed, false);
+    }
+
+    /// &lt;summary&gt;
+    /// Changes value of keys
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;key&quot;&gt;&lt;/param&gt;
+    /// &lt;param name=&quot;value&quot;&gt;&lt;/param&gt;
+    private void SwitchKey(Key key, bool value)
+    {
+        switch (key)
+        {
+            case Key.LeftCtrl:
+            case Key.RightCtrl:
+                IsCtrlPressed = value;
+                break;
+            case Key.LeftAlt:
+            case Key.RightAlt:
+                IsAltPressed = value;
+                break;
+            case Key.LeftShift:
+            case Key.RightShift:
+                IsShiftPressed = value;
+                break;
+            default:
+                if(value == false)
+                {
+                    if (_IsRecording == true)
+                    {
+                        //TODO: Save Selected Shortcut in user Settings
+                        UnRegisterKeyboardShortcut(_ShortcutToRecord);
+
+                        var NewShortcut = new KeyboardShortcut(_ShortcutToRecord)
+                        {
+                            Key = key,
+                            Alt = IsAltPressed,
+                            Ctrl = IsCtrlPressed,
+                            Shift = IsShiftPressed,
+                        };
+
+                        _RegisteredShortcuts.Add(NewShortcut);
+
+                        _IsRecording = false;
+                    }
+
+                    KeyPressed = Key.None;
+                }
+                else
+                {
+                    KeyPressed = key;
+                }
+                break;
+        }
+    }
+
+    #endregion
+
+    #region Public Methods
+
+    /// &lt;summary&gt;
+    /// Sets flag that indicates shortcut recording, the next combination of keys pressed by the user will be set as a shortcut
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;shortcut&quot;&gt;Shortcut with setted &lt;see cref=&quot;OnShortcutActivated&quot;/&gt;.&lt;/param&gt;
+    public void RecordKeyboardShortcut(KeyboardShortcut shortcut)
+    {
+        _ShortcutToRecord = shortcut;
+        _IsRecording = true;
+    }
+
+    /// &lt;summary&gt;
+    /// Register shortcut to listen to.
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;shortcut&quot;&gt;&lt;/param&gt;
+    public void RegisterKeyboardShortcut(KeyboardShortcut shortcut)
+    {
+        if (_RegisteredShortcuts == null)
+            _RegisteredShortcuts = new List&lt;KeyboardShortcut&gt;();
+
+        _RegisteredShortcuts.Add(shortcut);
+    }
+
+    /// &lt;summary&gt;
+    /// Removes shortcut from shortcut list
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;shortcut&quot;&gt;&lt;/param&gt;
+    public void UnRegisterKeyboardShortcut(KeyboardShortcut shortcut)
+    {
+        if (_RegisteredShortcuts == null)
+            return;
+
+        if (_RegisteredShortcuts.Contains(shortcut))
+        {
+            _RegisteredShortcuts.Remove(shortcut);
+        }
+    }
+
+    #endregion
+}</code></pre>
+
+<h3>Kończąc</h3>
+
+<p style="text-align: justify;">Podczas tworzenia klasy reprezentującej skrót klawiszowy przeładowałem również metodę <em>ToString</em>, aby mieć możliwość bezpośredniego Bindowania obiektu <em>KeyboardShortcut</em> do zawartości przycisku. Niestety zawartość przycisku pozostawała pusta. Okazało się, że wyłączenie stylu przycisku dało efekt, jaki oczekiwałem od samego początku. Wewnątrz zawartości przycisku wyświetliła się wartość zwrócona z przeładowanej metody <em>ToString</em>. Rozwiązaniem okazało się stworzenie <em>ValueConvertera</em>, którego jedynym zadaniem jest wywołanie metody <em>ToString</em>. Następne dodałem <em>ToStringValueConverter </em>do stylu bazowego przycisku i przycisk działa tak jak powinien.</p>
+
+<p style="text-align: justify;">Rozwiązanie przedstawione podczas nagrywania nowego skrótu spełnia swoje zadanie, którym jest zmiana klawiszy skrótu, ale niestety nie pozwala na jego zwrócenie bez zawiłych mechanizmów. Nie jestem usatysfakcjonowany takim rozwiązaniem w tym tygodniu zabrakło czasu na jego dopracowanie. Dlatego w następnym tygodniu będę pracował nad jego ulepszeniem.</p>
+
+Cały kod aplikacji można zobaczyć na moim koncie github [icon name="github" size="lg"] <a href="https://github.com/kkolodziejczak/Archivist">/kkolodziejczak/Archivist</a>
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../02/archiwista-cz-6-dokonczenie-wygladu-aplikacji/index.html">Previous: Archiwista [cz. 6 - Dokończenie wyglądu aplikacji]</a></span>
+        <span><a href="../../16/archiwista-cz-8-poprawki/index.html">Next: Archiwista [cz. 8 - Poprawki]</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

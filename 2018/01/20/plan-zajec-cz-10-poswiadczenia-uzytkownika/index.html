@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan zajęć cz. 10 - Poświadczenia użytkownika</title>
+  <meta name="description" content="Napotykając problemy z aplikacją mobilną, postanowiłem ukończyć pierw aplikację desktopową. W tym tygodniu skupiłem się głównie na przechowywaniu poświadcz">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Plan zajęć cz. 10 - Poświadczenia użytkownika</h1>
+        <div class="post-meta">
+          <time datetime="2018-01-20">2018-01-20</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/credentials/index.html">#Credentials</a> <a href="../../../../tags/logger/index.html">#Logger</a> <a href="../../../../tags/plan-zajec/index.html">#Plan zajęć</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2018/01/Featured_Image-2.png" alt="">
+      <div class="post-content">
+        Napotykając problemy z aplikacją mobilną, postanowiłem ukończyć pierw aplikację desktopową. W tym tygodniu skupiłem się głównie na przechowywaniu poświadczeń użytkownika w celu ich późniejszego odczytania.
+<hr class="more-break">
+
+<h3>Poświadczenia użytkownika</h3>
+
+System Windows posiada API, do którego można się odwołać w celu dodania nowych poświadczeń z poziomu kodu. W celu komunikacji z tym API zmodyfikowałem rozwiązanie podane przez meziantou na StackOverflow [<a href="https://stackoverflow.com/a/22435672">https://stackoverflow.com/a/22435672</a>]. Niestety jego wersja przesyła hasło w postaci <em>stringu</em>, co nie jest według mnie najlepszym rozwiązaniem. Zmodyfikowałem wszystkie metody tak, aby współpracowały z klasą <em>SecureString</em>. Dzięki temu hasło od momentu wprowadzenia w <em>PasswordBox</em> do momentu zapisu do Centrum poświadczeń znajduje się cały czas poza obszarem pamięci zarządzanej.
+
+<h3>Automatyczne logowanie</h3>
+
+Użytkownik posiada teraz opcję na zapisanie swoich poświadczeń, jak i ich usunięcie. W tym celu musiałem zmodyfikować całkowicie logikę aplikacji. Obecne zostały wydzielone widoczne warstwy logiki biznesowej oraz komunikacji z siecią. Jeżeli użytkownik wyrazi chęć zapisania jego poświadczeń, to po prawidłowym zalogowaniu zostaną one zapisane w centrum poświadczeń Windows. Natomiast kiedy użytkownik naciśnie przycisk “wyloguj” zapisane poświadczenia zostaną usunięte.
+
+<h3>Logger</h3>
+
+Nadszedł ten czas w aplikacji, że poczułem potrzebę prowadzenia logów aplikacji. Nie potrzebuję jakiś super zaawansowanych gotowych rozwiązań, dlatego napisałem prostą klasę nazywającą się <em>Logger</em>. Klasa ta posiada metodę log, która wyświetla wiadomość na konsoli. Jest to nakładka na metodę klasy <em>Debug</em>, <em>WriteLine()</em>. Poza standardowym wyświetleniem informacji na konsoli dodawane są informacje pomocnicze, o które tak naprawdę chodzi.
+
+<pre class="code-block language-plaintext" data-title="Przykładowa wiadomość"><code class="language-plaintext">***
+*** 20-sty-2018 10:58:18
+*** CommunicationService.cs:63 &gt; SendAsync()
+*** Message:
+***     GET: https://www.zut.edu.pl/WU/Wyloguj.aspx
+***</code></pre>
+
+Wiadomości można wysłać na kilku poziomach. Każdy poziom posiada inne oznaczenie w konsoli. Dodatkowo do każdej wiadomości dodawane są informacje o dacie i czasie wyświetlenia wiadomości, nazwy pliku, w którym doszło do wywołania, numer linii, w której wywołano metodę oraz nazwę metody, w której została uruchomiona metoda Log.
+
+<h3>Kończąc</h3>
+
+Niedługo ukończę uczelnie i istnieje możliwość, że stracę dostęp do konta w systemie. Dlatego postanowiłem jak najszybciej skończyć aplikację desktopową, aby można było z niej już w pełni funkcjonalnie korzystać.
+
+Następnym krokiem ku ukończeniu aplikacji desktopowej będzie zapisywanie ustawień użytkownika, czyli ile dni tygodnia ma być wyświetlane oraz pobranego planu zajęć. Ostatnią funkcjonalnością, jaką chcę na chwilę obecną dodać, będzie automatyczne odświeżanie planu oraz wyświetlanie komunikatów o ewentualnych zmianach w planie.
+
+[KodNaGicie name="ZUTSchedule"]
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../13/plan-zajec-cz-9-xamarin-gesty/index.html">Previous: Plan zajęć cz. 9 - Xamarin gesty</a></span>
+        <span><a href="../../27/praca-inzynierska-podsumowanie/index.html">Next: Praca Inżynierska - Podsumowanie</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>

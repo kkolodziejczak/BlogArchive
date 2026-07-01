@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Archiwista [cz. 5 - Główny wygląd aplikacji cd.]</title>
+  <meta name="description" content="Ostatnio zrobiłem główny widok aplikacji, tym razem pora go dopracować. Zwykła lista nie wyglądała zachęcająco, dlatego zrobię własną listę...">
+  <link rel="stylesheet" href="../../../../assets/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="../../../../index.html">kkolodziejczak</a>
+    <nav aria-label="Main">
+      <a href="../../../../index.html">Archive</a>
+      <a href="../../../../feed.xml">RSS</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">Post archive</p>
+        <h1>Archiwista [cz. 5 - Główny wygląd aplikacji cd.]</h1>
+        <div class="post-meta">
+          <time datetime="2017-08-26">2017-08-26</time>
+          <span>Krzysiek</span>
+        </div>
+        <div class="term-list"><a href="../../../../categories/programowanie/index.html">Programowanie</a> <a href="../../../../tags/archiwista/index.html">#Archiwista</a> <a href="../../../../tags/csharp/index.html">#C#</a> <a href="../../../../tags/gui/index.html">#GUI</a> <a href="../../../../tags/wpf/index.html">#WPF</a> <a href="../../../../tags/xaml/index.html">#XAML</a></div>
+      </header>
+      <img class="hero-image" src="../../../../assets/wp-content/uploads/2017/08/Featured_Image-3.png" alt="">
+      <div class="post-content">
+        <p style="text-align: justify;">Ostatnio zrobiłem główny widok aplikacji, tym razem pora go dopracować. Mam tutaj na myśli poprawienie wyświetlania dodanych projektów. Zwykła lista nie wyglądała zachęcająco. Drugą rzeczą do dodania będzie zaznaczenie w menu, w której zakładce się aktualnie znajdujemy.</p>
+
+<hr class="more-break">
+
+<h3>Lista projektów</h3>
+
+<p style="text-align: justify;">Aktualnie lista projektów korzysta ze zwykłego ListView zawierającego TextBlock jako wpis projektu. Nie byłem zadowolony z takiego rozwiązania więc postanowiłem stworzyć nowy wygląd od podstaw.</p>
+
+<h3>Wygląd rekordu</h3>
+
+<p style="text-align: justify;">Każdy rekord na liście będzie miał tytuł projektu, przycisk umożliwiający jego edycję oraz przycisk pozwalający usunąć dany wpis. Aby przyciski nie rzucały się w oczy napiszę specjalny styl, który będzie zmieniał ich widoczność w zależności od pozycji myszki. Dzięki temu będą wyświetlane tylko te przyciski nad którymi jest myszka.</p>
+
+<p style="text-align: justify;">Jednym z problemów, które ciągnie za sobą takie rozwiązanie jest problem z przypisaniem przyciskom odpowiednich komend. Obecnie listę projektów zawiera główny ViewModel odpowiedzialny za wygląd tej podstrony. Każdy rekord zawiera własny ViewModel opisujący rekord, usunięcie danego rekordu z listy w innym ViewModelu bezpośrednio jest niemożliwe. W tym celu zastosowałem mechanizm zdarzeń i dodałem trzy eventy: OnEditButtonClick, OnDeleteButtonClick, OnActiveProjectClick. Dzięki temu podczas tworzenia rekordów listy mogę przypisać metody, które mają się wywołać w danych okolicznościach. Takim sposobem stworzyłem komunikację wsteczną, która umożliwi usunięcie odpowiedniego rekordu z listy, edycję jego zawartości czy też aktywowanie wybranego projektu.</p>
+
+<h3>Lista</h3>
+
+<p style="text-align: justify;">Pierwszym krokiem do stworzenia listy projektów będzie skorzystanie z ItemsControl, które doskonale się sprawdzi w tym przypadku. Ustawię panel w którym wyświetlają się rekordy na StackPanel w orientacji pionowej oraz wzorzec wpisu na szablon rekordu stworzonego wcześniej. Całość opakuje w ScrollViewer który dostarczy możliwości scrollowania zawartości ItemsControl  oraz Border, która zapewni ramkę dookoła listy.</p>
+
+<pre class="code-block language-xml" data-title="ProjectsPage.xaml"><code class="language-xml">&lt;!-- ... --&gt;
+
+&lt;!-- Projects list --&gt;
+&lt;Border Grid.Column=&quot;0&quot;
+        Margin=&quot;15&quot;
+        Width=&quot;200&quot;
+        BorderThickness=&quot;1&quot;
+        BorderBrush=&quot;DarkGray&quot;&gt;
+    &lt;ScrollViewer VerticalScrollBarVisibility=&quot;Auto&quot;
+                    MaxHeight=&quot;268&quot;&gt;
+        &lt;ItemsControl ItemsSource=&quot;{Binding Projects}&quot;&gt;
+
+            &lt;!-- Set items panel to StackPanel in vertical orientatnion--&gt;
+            &lt;ItemsControl.ItemsPanel&gt;
+                &lt;ItemsPanelTemplate&gt;
+                    &lt;StackPanel Orientation=&quot;Vertical&quot;/&gt;
+                &lt;/ItemsPanelTemplate&gt;
+            &lt;/ItemsControl.ItemsPanel&gt;
+
+            &lt;!-- Set items template as ProjectItemControl --&gt;
+            &lt;ItemsControl.ItemTemplate&gt;
+                &lt;DataTemplate&gt;
+                    &lt;local:ProjectItemControl DataContext=&quot;{Binding}&quot;/&gt;
+                &lt;/DataTemplate&gt;
+            &lt;/ItemsControl.ItemTemplate&gt;
+
+        &lt;/ItemsControl&gt;
+    &lt;/ScrollViewer&gt;
+&lt;/Border&gt;
+
+&lt;!-- ... --&gt;</code></pre>
+
+<h3>Message box</h3>
+
+<p style="text-align: justify;">Użytkownik naciskając przycisk usuwający dany projekt powinien otrzymać powiadomienie o tym, co zamierza zrobić. Ostatnią rzeczą jaką chcemy to usunąć sobie przez przypadek projekt, nad którym pracowaliśmy. W tym celu chciałem wykorzystać MessageBox. Niestety komunikat pojawia się na środku ekranu a nie - tak jakbym ja to chciał - na środku aplikacji, niestety nie ma możliwości zmiany lokalizacji początkowej. Dlatego też postanowiłem stworzyć własną wersję MessageBox, która będzie wyświetlana na środku rodzicielskiego okna i będzie ostylowana jak reszta aplikacji.</p>
+
+<a href="../../../../assets/wp-content/uploads/2017/08/MessageBox2.png"><img src="../../../../assets/wp-content/uploads/2017/08/MessageBox2.png" alt="" width="303" height="185" class="aligncenter size-full wp-image-741" /></a>
+
+<h3>Scroll bar</h3>
+
+<p style="text-align: justify;">Prawie wszystko skończone, ale jednak duży szary pasek do przesuwania projektów nie wygląda zachęcająco, dlatego zdecydowałem się go zmodyfikować. Dodałem styl dla ScrollBar, który wygląda dużo lepiej na tle całej aplikacji.</p>
+
+<h3>Menu</h3>
+
+<p style="text-align: justify;">Kiedy użytkownik naciśnie przycisk, aby przejść do odpowiedniej podstrony aplikacji wypadałoby, żeby w jakiś sposób to sygnalizować. Prostym rozwiązaniem byłoby napisanie ValueConvertera, który zamieniłby jego tło w zależności od zmiennej Page na kolor odpowiadającemu aktywnemu przyciskowi. Niestety takie rozwiązanie nie będzie działało, ponieważ animacja przycisku za każdym razem będzie aktualizować kolor, który jest ustalony w jego stylu. Rozwiązaniem, jakie wybrałem jest otoczenie każdego przycisku w Border gdzie ustawię tło wcześniej opisanym Converterem. Aby jednak całość działała, trzeba zmodyfikować aktualny styl. Przycisk znajduje się nad obramowaniem, nie jest przezroczysty, przez co widzimy kolor tła przycisku a nie kolor obramowania. Rozwiązaniem jest zmiana podstawowego koloru na wartość RGBA zawierającego kanał przezroczystości alpha i ustawić jego wartość na maksimum. Dzięki temu będziemy widzieć kolor pod przyciskiem. Cała aplikacja prezentuje się następująco:</p>
+
+<a href="../../../../assets/wp-content/uploads/2017/08/Prezentacja_Listy_Projektów3.png"><img src="../../../../assets/wp-content/uploads/2017/08/Prezentacja_Listy_Projektów3.png" alt="" width="569" height="384" class="aligncenter size-full wp-image-731" /></a>
+
+<h3>Kończąc</h3>
+
+<p style="text-align: justify;">Na chwilę obecną uznaję widok projektów za skończony. Możliwe, że w międzyczasie poprawię to i owo, ale będą to raczej drobne zmiany o których nie będę robił wpisów. Pozostało stworzenie pozostałych wyglądów aplikacji po czym w końcu będę mógł zabrać się za pisanie logiki biznesowej.</p>
+
+Cały kod aplikacji można zobaczyć na moim koncie github [icon name="github" size="lg"] <a href="https://github.com/kkolodziejczak/Archivist">/kkolodziejczak/Archivist</a>
+
+      </div>
+      <nav class="post-nav" aria-label="Post navigation">
+        <span><a href="../../19/archiwista-cz-4-glowny-wyglad-aplikacji/index.html">Previous: Archiwista [cz. 4 - Główny wygląd aplikacji]</a></span>
+        <span><a href="../../../09/02/archiwista-cz-6-dokonczenie-wygladu-aplikacji/index.html">Next: Archiwista [cz. 6 - Dokończenie wyglądu aplikacji]</a></span>
+      </nav>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Static archive migrated from WordPress. Original domain: kkolodziejczak.net.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>window.hljs && hljs.highlightAll();</script>
+  <script src="../../../../assets/site.js"></script>
+</body>
+</html>
